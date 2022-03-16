@@ -12,19 +12,21 @@ namespace Assets.Scripts.Keystrokes
         private InputAction _cameraMovement;
         private global::Keystrokes _keystrokes;
         private bool _rightClickPressed;
+        private Rigidbody _rigidbody;
 
         private void Awake()
         {
             //init input system
             _keystrokes = new global::Keystrokes();
+            _rigidbody = gameObject.GetComponent<Rigidbody>();
         }
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
-            //camera move script
             var scroll = Mouse.current.scroll.ReadValue();
             var movement = _cameraMovement.ReadValue<Vector3>() * cameraSpeed;
             var direction = transform.rotation * Vector3.forward;
+            /*//camera move script
             transform.position +=
                 Quaternion.FromToRotation(Vector3.forward,
                     new Vector3(direction.x, 0, direction.z)
@@ -32,8 +34,15 @@ namespace Assets.Scripts.Keystrokes
                 movement;
 
             //camera zoom script
-            transform.Translate(Vector3.forward * Time.deltaTime * zoomSpeed * -scroll.y, Space.Self);
+            transform.Translate(Vector3.forward * Time.deltaTime * zoomSpeed * -scroll.y, Space.Self);*/
+            _rigidbody.AddForce(Quaternion.FromToRotation(Vector3.forward,
+                                    new Vector3(direction.x, 0, direction.z)
+                                        .normalized) *
+                                movement);
+        }
 
+        private void LateUpdate()
+        {
             //camera drag rotation script
             if (_rightClickPressed)
             {
