@@ -5,8 +5,9 @@ namespace Assets.Scripts.Keystrokes
 {
     public class KeystrokesController : MonoBehaviour
     {
-        [SerializeField] private float cameraDragSpeed = 2;
-        [SerializeField] private float cameraSpeed = .25f;
+        [SerializeField] private float cameraDragSpeed;
+        [SerializeField] private float cameraSpeed;
+        [SerializeField] private float zoomSpeed;
         private InputAction _cameraDrag;
         private InputAction _cameraMovement;
         private global::Keystrokes _keystrokes;
@@ -14,23 +15,26 @@ namespace Assets.Scripts.Keystrokes
 
         private void Awake()
         {
+            //init input system
             _keystrokes = new global::Keystrokes();
         }
 
         private void LateUpdate()
         {
-            /*var z = Mouse.current.scroll.ReadValue<float>();
-            if (z > 0)
-                Debug.Log("Scroll UP");
-            else if (z < 0)
-                Debug.Log("Scroll DOWN");*/
-
+            //camera move script
+            var scroll = Mouse.current.scroll.ReadValue();
             var movement = _cameraMovement.ReadValue<Vector3>() * cameraSpeed;
-            var cameraLookingDirection = transform.rotation * Vector3.forward;
-            cameraLookingDirection = new Vector3(cameraLookingDirection.x, 0, cameraLookingDirection.z).normalized;
-            var absuluteMovement = Quaternion.FromToRotation(Vector3.forward, cameraLookingDirection) * movement;
-            transform.position += absuluteMovement;
+            var direction = transform.rotation * Vector3.forward;
+            transform.position +=
+                Quaternion.FromToRotation(Vector3.forward,
+                    new Vector3(direction.x, 0, direction.z)
+                        .normalized) *
+                movement;
 
+            //camera zoom script
+            transform.Translate(Vector3.forward * Time.deltaTime * zoomSpeed * -scroll.y, Space.Self);
+
+            //camera drag rotation script
             if (_rightClickPressed)
             {
                 var x = Mouse.current.delta.x.ReadValue() * cameraDragSpeed;
@@ -53,6 +57,7 @@ namespace Assets.Scripts.Keystrokes
 
         private void EnableCamera()
         {
+            //enabling input system, hooking events
             _cameraMovement = _keystrokes.Camera.Movement;
             _cameraMovement.Enable();
 
@@ -74,6 +79,7 @@ namespace Assets.Scripts.Keystrokes
 
         private void DisableCamera()
         {
+            //disabling input system
             _cameraMovement.Disable();
 
             _cameraDrag.performed -= OnRightClick;
