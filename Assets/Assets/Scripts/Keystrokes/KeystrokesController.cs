@@ -13,6 +13,7 @@ namespace Assets.Scripts.Keystrokes
         private global::Keystrokes _keystrokes;
         private bool _rightClickPressed;
         private Rigidbody _rigidbody;
+        private float _scroll;
 
         private void Awake()
         {
@@ -23,22 +24,17 @@ namespace Assets.Scripts.Keystrokes
 
         private void FixedUpdate()
         {
-            var scroll = Mouse.current.scroll.ReadValue();
+            //camera movement script
             var movement = _cameraMovement.ReadValue<Vector3>() * cameraSpeed;
             var direction = transform.rotation * Vector3.forward;
-            /*//camera move script
-            transform.position +=
-                Quaternion.FromToRotation(Vector3.forward,
-                    new Vector3(direction.x, 0, direction.z)
-                        .normalized) *
-                movement;
-
-            //camera zoom script
-            transform.Translate(Vector3.forward * Time.deltaTime * zoomSpeed * -scroll.y, Space.Self);*/
             _rigidbody.AddForce(Quaternion.FromToRotation(Vector3.forward,
                                     new Vector3(direction.x, 0, direction.z)
                                         .normalized) *
                                 movement);
+
+            //camera zoom script
+            _rigidbody.AddRelativeForce(Vector3.forward * Time.deltaTime * zoomSpeed *
+                                        -Mouse.current.scroll.ReadValue().y);
         }
 
         private void LateUpdate()
