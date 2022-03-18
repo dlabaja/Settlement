@@ -13,7 +13,6 @@ namespace Assets.Scripts.Keystrokes
         private global::Keystrokes _keystrokes;
         private bool _rightClickPressed;
         private Rigidbody _rigidbody;
-        private float _scroll;
 
         private void Awake()
         {
@@ -31,14 +30,15 @@ namespace Assets.Scripts.Keystrokes
                                     new Vector3(direction.x, 0, direction.z)
                                         .normalized) *
                                 movement);
-
-            //camera zoom script
-            _rigidbody.AddRelativeForce(Vector3.forward * Time.deltaTime * zoomSpeed *
-                                        -Mouse.current.scroll.ReadValue().y);
         }
 
         private void LateUpdate()
         {
+            //camera zoom script
+            _rigidbody.AddRelativeForce(Vector3.forward * Time.deltaTime * zoomSpeed *
+                                        -Mouse.current.scroll.ReadValue().y);
+
+
             //camera drag rotation script
             if (_rightClickPressed)
             {
@@ -46,7 +46,10 @@ namespace Assets.Scripts.Keystrokes
                 var y = Mouse.current.delta.y.ReadValue() * cameraDragSpeed;
 
                 if (Mathf.Abs(Utils.WrapAngle(transform.eulerAngles.x - y)) > 80) y = 0;
-                transform.eulerAngles += new Vector3(-y, x, 0);
+                var eulerAngles = transform.eulerAngles;
+                eulerAngles =
+                    Vector3.Lerp(eulerAngles, eulerAngles + new Vector3(-y, x, 0), 2f);
+                transform.eulerAngles = eulerAngles;
             }
         }
 
