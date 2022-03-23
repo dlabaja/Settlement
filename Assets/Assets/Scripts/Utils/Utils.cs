@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = System.Random;
 
@@ -22,26 +23,11 @@ namespace Assets.Scripts
             return angle;
         }
 
-        public static bool Rnd(int max)
+        public static bool Rnd(int max = 0)
         {
             //game random ticks
             if (_rnd.Next(max / Const.GameSpeed) == 0) return true;
             return false;
-        }
-
-        public static void SpawnEntity()
-        {
-            //new entity
-            var prefab = Instantiate(Resources.Load("Entity", typeof(GameObject)),
-                GameObject.Find("Entities").transform) as GameObject;
-
-            if (prefab != null)
-            {
-                var entity = prefab.GetComponent<Entity>();
-                entity.SetGender(GenerateGender());
-                entity.SetName(GenerateName(entity.GetGender()));
-                entity.FillWater();
-            }
         }
 
         public static string GenerateName(Const.Gender gender)
@@ -55,6 +41,12 @@ namespace Assets.Scripts
             if (_rnd.Next(2) == 0)
                 return Const.Gender.Male;
             return Const.Gender.Female;
+        }
+
+        public static GameObject LoadGameObject(string prefabName, string parentName)
+        {
+            return Instantiate(Resources.Load(prefabName, typeof(GameObject)),
+                GameObject.Find(parentName).transform) as GameObject;
         }
     }
 }

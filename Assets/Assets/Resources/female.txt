@@ -7,7 +7,7 @@ Aldusa
 Alice
 Alina
 Amanda
-Amice/Amicia
+Amice
 Amiria
 Anabel
 Annora
@@ -24,7 +24,7 @@ Christian
 Cecilia
 Clarice
 Constance
-Dionisia/Denise
+Dionisia
 Edith
 Eleanor
 Elizabeth
@@ -55,7 +55,8 @@ Leticia
 Liecia
 Linota
 Lora
-LuciaMabel
+Lucia
+Mabel
 Malota
 Margaret
 Margery

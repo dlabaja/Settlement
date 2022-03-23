@@ -1,6 +1,6 @@
 namespace Assets.Scripts
 {
-    public interface ICustomObject
+    public class Well : Building
     {
     }
 }

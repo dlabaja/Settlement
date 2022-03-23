@@ -6,16 +6,17 @@ namespace Assets.Scripts
     {
         private void Start()
         {
-            //Utils.r = new Random();
-            Utils.SpawnEntity();
-            Utils.SpawnEntity();
-            Utils.SpawnEntity();
-            Utils.SpawnEntity();
+            CustomObject.Spawn("Entity", Const.EntityParent);
+            CustomObject.Spawn("Entity", Const.EntityParent);
+            CustomObject.Spawn("Entity", Const.EntityParent);
+            CustomObject.Spawn("Entity", Const.EntityParent);
         }
 
         private void FixedUpdate()
         {
-            foreach (var entity in (Entity[]) FindObjectsOfType(typeof(Entity))) entity.DecreaseWater();
+            foreach (var entity in (Entity[]) FindObjectsOfType(typeof(Entity)))
+                if (Utils.Rnd(Const.WaterDecreaseChance))
+                    entity.DecreaseWater();
         }
     }
 }
