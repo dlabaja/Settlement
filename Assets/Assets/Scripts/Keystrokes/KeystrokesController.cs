@@ -27,9 +27,7 @@ namespace Assets.Scripts.Keystrokes
             var movement = _cameraMovement.ReadValue<Vector3>() * cameraSpeed;
             var direction = transform.rotation * Vector3.forward;
             _rigidbody.AddForce(Quaternion.FromToRotation(Vector3.forward,
-                                    new Vector3(direction.x, 0, direction.z)
-                                        .normalized) *
-                                movement);
+                new Vector3(direction.x, 0, direction.z).normalized) * movement);
         }
 
         private void LateUpdate()

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4094131659973612557}
   - component: {fileID: 500596580310754424}
   - component: {fileID: 3704600454974111776}
+  - component: {fileID: -5223659856700228937}
+  - component: {fileID: -5066669166133138723}
   m_Layer: 0
   m_Name: Well
   m_TagString: Untagged
@@ -96,3 +98,31 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5223659856700228937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3526459843486528791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6986f763c55e4b269618495a5b0bb9fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!208 &-5066669166133138723
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3526459843486528791}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

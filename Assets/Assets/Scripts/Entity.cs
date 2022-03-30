@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.Scripts
 {
@@ -9,6 +12,7 @@ namespace Assets.Scripts
         [SerializeField] private new string name;
         [SerializeField] private Const.Gender gender;
         [SerializeField] private int water;
+        [SerializeField] private List<GameObject> lookingFor;
 
         private void Awake()
         {
@@ -25,12 +29,21 @@ namespace Assets.Scripts
             print(entity.GetName());
         }
 
+        public void FindObject<T>() where T : CustomObject
+        {
+            var navMesh = gameObject.GetComponent<NavMeshAgent>();
+            var target = FindObjectsOfType<T>()
+                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
+            if (target != null) navMesh.SetDestination(target.transform.position);
+            navMesh.speed = 50 * Const.GameSpeed;
+        }
+
         private event EventHandler NoWater;
 
 
         private void OnNoWater(object sender, EventArgs e)
         {
-            print(GetName() + "no wotr");
+            FindObject<Well>();
         }
 
         public int GetWater()
@@ -52,11 +65,6 @@ namespace Assets.Scripts
         {
             water = Mathf.Clamp(water - 1, 0, 100);
             if (water == 0) NoWater?.Invoke(this, EventArgs.Empty);
-        }
-
-
-        public void FindBuilding(GameObject gameObject)
-        {
         }
 
         public string GetName()
