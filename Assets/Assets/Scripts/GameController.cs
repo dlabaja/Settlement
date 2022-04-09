@@ -7,9 +7,6 @@ namespace Assets.Scripts
         private void Start()
         {
             CustomObject.Spawn("Entity", Const.EntityParent);
-            CustomObject.Spawn("Entity", Const.EntityParent);
-            CustomObject.Spawn("Entity", Const.EntityParent);
-            CustomObject.Spawn("Entity", Const.EntityParent);
         }
 
         private void FixedUpdate()

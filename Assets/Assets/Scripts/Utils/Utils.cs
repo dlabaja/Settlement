@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Random = System.Random;
 
@@ -20,6 +21,11 @@ namespace Assets.Scripts
             if (angle > 180)
                 return angle - 360;
             return angle;
+        }
+
+        public static IEnumerator Wait(int millis)
+        {
+            yield return new WaitForSecondsRealtime(millis);
         }
 
         public static bool Rnd(int max = 0)
