@@ -1,21 +1,16 @@
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts.Buildings
 {
-    public class Well : Building
+    public class Well : Building, ICollidable
     {
-        private void OnCollisionEnter(Collision collision)
+        public async void OnCollision(Collision collision)
         {
-            print("sus");
-
-            if (collision.gameObject.GetComponent<Entity>().GetLookingFor().Contains(gameObject))
-            {
-                print("amogus");
-                var entity = collision.gameObject.GetComponent<Entity>();
-                entity.Stop(2000);
-                entity.RefillWater();
-                entity.HasColided?.Invoke(this, gameObject);
-            }
+            var entity = collision.gameObject.GetComponent<Entity>();
+            await entity.Stop(2000);
+            entity.RefillWater();
+            entity.HasColided?.Invoke(this, gameObject);
         }
     }
 }

@@ -1,12 +1,19 @@
-using System;
+using Assets.Scripts.Interfaces;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Building : CustomObject
     {
-        public void OnSpawn(object sender, EventArgs e)
+        private void OnCollisionEnter(Collision collision)
         {
-            print("byldyng lol");
+            var e = collision.gameObject.GetComponent<Entity>();
+            if (e == null) return;
+
+            if ((e.GetLookingFor().Contains(gameObject) ||
+                 e.GetJob() == gameObject) &&
+                collision.gameObject != Camera.main.gameObject)
+                gameObject.GetComponent<ICollidable>().OnCollision(collision);
         }
     }
 }

@@ -2,9 +2,11 @@ namespace Assets.Scripts
 {
     public static class Const
     {
-        public enum Buildings
+        public enum CustomObjects
         {
-            Well
+            Entity,
+            Well,
+            Spawn
         }
 
         public enum Gender
@@ -13,8 +15,11 @@ namespace Assets.Scripts
             Female
         }
 
-        public const string EntityParent = "Entities";
-        public const string BuildingsParent = "Buildings";
+        public enum Parents
+        {
+            Entities,
+            Buildings
+        }
 
         public const int WaterDecreaseChance = 400;
         public static int GameSpeed = 1;

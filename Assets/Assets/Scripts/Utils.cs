@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using Random = System.Random;
 
@@ -21,11 +20,6 @@ namespace Assets.Scripts
             if (angle > 180)
                 return angle - 360;
             return angle;
-        }
-
-        public static IEnumerator Wait(int millis)
-        {
-            yield return new WaitForSecondsRealtime(millis);
         }
 
         public static bool Rnd(int max = 0)
@@ -52,6 +46,12 @@ namespace Assets.Scripts
         {
             return Instantiate(Resources.Load(prefabName, typeof(GameObject)),
                 GameObject.Find(parentName).transform) as GameObject;
+        }
+
+        public static Const.Parents GetParent<T>()
+        {
+            if (typeof(T) == typeof(Entity)) return Const.Parents.Entities;
+            return Const.Parents.Buildings;
         }
     }
 }

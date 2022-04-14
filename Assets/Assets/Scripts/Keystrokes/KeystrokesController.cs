@@ -34,7 +34,8 @@ namespace Assets.Scripts.Keystrokes
         {
             //camera zoom script
             _rigidbody.AddRelativeForce(Vector3.forward * Time.deltaTime * zoomSpeed *
-                                        -Mouse.current.scroll.ReadValue().y);
+                                        -Mouse.current.scroll.ReadValue().y,
+                ForceMode.Force);
 
 
             //camera drag rotation script

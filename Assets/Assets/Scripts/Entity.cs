@@ -2,22 +2,32 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using Assets.Scripts.Buildings;
-using Assets.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Assets.Scripts
 {
-    public class Entity : CustomObject, ISpawnable
+    public class Entity : CustomObject
     {
         [SerializeField] private new string name;
         [SerializeField] private Const.Gender gender;
         [SerializeField] private int water;
-        private readonly ObservableCollection<GameObject> _lookingFor = new ObservableCollection<GameObject>();
+        private readonly ObservableCollection<GameObject> _lookingFor = new();
+        private GameObject _job;
         private NavMeshAgent _navMesh;
         public EventHandler<GameObject> HasColided;
 
+        private GameObject Job
+        {
+            get => _job;
+            set
+            {
+                _job = value;
+                OnJobChanged();
+            }
+        }
 
         private void Awake()
         {
@@ -25,55 +35,37 @@ namespace Assets.Scripts
             HasColided += OnHasColided;
             _lookingFor.CollectionChanged += OnLookingForChanged;
             _navMesh = GetComponent<NavMeshAgent>();
+
+            SetGender(Utils.GenerateGender());
+            SetName(Utils.GenerateName(GetGender()));
         }
 
-        private void FixedUpdate()
+        public void FindJob()
         {
-            print(_lookingFor.Count);
-        }
-
-        public void Spawn(GameObject prefab)
-        {
-            var entity = prefab.GetComponent<Entity>();
-            entity.SetGender(Utils.GenerateGender());
-            entity.SetName(Utils.GenerateName(entity.GetGender()));
-
-            print(entity.GetName());
-        }
-
-        public void Stop(int millis)
-        {
-            _navMesh.isStopped = true;
-
-
-            //StartCoroutine(Utils.Wait(millis));
-            _navMesh.isStopped = false;
-        }
-
-        public ObservableCollection<GameObject> GetLookingFor()
-        {
-            return _lookingFor;
-        }
-
-        private void OnHasColided(object sender, GameObject g)
-        {
-            _lookingFor.Remove(g);
-        }
-
-        private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs args)
-        {
-            foreach (var item in _lookingFor)
-                if (item.GetComponent<Spawn>() != null)
-                    _lookingFor.Remove(item);
-
-            if (_lookingFor.Count == 0)
+            if (Job != null)
             {
-                _navMesh.SetDestination(FindObjectOfType<Spawn>().transform.position);
+                _navMesh.SetDestination(Job.transform.position);
                 return;
             }
 
-            _navMesh.SetDestination(_lookingFor[0].transform.position);
-            _navMesh.speed = 50 * Const.GameSpeed;
+            _navMesh.SetDestination(GameObject.Find("Spawn").transform.position);
+        }
+
+        private void OnJobChanged()
+        {
+            FindJob();
+        }
+
+        public async Task Stop(int millis)
+        {
+            _navMesh.isStopped = true;
+            await Task.Delay(millis / Const.GameSpeed);
+            _navMesh.isStopped = false;
+        }
+
+        public void FindObject(GameObject gm)
+        {
+            AddToLookingFor(gm);
         }
 
         public void FindObject<T>() where T : CustomObject
@@ -81,8 +73,34 @@ namespace Assets.Scripts
             var target = FindObjectsOfType<T>()
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
             if (target == null) return;
+            AddToLookingFor(target.gameObject);
+        }
 
-            _lookingFor.Add(target.gameObject);
+        private void OnHasColided(object sender, GameObject g)
+        {
+            RemoveFromLookingFor(g);
+        }
+
+        private void AddToLookingFor(GameObject gm)
+        {
+            _lookingFor.Add(gm);
+        }
+
+        private void RemoveFromLookingFor(GameObject gm)
+        {
+            _lookingFor.Where(l => l == gm).ToList().All(i => _lookingFor.Remove(i));
+        }
+
+        private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            if (_lookingFor.Count != 0)
+            {
+                _navMesh.SetDestination(_lookingFor[0].transform.position);
+                _navMesh.speed *= Const.GameSpeed;
+                return;
+            }
+
+            FindJob();
         }
 
         private event EventHandler NoWater;
@@ -102,8 +120,6 @@ namespace Assets.Scripts
             water = 100;
         }
 
-
-        //if water is < 0, OnNoWater event is called
         public void DecreaseWater()
         {
             water = Mathf.Clamp(water - 1, 0, 100);
@@ -128,6 +144,21 @@ namespace Assets.Scripts
         public void SetGender(Const.Gender gender)
         {
             this.gender = gender;
+        }
+
+        public void SetJob(GameObject workplace)
+        {
+            Job = workplace;
+        }
+
+        public GameObject GetJob()
+        {
+            return Job;
+        }
+
+        public ObservableCollection<GameObject> GetLookingFor()
+        {
+            return _lookingFor;
         }
     }
 }

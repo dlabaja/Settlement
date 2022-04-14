@@ -1,14 +1,13 @@
-using Assets.Scripts.Interfaces;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class CustomObject : MonoBehaviour
     {
-        public static void Spawn(string prefabName, string parentName)
+        public static void Spawn<T>()
         {
-            var prefab = Utils.LoadGameObject(prefabName, parentName);
-            prefab.GetComponent<ISpawnable>().Spawn(prefab);
+            print(typeof(T).Name);
+            Utils.LoadGameObject(typeof(T).Name, Utils.GetParent<T>().ToString());
         }
     }
 }
