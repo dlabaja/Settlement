@@ -7,13 +7,25 @@ namespace Assets.Scripts
     {
         private void OnCollisionEnter(Collision collision)
         {
-            var e = collision.gameObject.GetComponent<Entity>();
-            if (e == null) return;
+            if (OnCollision<IEnterCollideable>(collision))
+                gameObject.GetComponent<IEnterCollideable>().OnCollision(collision);
+        }
 
-            if ((e.GetLookingFor().Contains(gameObject) ||
-                 e.GetJob() == gameObject) &&
-                collision.gameObject != Camera.main.gameObject)
-                gameObject.GetComponent<ICollidable>().OnCollision(collision);
+        private void OnCollisionStay(Collision collision)
+        {
+            if (OnCollision<IStayCollideable>(collision) &&
+                collision.gameObject.GetComponent<Entity>().GetLookingFor().Count == 0)
+                gameObject.GetComponent<IStayCollideable>().OnCollision(collision);
+        }
+
+        private bool OnCollision<T>(Collision collision)
+        {
+            var e = collision.gameObject.GetComponent<Entity>();
+            if (GetComponent<T>() == null || e == null) return false;
+
+            if ((e.GetLookingFor().Contains(gameObject) || e.GetJob() == gameObject) &&
+                collision.gameObject != Camera.main.gameObject) return true;
+            return false;
         }
     }
 }

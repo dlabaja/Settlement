@@ -1,9 +1,9 @@
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.Buildings
+namespace Assets.Scripts
 {
-    public class Well : Building, ICollidable
+    public class Well : Building, IEnterCollideable
     {
         public async void OnCollision(Collision collision)
         {
