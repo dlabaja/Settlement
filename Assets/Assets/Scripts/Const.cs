@@ -6,7 +6,8 @@ namespace Assets.Scripts
         {
             Entity,
             Well,
-            Spawn
+            Spawn,
+            Woodcutter
         }
 
         public enum Gender

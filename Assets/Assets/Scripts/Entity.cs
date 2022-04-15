@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
-using Assets.Scripts.Buildings;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -38,6 +37,11 @@ namespace Assets.Scripts
 
             SetGender(Utils.GenerateGender());
             SetName(Utils.GenerateName(GetGender()));
+            SetJob(GameObject.Find("Woodcutter"));
+        }
+
+        private void FixedUpdate()
+        {
         }
 
         public void FindJob()
@@ -73,6 +77,7 @@ namespace Assets.Scripts
             var target = FindObjectsOfType<T>()
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
             if (target == null) return;
+            print(target);
             AddToLookingFor(target.gameObject);
         }
 
