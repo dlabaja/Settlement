@@ -1,14 +1,13 @@
+using Assets.Scripts.Buildings;
 using Assets.Scripts.Interfaces;
-using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Woodcutter : Building, IStayCollideable
+    public class Woodcutter : Building, ICollideable
     {
-        public async void OnCollision(Collision collision)
+        public async void OnCollision(Entity entity)
         {
-            await collision.gameObject.GetComponent<Entity>().Stop(1000);
-            print("dřevo");
+            entity.FindObject<Tree>();
         }
     }
 }

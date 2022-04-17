@@ -40,10 +40,6 @@ namespace Assets.Scripts
             SetJob(GameObject.Find("Woodcutter"));
         }
 
-        private void FixedUpdate()
-        {
-        }
-
         public void FindJob()
         {
             if (Job != null)
@@ -75,14 +71,17 @@ namespace Assets.Scripts
         public void FindObject<T>() where T : CustomObject
         {
             var target = FindObjectsOfType<T>()
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).FirstOrDefault();
-            if (target == null) return;
-            print(target);
-            AddToLookingFor(target.gameObject);
+                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).ToArray();
+            if (!target.Any()) FindJob();
+
+            for (var i = 0; i < target.Count(); i++)
+                if (target[i] != null)
+                    AddToLookingFor(target[i].gameObject);
         }
 
         private void OnHasColided(object sender, GameObject g)
         {
+            print("sus");
             RemoveFromLookingFor(g);
         }
 
@@ -98,10 +97,9 @@ namespace Assets.Scripts
 
         private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (_lookingFor.Count != 0)
+            if (_lookingFor.Count != 0 && _lookingFor[0] != null)
             {
                 _navMesh.SetDestination(_lookingFor[0].transform.position);
-                _navMesh.speed *= Const.GameSpeed;
                 return;
             }
 

@@ -22,24 +22,22 @@ namespace Assets.Scripts
             return angle;
         }
 
-        public static bool Rnd(int max = 0)
+        public static bool Rnd(int max)
         {
             //game random ticks
-            if (_rnd.Next(max / Const.GameSpeed) == 0) return true;
-            return false;
+            return _rnd.Next(max) == 0;
         }
 
         public static string GenerateName(Const.Gender gender)
         {
-            if (gender == Const.Gender.Male) return Const.MaleNames[_rnd.Next(Const.MaleNames.Length)];
-            return Const.FemaleNames[_rnd.Next(Const.FemaleNames.Length)];
+            return gender == Const.Gender.Male
+                ? Const.MaleNames[_rnd.Next(Const.MaleNames.Length)]
+                : Const.FemaleNames[_rnd.Next(Const.FemaleNames.Length)];
         }
 
         public static Const.Gender GenerateGender()
         {
-            if (_rnd.Next(2) == 0)
-                return Const.Gender.Male;
-            return Const.Gender.Female;
+            return _rnd.Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
         }
 
         public static GameObject LoadGameObject(string prefabName, string parentName)
@@ -50,8 +48,7 @@ namespace Assets.Scripts
 
         public static Const.Parents GetParent<T>()
         {
-            if (typeof(T) == typeof(Entity)) return Const.Parents.Entities;
-            return Const.Parents.Buildings;
+            return typeof(T) == typeof(Entity) ? Const.Parents.Entities : Const.Parents.Buildings;
         }
     }
 }
