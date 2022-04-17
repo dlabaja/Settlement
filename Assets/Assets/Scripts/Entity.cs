@@ -81,7 +81,6 @@ namespace Assets.Scripts
 
         private void OnHasColided(object sender, GameObject g)
         {
-            print("sus");
             RemoveFromLookingFor(g);
         }
 
