@@ -7,6 +7,7 @@ namespace Assets.Scripts
         private void Start()
         {
             CustomObject.Spawn<Entity>();
+            Time.timeScale = Const.GameSpeed;
         }
 
         private void FixedUpdate()

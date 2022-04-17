@@ -7,24 +7,31 @@ namespace Assets.Scripts
     {
         private void OnCollisionEnter(Collision collision)
         {
-            if (OnCollision<IEnterCollideable>(collision))
-                gameObject.GetComponent<IEnterCollideable>().OnCollision(collision);
+            OnTriggerEnter(collision.collider);
         }
 
+
+        //removes object from lookingFor when in the collision
         private void OnCollisionStay(Collision collision)
         {
-            if (OnCollision<IStayCollideable>(collision) &&
-                collision.gameObject.GetComponent<Entity>().GetLookingFor().Count == 0)
-                gameObject.GetComponent<IStayCollideable>().OnCollision(collision);
+            if (OnCollision(collision.gameObject))
+                collision.gameObject.GetComponent<Entity>().HasColided?.Invoke(this, gameObject);
         }
 
-        private bool OnCollision<T>(Collision collision)
+        private void OnTriggerEnter(Collider collider)
         {
-            var e = collision.gameObject.GetComponent<Entity>();
-            if (GetComponent<T>() == null || e == null) return false;
+            if (OnCollision(collider.gameObject))
+                gameObject.GetComponent<ICollideable>()
+                    .OnCollision(collider.gameObject.GetComponent<Entity>());
+        }
+
+        private bool OnCollision(GameObject collision)
+        {
+            var e = collision.GetComponent<Entity>();
+            if (GetComponent<ICollideable>() == null || e == null) return false;
 
             if ((e.GetLookingFor().Contains(gameObject) || e.GetJob() == gameObject) &&
-                collision.gameObject != Camera.main.gameObject) return true;
+                collision != Camera.main.gameObject) return true;
             return false;
         }
     }

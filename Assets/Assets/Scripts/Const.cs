@@ -23,9 +23,9 @@ namespace Assets.Scripts
         }
 
         public const int WaterDecreaseChance = 400;
-        public static int GameSpeed = 1;
 
         public static string[] MaleNames;
         public static string[] FemaleNames;
+        public static int GameSpeed = 1;
     }
 }
