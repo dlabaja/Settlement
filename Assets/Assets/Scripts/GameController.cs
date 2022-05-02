@@ -13,7 +13,7 @@ namespace Assets.Scripts
         private void FixedUpdate()
         {
             foreach (var entity in (Entity[]) FindObjectsOfType(typeof(Entity)))
-                if (Utils.Rnd(Const.WaterDecreaseChance))
+                if (Utils.RndTick(Const.WaterDecreaseChance))
                     entity.DecreaseWater();
         }
     }

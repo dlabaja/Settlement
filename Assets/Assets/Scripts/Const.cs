@@ -16,6 +16,11 @@ namespace Assets.Scripts
             Female
         }
 
+        public enum Items
+        {
+            Wood
+        }
+
         public enum Parents
         {
             Entities,

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         [SerializeField] private new string name;
         [SerializeField] private Const.Gender gender;
         [SerializeField] private int water;
+        [SerializeField] private List<GameObject> list;
         private readonly ObservableCollection<GameObject> _lookingFor = new();
         private GameObject _job;
         private NavMeshAgent _navMesh;
@@ -40,15 +42,15 @@ namespace Assets.Scripts
             SetJob(GameObject.Find("Woodcutter"));
         }
 
+        private void Update()
+        {
+            list = _lookingFor.ToList();
+        }
+
         public void FindJob()
         {
-            if (Job != null)
-            {
-                _navMesh.SetDestination(Job.transform.position);
-                return;
-            }
-
-            _navMesh.SetDestination(GameObject.Find("Spawn").transform.position);
+            var gm = Job ? Job : GameObject.Find("Spawn");
+            _navMesh.SetDestination(gm.transform.position);
         }
 
         private void OnJobChanged()
@@ -72,7 +74,12 @@ namespace Assets.Scripts
         {
             var target = FindObjectsOfType<T>()
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).ToArray();
-            if (!target.Any()) FindJob();
+
+            if (!target.Any())
+            {
+                FindJob();
+                return;
+            }
 
             for (var i = 0; i < target.Count(); i++)
                 if (target[i] != null)
@@ -89,18 +96,19 @@ namespace Assets.Scripts
             _lookingFor.Add(gm);
         }
 
-        private void RemoveFromLookingFor(GameObject gm)
+        public void RemoveFromLookingFor(GameObject gm)
         {
             _lookingFor.Where(l => l == gm).ToList().All(i => _lookingFor.Remove(i));
         }
 
         private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            if (_lookingFor.Count != 0 && _lookingFor[0] != null)
-            {
-                _navMesh.SetDestination(_lookingFor[0].transform.position);
-                return;
-            }
+            if (_lookingFor.Count != 0)
+                if (_lookingFor[0] != null)
+                {
+                    _navMesh.SetDestination(_lookingFor[0].transform.position);
+                    return;
+                }
 
             FindJob();
         }

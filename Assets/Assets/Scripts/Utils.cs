@@ -22,10 +22,15 @@ namespace Assets.Scripts
             return angle;
         }
 
-        public static bool Rnd(int max)
+        public static bool RndTick(int max)
         {
             //game random ticks
             return _rnd.Next(max) == 0;
+        }
+
+        public static int Rnd(int min, int max)
+        {
+            return _rnd.Next(min, max);
         }
 
         public static string GenerateName(Const.Gender gender)
