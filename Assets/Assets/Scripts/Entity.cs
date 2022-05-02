@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -15,7 +13,7 @@ namespace Assets.Scripts
         [SerializeField] private Const.Gender gender;
         [SerializeField] private int water;
         [SerializeField] private List<GameObject> list;
-        private readonly ObservableCollection<GameObject> _lookingFor = new();
+        private readonly HashSet<GameObject> _lookingFor = new();
         private GameObject _job;
         private NavMeshAgent _navMesh;
         public EventHandler<GameObject> HasColided;
@@ -34,7 +32,6 @@ namespace Assets.Scripts
         {
             NoWater += OnNoWater;
             HasColided += OnHasColided;
-            _lookingFor.CollectionChanged += OnLookingForChanged;
             _navMesh = GetComponent<NavMeshAgent>();
 
             SetGender(Utils.GenerateGender());
@@ -75,6 +72,8 @@ namespace Assets.Scripts
             var target = FindObjectsOfType<T>()
                 .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).ToArray();
 
+            if (target.Length > 10) target = target[..10];
+
             if (!target.Any())
             {
                 FindJob();
@@ -94,19 +93,21 @@ namespace Assets.Scripts
         private void AddToLookingFor(GameObject gm)
         {
             _lookingFor.Add(gm);
+            OnLookingForChanged();
         }
 
         public void RemoveFromLookingFor(GameObject gm)
         {
             _lookingFor.Where(l => l == gm).ToList().All(i => _lookingFor.Remove(i));
+            OnLookingForChanged();
         }
 
-        private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs args)
+        private void OnLookingForChanged()
         {
             if (_lookingFor.Count != 0)
-                if (_lookingFor[0] != null)
+                if (_lookingFor.FirstOrDefault() != null)
                 {
-                    _navMesh.SetDestination(_lookingFor[0].transform.position);
+                    _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
                     return;
                 }
 
@@ -166,7 +167,7 @@ namespace Assets.Scripts
             return Job;
         }
 
-        public ObservableCollection<GameObject> GetLookingFor()
+        public HashSet<GameObject> GetLookingFor()
         {
             return _lookingFor;
         }
