@@ -14,9 +14,9 @@ namespace Assets.Scripts
         [SerializeField] private int water;
         [SerializeField] private List<GameObject> list;
         private readonly HashSet<GameObject> _lookingFor = new();
+        private GameObject _interactingObject;
         private GameObject _job;
         private NavMeshAgent _navMesh;
-        public EventHandler<GameObject> HasColided;
 
         private GameObject Job
         {
@@ -31,7 +31,6 @@ namespace Assets.Scripts
         private void Awake()
         {
             NoWater += OnNoWater;
-            HasColided += OnHasColided;
             _navMesh = GetComponent<NavMeshAgent>();
 
             SetGender(Utils.GenerateGender());
@@ -42,6 +41,11 @@ namespace Assets.Scripts
         private void Update()
         {
             list = _lookingFor.ToList();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            _interactingObject = collision.gameObject;
         }
 
         public void FindJob()
@@ -70,9 +74,8 @@ namespace Assets.Scripts
         public void FindObject<T>() where T : CustomObject
         {
             var target = FindObjectsOfType<T>()
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).ToArray();
-
-            if (target.Length > 10) target = target[..10];
+                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
+                .ToList().FindAll(x => x != null && x.gameObject != _interactingObject).Take(2).ToList();
 
             if (!target.Any())
             {
@@ -80,14 +83,7 @@ namespace Assets.Scripts
                 return;
             }
 
-            for (var i = 0; i < target.Count(); i++)
-                if (target[i] != null)
-                    AddToLookingFor(target[i].gameObject);
-        }
-
-        private void OnHasColided(object sender, GameObject g)
-        {
-            RemoveFromLookingFor(g);
+            foreach (var item in target) AddToLookingFor(item.gameObject);
         }
 
         private void AddToLookingFor(GameObject gm)
@@ -104,12 +100,11 @@ namespace Assets.Scripts
 
         private void OnLookingForChanged()
         {
-            if (_lookingFor.Count != 0)
-                if (_lookingFor.FirstOrDefault() != null)
-                {
-                    _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
-                    return;
-                }
+            if (_lookingFor.FirstOrDefault() != null)
+            {
+                _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
+                return;
+            }
 
             FindJob();
         }

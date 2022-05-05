@@ -6,21 +6,67 @@ namespace Assets.Scripts
 {
     public class CustomObject : MonoBehaviour
     {
-        public int itemSlotLimit = 1;
+        [SerializeField] private int itemSlotLimit = 1;
+        [SerializeField] private List<string> _inventory;
         private readonly Dictionary<Const.Items, int> inventory = new();
+
+        private void FixedUpdate()
+        {
+            _inventory = new List<string>();
+            foreach (var item in inventory) _inventory.Add(item.Key + ";" + item.Value);
+        }
 
         private void OnDestroy()
         {
-            foreach (var entity in FindObjectsOfType<Entity>()) entity.RemoveFromLookingFor(gameObject);
+            try
+            {
+                foreach (var entity in FindObjectsOfType<Entity>()) entity.RemoveFromLookingFor(gameObject);
+            }
+            catch (Exception ignored)
+            {
+                // ignored
+            }
         }
 
         public static void Spawn<T>()
         {
-            print(typeof(T).Name);
             Utils.LoadGameObject(typeof(T).Name, Utils.GetParent<T>().ToString());
         }
 
+        public void GetAllItems(GameObject gm, Const.Items item)
+        {
+            var gameObject = GetComponent<CustomObject>();
+            var other = gm.GetComponent<CustomObject>();
+            gameObject.AddItem(item, other.TryGetItemCount(item));
+            other.RemoveItem(item, other.TryGetItemCount(item));
+        }
+
+        public int TryGetItemCount(Const.Items item)
+        {
+            if (!inventory.ContainsKey(item)) return 0;
+
+            return inventory[item];
+        }
+
         public void AddItem(Const.Items item, int count)
+        {
+            if (!inventory.ContainsKey(item))
+            {
+                inventory.Add(item, count);
+                return;
+            }
+
+            inventory[item] += count;
+        }
+
+        public void RemoveItem(Const.Items item, int count)
+        {
+            if (!inventory.ContainsKey(item)) return;
+
+            inventory[item] -= count;
+        }
+
+        /*public void AddItem(Const.Items item, int count)
         {
             if (!inventory.ContainsKey(item))
             {
@@ -43,7 +89,7 @@ namespace Assets.Scripts
                 inventory.Add(item, count);
             }
 
-            return 0;*/
+            return 0;
         }
 
         public void RemoveItem(Const.Items item, int count)
@@ -88,15 +134,16 @@ namespace Assets.Scripts
 
             return maxCap;
         }
+    }*/
+
+        /*            var slots = 0;
+                var listSloty = new Dictionary<Const.Items, int>();
+    
+                foreach (var i in inventory)
+                {
+                    var mezi = int.Parse(Math.Ceiling((decimal) (i.Value / 99)).ToString(CultureInfo.InvariantCulture));
+                    slots += mezi;
+                    listSloty.Add(item, mezi);
+                }*/
     }
-
-    /*            var slots = 0;
-            var listSloty = new Dictionary<Const.Items, int>();
-
-            foreach (var i in inventory)
-            {
-                var mezi = int.Parse(Math.Ceiling((decimal) (i.Value / 99)).ToString(CultureInfo.InvariantCulture));
-                slots += mezi;
-                listSloty.Add(item, mezi);
-            }*/
 }

@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32bf846fdef79cee95f8c7b70391f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlotLimit: 1
+  _inventory: []
+  pickupableItems: 01000000
 --- !u!33 &4094131659973612557
 MeshFilter:
   m_ObjectHideFlags: 0

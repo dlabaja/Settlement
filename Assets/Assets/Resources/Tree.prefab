@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5334037119324981776}
   - component: {fileID: -4683669308469848369}
   - component: {fileID: -808966925217029657}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 3674220914611665828}
   - component: {fileID: -7880495813687746426}
   - component: {fileID: -2494589315821288137}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953d21961abb424d809afeedf39165f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlotLimit: 1
+  _inventory: []
+  pickupableItems: 
 --- !u!136 &-2494589315821288137
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -155,7 +158,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 2
+  m_Radius: 1
   m_Height: 3
   m_Direction: 1
   m_Center: {x: -0.5, y: 0.47, z: 0.09}
@@ -171,7 +174,7 @@ GameObject:
   - component: {fileID: -5198910632598330852}
   - component: {fileID: -7601226680800833775}
   - component: {fileID: 8606509693613944742}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

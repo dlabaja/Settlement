@@ -8,8 +8,8 @@ namespace Assets.Scripts.Buildings
         {
             await entity.Stop(2000);
             Destroy(gameObject);
+            entity.AddItem(Const.Items.Stone, 2);
             entity.FindObject<Tree>();
-            entity.AddItem(Const.Items.Wood, Utils.Rnd(1, 4));
         }
     }
 }

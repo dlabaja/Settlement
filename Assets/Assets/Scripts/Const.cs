@@ -7,7 +7,9 @@ namespace Assets.Scripts
             Entity,
             Well,
             Spawn,
-            Woodcutter
+            Woodcutter,
+            House,
+            Church
         }
 
         public enum Gender
@@ -18,7 +20,8 @@ namespace Assets.Scripts
 
         public enum Items
         {
-            Wood
+            Wood,
+            Stone
         }
 
         public enum Parents
