@@ -25,7 +25,7 @@ namespace Assets.Scripts
         public static bool RndTick(int max)
         {
             //game random ticks
-            return _rnd.Next(max) == 0;
+            return _rnd.Next(max / Const.GameSpeed) == 0;
         }
 
         public static int Rnd(int min, int max)

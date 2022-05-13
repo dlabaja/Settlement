@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Assets.Scripts.Buildings;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,10 +13,12 @@ namespace Assets.Scripts
         [SerializeField] private new string name;
         [SerializeField] private Const.Gender gender;
         [SerializeField] private int water;
+        [SerializeField] private int sleep;
+        [SerializeField] private GameObject house;
+        [SerializeField] private GameObject _job;
         [SerializeField] private List<GameObject> list;
         private readonly HashSet<GameObject> _lookingFor = new();
         private GameObject _interactingObject;
-        private GameObject _job;
         private NavMeshAgent _navMesh;
 
         private GameObject Job
@@ -28,14 +31,19 @@ namespace Assets.Scripts
             }
         }
 
-        private void Awake()
+
+        private void Start()
         {
+            GameController.AddEntity(this);
             NoWater += OnNoWater;
+            NoSleep += OnNoSleep;
+            House.NewRoom += OnNewRoom;
             _navMesh = GetComponent<NavMeshAgent>();
 
             SetGender(Utils.GenerateGender());
             SetName(Utils.GenerateName(GetGender()));
             SetJob(GameObject.Find("Woodcutter"));
+            FindHouse();
         }
 
         private void Update()
@@ -47,6 +55,28 @@ namespace Assets.Scripts
         {
             _interactingObject = collision.gameObject;
         }
+
+        private void OnNewRoom(object sender, GameObject e)
+        {
+            if (house != null) return;
+            house = e;
+        }
+
+        private void FindHouse()
+        {
+            foreach (var house in FindObjectsOfType<House>())
+                if (house.capacity > house.GetOccupantsCount())
+                    this.house = house.gameObject;
+        }
+
+        private void OnNoSleep(object sender, EventArgs e)
+        {
+            FindObject(house);
+        }
+
+        private event EventHandler NoSleep;
+
+        private event EventHandler NoWater;
 
         public void FindJob()
         {
@@ -88,28 +118,30 @@ namespace Assets.Scripts
 
         private void AddToLookingFor(GameObject gm)
         {
+            if (gm == null) return;
             _lookingFor.Add(gm);
             OnLookingForChanged();
         }
 
         public void RemoveFromLookingFor(GameObject gm)
         {
-            _lookingFor.Where(l => l == gm).ToList().All(i => _lookingFor.Remove(i));
+            //if (gm == null || !_lookingFor.Contains(gm)) return;
+            _lookingFor.RemoveWhere(x => x == gm);
             OnLookingForChanged();
         }
 
         private void OnLookingForChanged()
         {
-            if (_lookingFor.FirstOrDefault() != null)
+            //_lookingFor.RemoveWhere(x => x == null);
+
+            if (!_lookingFor.Any())
             {
-                _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
+                FindJob();
                 return;
             }
 
-            FindJob();
+            _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
         }
-
-        private event EventHandler NoWater;
 
         private void OnNoWater(object sender, EventArgs e)
         {
@@ -155,6 +187,22 @@ namespace Assets.Scripts
         public void SetJob(GameObject workplace)
         {
             Job = workplace;
+        }
+
+        public int GetSleep()
+        {
+            return sleep;
+        }
+
+        public void RefillSleep()
+        {
+            sleep = 100;
+        }
+
+        public void DecreaseSleep()
+        {
+            sleep = Mathf.Clamp(sleep - 1, 0, 100);
+            if (sleep == 0) NoSleep?.Invoke(this, EventArgs.Empty);
         }
 
         public GameObject GetJob()

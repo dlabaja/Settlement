@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class CustomObject : MonoBehaviour
+    public abstract class CustomObject : MonoBehaviour
     {
         [SerializeField] private int itemSlotLimit = 1;
         [SerializeField] private List<string> _inventory;
@@ -33,6 +33,11 @@ namespace Assets.Scripts
             Utils.LoadGameObject(typeof(T).Name, Utils.GetParent<T>().ToString());
         }
 
+        public Dictionary<Const.Items, int> GetInventory()
+        {
+            return inventory;
+        }
+
         public void GetAllItems(GameObject gm, Const.Items item)
         {
             var gameObject = GetComponent<CustomObject>();
@@ -50,6 +55,7 @@ namespace Assets.Scripts
 
         public void AddItem(Const.Items item, int count)
         {
+            GameController.UpdateGlobalInventory(new KeyValuePair<Const.Items, int>(item, count));
             if (!inventory.ContainsKey(item))
             {
                 inventory.Add(item, count);
@@ -64,6 +70,7 @@ namespace Assets.Scripts
             if (!inventory.ContainsKey(item)) return;
 
             inventory[item] -= count;
+            GameController.UpdateGlobalInventory(new KeyValuePair<Const.Items, int>(item, -count));
         }
 
         /*public void AddItem(Const.Items item, int count)

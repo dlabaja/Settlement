@@ -14,15 +14,6 @@ namespace Assets.Scripts
             OnTriggerEnter(collision.collider);
         }
 
-
-        //removes object from lookingFor when in the collision
-        private void OnCollisionStay(Collision collision)
-        {
-            if (OnCollision(collision.gameObject))
-                collision.gameObject.GetComponent<Entity>().RemoveFromLookingFor(gameObject);
-        }
-
-
         private void OnTriggerEnter(Collider collider)
         {
             if (OnCollision(collider.gameObject))
@@ -33,7 +24,16 @@ namespace Assets.Scripts
                 if (GetComponent<IInventoryPickable>() != null)
                     GetComponent<IInventoryPickable>()
                         .PickItems(gameObject, collider.gameObject, pickupableItems);
+                collider.gameObject.GetComponent<Entity>().RemoveFromLookingFor(gameObject);
             }
+        }
+
+        private void OnTriggerStay(Collider collider)
+        {
+            var entity = collider.gameObject.GetComponent<Entity>();
+
+            if (entity == null) return;
+            if (entity.GetLookingFor().Contains(gameObject)) entity.RemoveFromLookingFor(gameObject);
         }
 
         private bool OnCollision(GameObject collision)

@@ -31,6 +31,7 @@ namespace Assets.Scripts
         }
 
         public const int WaterDecreaseChance = 400;
+        public const int SleepDecreaseChance = 600;
 
         public static string[] MaleNames;
         public static string[] FemaleNames;
