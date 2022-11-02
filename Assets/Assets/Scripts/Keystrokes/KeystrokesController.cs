@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,16 +28,14 @@ namespace Assets.Scripts.Keystrokes
             var movement = _cameraMovement.ReadValue<Vector3>() * cameraSpeed;
             var direction = transform.rotation * Vector3.forward;
             _rigidbody.AddForce(Quaternion.FromToRotation(Vector3.forward,
-                new Vector3(direction.x, 0, direction.z).normalized) * movement / Const.GameSpeed);
+                new Vector3(direction.x, 0, direction.z).normalized) * movement);
         }
 
         private void LateUpdate()
         {
             //camera zoom script
-            _rigidbody.AddRelativeForce(Vector3.forward * Time.deltaTime * zoomSpeed *
-                -Mouse.current.scroll.ReadValue().y / Const.GameSpeed,
+            _rigidbody.AddRelativeForce(Vector3.Normalize(Vector3.forward * (Time.deltaTime * zoomSpeed * Mouse.current.scroll.ReadValue().y)),
                 ForceMode.Force);
-
 
             //camera drag rotation script
             if (_rightClickPressed)
