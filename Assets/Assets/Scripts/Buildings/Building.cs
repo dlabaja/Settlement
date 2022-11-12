@@ -7,7 +7,7 @@ namespace Assets.Scripts
 {
     public class Building : CustomObject
     {
-        public List<Const.Items> pickupableItems;
+        public List<Const.Item> pickupableItems;
 
         private void OnCollisionEnter(Collision collision)
         {

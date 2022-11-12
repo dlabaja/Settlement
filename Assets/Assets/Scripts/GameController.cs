@@ -9,7 +9,7 @@ namespace Assets.Scripts
 {
     public class GameController : MonoBehaviour
     {
-        private static readonly Dictionary<Const.Items, int> GlobalInventory = new();
+        private static readonly Dictionary<Const.Item, int> GlobalInventory = new();
         private static TMP_Text _gInventoryText;
         private static readonly List<Entity> _entities = new();
 
@@ -40,7 +40,7 @@ namespace Assets.Scripts
             }
         }
 
-        public static void UpdateGlobalInventory(KeyValuePair<Const.Items, int> item)
+        public static void UpdateGlobalInventory(KeyValuePair<Const.Item, int> item)
         {
             if (GlobalInventory.ContainsKey(item.Key))
             {

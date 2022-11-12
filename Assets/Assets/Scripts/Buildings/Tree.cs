@@ -8,7 +8,7 @@ namespace Assets.Scripts.Buildings
         {
             await entity.Stop(2000);
             Destroy(gameObject);
-            entity.AddItem(Const.Items.Wood, 2);
+            entity.AddItem(Const.Item.Wood, 2);
             entity.FindObject<Tree>();
         }
     }

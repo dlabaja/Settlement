@@ -3,16 +3,9 @@ using Random = System.Random;
 
 namespace Assets.Scripts
 {
-    public class Utils : MonoBehaviour
+    public static class Utils
     {
-        private static Random _rnd;
-
-        private void Awake()
-        {
-            _rnd = new Random();
-            Const.MaleNames = ((TextAsset) Resources.Load("male")).text.Split('\n');
-            Const.FemaleNames = ((TextAsset) Resources.Load("female")).text.Split('\n');
-        }
+        private static readonly Random Rnd = new();
 
         public static float WrapAngle(float angle)
         {
@@ -25,35 +18,24 @@ namespace Assets.Scripts
         public static bool RndTick(int max)
         {
             //game random ticks
-            return _rnd.Next(max / Const.GameSpeed) == 0;
-        }
-
-        public static int Rnd(int min, int max)
-        {
-            return _rnd.Next(min, max);
+            return Rnd.Next(max / Const.GameSpeed) == 0;
         }
 
         public static string GenerateName(Const.Gender gender)
         {
             return gender == Const.Gender.Male
-                ? Const.MaleNames[_rnd.Next(Const.MaleNames.Length)]
-                : Const.FemaleNames[_rnd.Next(Const.FemaleNames.Length)];
+                ? Const.MaleNames[Rnd.Next(Const.MaleNames.Count)]
+                : Const.FemaleNames[Rnd.Next(Const.MaleNames.Count)];
         }
 
         public static Const.Gender GenerateGender()
         {
-            return _rnd.Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
+            return Rnd.Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
         }
 
-        public static GameObject LoadGameObject(string prefabName, string parentName)
+        public static Const.Parent GetParent<T>()
         {
-            return Instantiate(Resources.Load(prefabName, typeof(GameObject)),
-                GameObject.Find(parentName).transform) as GameObject;
-        }
-
-        public static Const.Parents GetParent<T>()
-        {
-            return typeof(T) == typeof(Entity) ? Const.Parents.Entities : Const.Parents.Buildings;
+            return typeof(T) == typeof(Entity) ? Const.Parent.Entities : Const.Parent.Buildings;
         }
     }
 }
