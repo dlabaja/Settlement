@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Assets.Scripts.Const;
 
@@ -9,13 +10,41 @@ namespace Assets.Scripts
     {
         [SerializeField] private int slots = 1;
         private Dictionary<Item, int> _inventory = new();
+        [SerializeField] private List<Item> _itemy = new();
+        [SerializeField] private List<int> _hodnoty = new();
+
+        //TODO loads items from inspector at start, also temporary
+        private void Awake()
+        {
+            for (int i = 0; i < _itemy.Count; i++)
+            {
+                _inventory.Add(_itemy[i], _hodnoty[i]);
+            }
+        }
+
+        //TODO only temporary for debug
+        [SerializeField] private string iinventory;
+
+        private void FixedUpdate()
+        {
+            var str = "";
+            foreach (var i in _inventory)
+            {
+                str += ($"{i.Key}:{i.Value}\n");
+            }
+
+            iinventory = str;
+        }
 
         public Dictionary<Item, int> GetInventory() => _inventory;
 
+        //current number of item in inventory
         public int GetItemCount(Item item) => _inventory.GetValueOrDefault(item, 0);
 
+        //returns max space for specific item
         private int GetMaxItemRoom(Item item) => GetFreeSlots() * 100 + _inventory.GetValueOrDefault(item, 0);
 
+        //returns slot unoccupied with items
         private int GetFreeSlots()
         {
             var value = slots;
@@ -27,28 +56,40 @@ namespace Assets.Scripts
             return value;
         }
 
-        public void TransferItems(GameObject gm, Item item, int count)
+        //transfers items from sender (gameobject) to receiver
+        public void TransferItems(GameObject receiver, Item item, int count)
         {
-            gm.GetComponent<Inventory>().RemoveItems(item, count);
-            var maxitemy = GetMaxItemRoom(item);
+            var senderInv = gameObject.GetComponent<Inventory>();
+            var receiverInv = receiver.GetComponent<Inventory>();
+            var maxitems = receiverInv.GetMaxItemRoom(item);
+            if (!senderInv.RemoveItems(item, count)) return;
+
             //receiver is full
-            if (maxitemy == 0)
+            if (maxitems == 0)
             {
-                gm.GetComponent<Inventory>().AddItems(item, count);
+                senderInv.AddItems(item, count);
             }
             //sender gives more than receiver can carry
-            else if (count > maxitemy)
+            else if (count > maxitems)
             {
-                UpsertInventory(item, maxitemy);
-                gm.GetComponent<Inventory>().AddItems(item, count - maxitemy);
+                receiverInv.UpsertInventory(item, maxitems);
+                senderInv.AddItems(item, count - maxitems);
             }
-            else UpsertInventory(item, count);
+            else receiverInv.UpsertInventory(item, count);
         }
 
-        public void AddItems(Item item, int count) => UpsertInventory(item, count);
+        //adds and removes items, use TransferItems instead
+        private void AddItems(Item item, int count) => UpsertInventory(item, count);
 
-        public void RemoveItems(Item item, int count) => _inventory[item] -= count;
+        private bool RemoveItems(Item item, int count)
+        {
+            if (!_inventory.ContainsKey(item)) return false;
+            _inventory[item] -= count;
+            if (_inventory[item] <= 0) _inventory.Remove(item);
+            return true;
+        }
 
+        //adds items to stack or creates new slot for them
         private void UpsertInventory(Item item, int count)
         {
             if (!_inventory.TryAdd(item, count))
@@ -56,41 +97,5 @@ namespace Assets.Scripts
                 _inventory[item] = count;
             }
         }
-
-        /*
-        public void GetAllItems(GameObject gm, Const.Items item)
-        {
-            var gameObject = GetComponent<CustomObject>();
-            var other = gm.GetComponent<CustomObject>();
-            gameObject.AddItem(item, other.TryGetItemCount(item));
-            other.RemoveItem(item, other.TryGetItemCount(item));
-        }
-        
-        public int TryGetItemCount(Const.Items item)
-        {
-            if (!inventory.ContainsKey(item)) return 0;
-
-            return inventory[item];
-        }
-
-        public void AddItem(Const.Items item, int count)
-        {
-            GameController.UpdateGlobalInventory(new KeyValuePair<Const.Items, int>(item, count));
-            if (!inventory.ContainsKey(item))
-            {
-                inventory.Add(item, count);
-                return;
-            }
-
-            inventory[item] += count;
-        }
-
-        public void RemoveItem(Const.Items item, int count)
-        {
-            if (!inventory.ContainsKey(item)) return;
-
-            inventory[item] -= count;
-            GameController.UpdateGlobalInventory(new KeyValuePair<Const.Items, int>(item, -count));
-        }*/
     }
 }

@@ -7,8 +7,8 @@ namespace Assets.Scripts.Interfaces
     {
         public void PickItems(GameObject gameObject, GameObject gm, List<Const.Item> items)
         {
-            var customObject = gameObject.GetComponent<CustomObject>();
-            foreach (var item in items) customObject.GetAllItems(gm, item);
+            var customObject = gameObject.GetComponent<Inventory>();
+            foreach (var item in items) customObject.TransferItems(gm, item, customObject.GetItemCount(item));
         }
     }
 }

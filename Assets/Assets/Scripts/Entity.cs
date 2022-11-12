@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using Assets.Scripts.Buildings;
@@ -31,7 +32,6 @@ namespace Assets.Scripts
             }
         }
 
-
         private void Start()
         {
             GameController.AddEntity(this);
@@ -45,6 +45,12 @@ namespace Assets.Scripts
             SetJob(GameObject.Find("Woodcutter"));
             FindHouse();
         }
+        
+        private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            //
+        }
+
 
         private void Update()
         {
@@ -130,7 +136,7 @@ namespace Assets.Scripts
             OnLookingForChanged();
         }
 
-        private void OnLookingForChanged()
+        private void OnLooki_lngForChanged()
         {
             //_lookingFor.RemoveWhere(x => x == null);
 

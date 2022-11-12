@@ -24,8 +24,8 @@ namespace Assets.Scripts
         public static string GenerateName(Const.Gender gender)
         {
             return gender == Const.Gender.Male
-                ? Const.MaleNames[Rnd.Next(Const.MaleNames.Count)]
-                : Const.FemaleNames[Rnd.Next(Const.MaleNames.Count)];
+                ? Const.MaleNames[Rnd.Next(Const.MaleNames.Count - 1)]
+                : Const.FemaleNames[Rnd.Next(Const.MaleNames.Count - 1)];
         }
 
         public static Const.Gender GenerateGender()

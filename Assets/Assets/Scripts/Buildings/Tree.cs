@@ -7,8 +7,8 @@ namespace Assets.Scripts.Buildings
         public async void OnCollision(Entity entity)
         {
             await entity.Stop(2000);
+            gameObject.GetComponent<Inventory>().TransferItems(entity.gameObject, Const.Item.Wood, 3);
             Destroy(gameObject);
-            entity.AddItem(Const.Item.Wood, 2);
             entity.FindObject<Tree>();
         }
     }
