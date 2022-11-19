@@ -31,6 +31,12 @@ namespace Assets.Scripts
             Entities,
             Buildings
         }
+
+        public enum Job
+        {
+            Woodcutter,
+            Stonecutter
+        }
         
         public const int WaterDecreaseChance = 400;
         public const int SleepDecreaseChance = 600;

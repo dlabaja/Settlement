@@ -26,11 +26,6 @@ namespace Assets.Scripts
             }*/
         }
 
-        public static void AddEntity(Entity gm)
-        {
-            _entities.Add(gm);
-        }
-
         private void FixedUpdate()
         {
             foreach (var entity in _entities)

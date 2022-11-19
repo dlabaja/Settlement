@@ -10,6 +10,7 @@ namespace Assets.Scripts
     {
         [SerializeField] private int slots = 1;
         private Dictionary<Item, int> _inventory = new();
+        [SerializeField] private List<Item> pickupableItems = new();
         [SerializeField] private List<Item> _itemy = new();
         [SerializeField] private List<int> _hodnoty = new();
 

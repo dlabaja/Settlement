@@ -18,7 +18,7 @@ namespace Assets.Scripts.Buildings
 
         public async void OnCollision(Entity entity)
         {
-            await entity.Stop(10000);
+            await entity.Stop(1000);
             entity.RefillSleep();
         }
 

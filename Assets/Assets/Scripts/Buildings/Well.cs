@@ -6,8 +6,8 @@ namespace Assets.Scripts
     {
         public async void OnCollision(Entity entity)
         {
-            await entity.Stop(2000);
             entity.RefillWater();
+            await entity.Stop(2000);
         }
     }
 }

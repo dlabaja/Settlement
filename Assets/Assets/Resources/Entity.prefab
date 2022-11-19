@@ -54,9 +54,8 @@ MonoBehaviour:
   gender: 0
   water: 0
   sleep: 0
-  house: {fileID: 0}
-  _job: {fileID: 0}
-  list: []
+  workplace: {fileID: 0}
+  __lookingFor: []
 --- !u!33 &2909677475992747848
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -173,3 +172,4 @@ MonoBehaviour:
   slots: 1
   _itemy: 
   _hodnoty: 
+  iinventory: 

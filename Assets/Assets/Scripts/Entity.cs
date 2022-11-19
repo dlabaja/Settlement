@@ -1,224 +1,118 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Assets.Scripts.Buildings;
 using UnityEngine;
 using UnityEngine.AI;
+using static Assets.Scripts.Const;
+using UnityEngine.PlayerLoop;
+using UnityEngine.Serialization;
 
 namespace Assets.Scripts
 {
     public class Entity : CustomObject
     {
         [SerializeField] private new string name;
-        [SerializeField] private Const.Gender gender;
+        [SerializeField] private Gender gender;
         [SerializeField] private int water;
         [SerializeField] private int sleep;
-        [SerializeField] private GameObject house;
-        [SerializeField] private GameObject _job;
-        [SerializeField] private List<GameObject> list;
-        private readonly HashSet<GameObject> _lookingFor = new();
-        private GameObject _interactingObject;
-        private NavMeshAgent _navMesh;
 
-        private GameObject Job
-        {
-            get => _job;
-            set
-            {
-                _job = value;
-                OnJobChanged();
-            }
-        }
+        //todo zaměstnanci
+        [SerializeField] private GameObject workplace;
+
+        //[SerializeField] private GameObject house;
+        //todo debug only
+        [SerializeField] private List<GameObject> __lookingFor = new();
+        private ObservableCollection<GameObject> _lookingFor = new();
+        private NavMeshAgent _navMesh;
 
         private void Start()
         {
-            GameController.AddEntity(this);
-            NoWater += OnNoWater;
-            NoSleep += OnNoSleep;
-            House.NewRoom += OnNewRoom;
             _navMesh = GetComponent<NavMeshAgent>();
 
-            SetGender(Utils.GenerateGender());
-            SetName(Utils.GenerateName(GetGender()));
-            SetJob(GameObject.Find("Woodcutter"));
-            FindHouse();
+            gender = Utils.GenerateGender();
+            name = Utils.GenerateName(gender);
+            //todo rewrite to spawn
+            workplace = FindObjectOfType<Woodcutter>().gameObject;
+
+            _lookingFor.CollectionChanged += OnLookingForChanged;
+            FindGameObject<Well>();
+            _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
         }
+
+        //ondestroy zavolat onlookingforchanged
         
+        //tasks the entity has to do
         private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //
+            if (e.Action == NotifyCollectionChangedAction.Add) return;
+
+            if (water <= 0 && !HasGameObject<Well>()) FindGameObject<Well>();
+            //TODO owning a house
+            if (sleep <= 0 && !HasGameObject<House>()) FindGameObject<House>();
+            if (_lookingFor.ToList().Count == 0)
+            {
+                print(_lookingFor.ToList().Count + "s" + __lookingFor.Count);
+                _lookingFor.Add(workplace);
+            }
+            _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
+            __lookingFor = _lookingFor.ToList();
         }
 
+        //removes item from lookingFor list, triggering OnLookingForChanged
+        public void RemoveFromLookingFor(GameObject gm) => _lookingFor.Remove(gm);
 
-        private void Update()
+        public IEnumerable<GameObject> GetLookingFor() => _lookingFor;
+
+        //returns nearest object of type T
+        public void FindGameObject<T>() where T : CustomObject
         {
-            list = _lookingFor.ToList();
+            if (!HasGameObject<T>())
+                _lookingFor.Add(FindObjectsOfType<T>()
+                    .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
+                    .ToList().DefaultIfEmpty(workplace.GetComponent<CustomObject>())
+                    .First().gameObject);
+                    
         }
 
-        private void OnCollisionEnter(Collision collision)
+        //returns true if gameobject of type <T> is in the lookingFor list 
+        public bool HasGameObject<T>()
         {
-            _interactingObject = collision.gameObject;
+            return _lookingFor.Count(x => x.GetComponent<T>() is not null) != 0;
         }
 
-        private void OnNewRoom(object sender, GameObject e)
+        public int GetWater() => water;
+
+        public void RefillWater() => water = 100;
+
+        public void DecreaseWater() => water = Mathf.Clamp(water - 1, 0, 100);
+
+        public int GetSleep() => sleep;
+
+        public void RefillSleep() => sleep = 100;
+
+        public void DecreaseSleep() => sleep = Mathf.Clamp(sleep - 1, 0, 100);
+
+        public string GetName() => name;
+
+        public Gender GetGender() => gender;
+
+        public void SetJob(GameObject workplace)
         {
-            if (house != null) return;
-            house = e;
+            //sets job, event signal from Building
         }
 
-        private void FindHouse()
-        {
-            foreach (var house in FindObjectsOfType<House>())
-                if (house.capacity > house.GetOccupantsCount())
-                    this.house = house.gameObject;
-        }
-
-        private void OnNoSleep(object sender, EventArgs e)
-        {
-            FindObject(house);
-        }
-
-        private event EventHandler NoSleep;
-
-        private event EventHandler NoWater;
-
-        public void FindJob()
-        {
-            var gm = Job ? Job : GameObject.Find("Spawn");
-            _navMesh.SetDestination(gm.transform.position);
-        }
-
-        private void OnJobChanged()
-        {
-            FindJob();
-        }
+        public GameObject GetWorkplace => workplace;
 
         public async Task Stop(int millis)
         {
             _navMesh.isStopped = true;
-            await Task.Delay(millis / Const.GameSpeed);
+            await Task.Delay(millis / GameSpeed);
             _navMesh.isStopped = false;
-        }
-
-        public void FindObject(GameObject gm)
-        {
-            AddToLookingFor(gm);
-        }
-
-        public void FindObject<T>() where T : CustomObject
-        {
-            var target = FindObjectsOfType<T>()
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .ToList().FindAll(x => x != null && x.gameObject != _interactingObject).Take(2).ToList();
-
-            if (!target.Any())
-            {
-                FindJob();
-                return;
-            }
-
-            foreach (var item in target) AddToLookingFor(item.gameObject);
-        }
-
-        private void AddToLookingFor(GameObject gm)
-        {
-            if (gm == null) return;
-            _lookingFor.Add(gm);
-            OnLookingForChanged();
-        }
-
-        public void RemoveFromLookingFor(GameObject gm)
-        {
-            //if (gm == null || !_lookingFor.Contains(gm)) return;
-            _lookingFor.RemoveWhere(x => x == gm);
-            OnLookingForChanged();
-        }
-
-        private void OnLooki_lngForChanged()
-        {
-            //_lookingFor.RemoveWhere(x => x == null);
-
-            if (!_lookingFor.Any())
-            {
-                FindJob();
-                return;
-            }
-
-            _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
-        }
-
-        private void OnNoWater(object sender, EventArgs e)
-        {
-            FindObject<Well>();
-        }
-
-        public int GetWater()
-        {
-            return water;
-        }
-
-        public void RefillWater()
-        {
-            water = 100;
-        }
-
-        public void DecreaseWater()
-        {
-            water = Mathf.Clamp(water - 1, 0, 100);
-            if (water == 0) NoWater?.Invoke(this, EventArgs.Empty);
-        }
-
-        public string GetName()
-        {
-            return name;
-        }
-
-        public void SetName(string name)
-        {
-            this.name = name;
-        }
-
-        public Const.Gender GetGender()
-        {
-            return gender;
-        }
-
-        public void SetGender(Const.Gender gender)
-        {
-            this.gender = gender;
-        }
-
-        public void SetJob(GameObject workplace)
-        {
-            Job = workplace;
-        }
-
-        public int GetSleep()
-        {
-            return sleep;
-        }
-
-        public void RefillSleep()
-        {
-            sleep = 100;
-        }
-
-        public void DecreaseSleep()
-        {
-            sleep = Mathf.Clamp(sleep - 1, 0, 100);
-            if (sleep == 0) NoSleep?.Invoke(this, EventArgs.Empty);
-        }
-
-        public GameObject GetJob()
-        {
-            return Job;
-        }
-
-        public HashSet<GameObject> GetLookingFor()
-        {
-            return _lookingFor;
         }
     }
 }
