@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = System.Random;
 
@@ -33,9 +36,26 @@ namespace Assets.Scripts
             return Rnd.Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
         }
 
+        public static string DictToString<TK, TV>(Dictionary<TK, TV> dict, string keyValSeparator = " : ", string itemSeparator = "; ")
+        {
+            return dict.Aggregate("", (current, item) => current + $"{item.Key}{keyValSeparator}{item.Value}{itemSeparator}");
+        }
+
         public static Const.Parent GetParent<T>()
         {
             return typeof(T) == typeof(Entity) ? Const.Parent.Entities : Const.Parent.Buildings;
         }
+
+        public static GameObject LoadGameObject(string prefabName, string parentName)
+        {
+            return Object.Instantiate(Resources.Load(prefabName, typeof(GameObject)),
+                GameObject.Find(parentName).transform) as GameObject;
+        }
+
+        public static bool HasComponent<T>(GameObject gm)
+        {
+            return gm.GetComponent<T>() is not null;
+        }
+
     }
 }

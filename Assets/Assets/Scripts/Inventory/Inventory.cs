@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using static Assets.Scripts.Const;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Inventory
 {
     public class Inventory : MonoBehaviour
     {
@@ -68,20 +68,19 @@ namespace Assets.Scripts
             //receiver is full
             if (maxitems == 0)
             {
-                senderInv.AddItems(item, count);
+                senderInv.UpsertInventory(item, count);
             }
             //sender gives more than receiver can carry
             else if (count > maxitems)
             {
                 receiverInv.UpsertInventory(item, maxitems);
-                senderInv.AddItems(item, count - maxitems);
+                senderInv.UpsertInventory(item, count - maxitems);
             }
+            //all fine
             else receiverInv.UpsertInventory(item, count);
         }
 
-        //adds and removes items, use TransferItems instead
-        private void AddItems(Item item, int count) => UpsertInventory(item, count);
-
+        //removes items, use TransferItems instead
         private bool RemoveItems(Item item, int count)
         {
             if (!_inventory.ContainsKey(item)) return false;
@@ -93,10 +92,7 @@ namespace Assets.Scripts
         //adds items to stack or creates new slot for them
         private void UpsertInventory(Item item, int count)
         {
-            if (!_inventory.TryAdd(item, count))
-            {
-                _inventory[item] = count;
-            }
+            if (!_inventory.TryAdd(item, count)) _inventory[item] += count; //there are items already, adding them up
         }
     }
 }
