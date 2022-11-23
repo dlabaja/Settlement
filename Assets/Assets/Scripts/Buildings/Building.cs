@@ -15,10 +15,11 @@ namespace Assets.Scripts
         private void OnTriggerStay(Collider collider)
         {
             var entity = collider.gameObject.GetComponent<Entity>();
-            if (entity.GetLookingFor().FirstOrDefault() == gameObject)
+            //entity has building in lookingFor OR the lookingFor is empty and the building is its workspaces
+            if (entity.GetLookingFor() == gameObject ||
+                entity.GetLookingFor() == null && entity.GetWorkplace == gameObject)
             {
-                //smazat jenom jednou
-                entity.RemoveFromLookingFor(gameObject);
+                entity.ChangeLookingFor();
                 GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
             }
         }

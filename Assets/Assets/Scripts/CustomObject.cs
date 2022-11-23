@@ -12,18 +12,6 @@ namespace Assets.Scripts
             //foreach (var item in inventory) _inventory.Add(item.Key + ";" + item.Value);
         }
 
-        private void OnDestroy()
-        {
-            try
-            {
-                foreach (var entity in FindObjectsOfType<Entity>()) entity.RemoveFromLookingFor(gameObject);
-            }
-            catch (Exception ignored)
-            {
-                // ignored
-            }
-        }
-
         public static void Spawn<T>()
         {
             LoadGameObject(typeof(T).Name, Utils.GetParent<T>().ToString());

@@ -24,10 +24,8 @@ namespace Assets.Scripts
         //todo zaměstnanci
         [SerializeField] private GameObject workplace;
 
-        //[SerializeField] private GameObject house;
-        //todo debug only
-        [SerializeField] private List<GameObject> __lookingFor = new();
-        private ObservableCollection<GameObject> _lookingFor = new();
+        [SerializeField] private GameObject house;
+        [SerializeField] private GameObject lookingFor;
         private NavMeshAgent _navMesh;
 
         private void Start()
@@ -37,52 +35,38 @@ namespace Assets.Scripts
             gender = Utils.GenerateGender();
             name = Utils.GenerateName(gender);
             //todo rewrite to spawn
-            workplace = FindObjectOfType<Woodcutter>().gameObject;
+            workplace = FindObjectsOfType<Woodcutter>()
+                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
+                .ToList().First().gameObject;
 
-            _lookingFor.CollectionChanged += OnLookingForChanged;
             FindGameObject<Well>();
-            _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
         }
 
-        //ondestroy zavolat onlookingforchanged
-        
-        //tasks the entity has to do
-        private void OnLookingForChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //updates tasks the entity has to do
+        public void ChangeLookingFor()
         {
-            if (e.Action == NotifyCollectionChangedAction.Add) return;
-
-            if (water <= 0 && !HasGameObject<Well>()) FindGameObject<Well>();
+            lookingFor = null;
+            if (water <= 0) FindGameObject<Well>();
             //TODO owning a house
-            if (sleep <= 0 && !HasGameObject<House>()) FindGameObject<House>();
-            if (_lookingFor.ToList().Count == 0)
-            {
-                print(_lookingFor.ToList().Count + "s" + __lookingFor.Count);
-                _lookingFor.Add(workplace);
-            }
-            _navMesh.SetDestination(_lookingFor.FirstOrDefault()!.transform.position);
-            __lookingFor = _lookingFor.ToList();
+            else if (sleep <= 0) FindGameObject<House>();
+            else if (lookingFor == null) _navMesh.SetDestination(workplace.transform.position);
         }
 
-        //removes item from lookingFor list, triggering OnLookingForChanged
-        public void RemoveFromLookingFor(GameObject gm) => _lookingFor.Remove(gm);
+        public GameObject GetLookingFor() => lookingFor;
 
-        public IEnumerable<GameObject> GetLookingFor() => _lookingFor;
-
-        //returns nearest object of type T
+        //returns nearest object of type T and adds it to the lookingFor
         public void FindGameObject<T>() where T : CustomObject
         {
-            if (!HasGameObject<T>())
-                _lookingFor.Add(FindObjectsOfType<T>()
+            try
+            {
+                lookingFor = FindObjectsOfType<T>()
                     .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                    .ToList().DefaultIfEmpty(workplace.GetComponent<CustomObject>())
-                    .First().gameObject);
-                    
-        }
+                    .ToList().FirstOrDefault()!.gameObject;
+            }
+            catch {}
 
-        //returns true if gameobject of type <T> is in the lookingFor list 
-        public bool HasGameObject<T>()
-        {
-            return _lookingFor.Count(x => x.GetComponent<T>() is not null) != 0;
+            //goes to workplace
+            if (lookingFor != null) _navMesh.SetDestination(lookingFor.transform.position);
         }
 
         public int GetWater() => water;
@@ -101,7 +85,7 @@ namespace Assets.Scripts
 
         public Gender GetGender() => gender;
 
-        public void SetJob(GameObject workplace)
+        public void SetWorkspace(GameObject workplace)
         {
             //sets job, event signal from Building
         }
