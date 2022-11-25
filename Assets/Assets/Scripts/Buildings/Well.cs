@@ -8,6 +8,8 @@ namespace Assets.Scripts
         {
             entity.RefillWater();
             await entity.Stop(2000);
+            //todo a) po stromech bude kvůli reforestaci zůstavat empty object
+            //     b) budou se spawnovat náhodně vedle sebe
         }
     }
 }

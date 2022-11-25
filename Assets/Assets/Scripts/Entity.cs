@@ -35,41 +35,39 @@ namespace Assets.Scripts
             gender = Utils.GenerateGender();
             name = Utils.GenerateName(gender);
             //todo rewrite to spawn
-            workplace = FindObjectsOfType<Woodcutter>()
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .ToList().First().gameObject;
+            workplace = FindNearestObject<Woodcutter>();
+            house = FindNearestObject<House>();
 
-            FindGameObject<Well>();
+            ChangeLookingFor();
         }
 
         //updates tasks the entity has to do
         public void ChangeLookingFor()
         {
             lookingFor = null;
-            if (water <= 0) FindGameObject<Well>();
+            if (water <= 0) SetDestination(FindNearestObject<Well>());
             //TODO owning a house
-            else if (sleep <= 0) FindGameObject<House>();
-            else if (lookingFor == null) SetDestination(workplace);
+            else if (sleep <= 0) SetDestination(house);
+            else if (lookingFor == null) SetDestination(workplace); //todo Work()
         }
 
         public GameObject GetLookingFor() => lookingFor;
 
         //returns nearest object of type T and adds it to the lookingFor
-        public void FindGameObject<T>() where T : CustomObject
+        public GameObject FindNearestObject<T>() where T : CustomObject
         {
             try
             {
-                lookingFor = FindObjectsOfType<T>()
+                return FindObjectsOfType<T>()
                     .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
                     .ToList().FirstOrDefault()!.gameObject;
             }
             catch {}
 
-            //goes to workplace
-            if (lookingFor != null) SetDestination(lookingFor);
+            return null;
         }
 
-        //sets destination and adds it to the lookingFor
+        //sets destination and adds it to the lookingFor, if null it finds workspace/spawn
         public void SetDestination(GameObject gm)
         {
             if (gm != null)
@@ -82,6 +80,13 @@ namespace Assets.Scripts
             gm = workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
             _navMesh.SetDestination(gm.transform.position);
             lookingFor = null;
+        }
+
+        public void Work()
+        {
+            //z nějakýho listu workspacu zjistit kam chodit a co tam dělat
+            //pracovat dokud se nenaplní inventář/nedojdou fyz. potřeby
+            //po naplnění vyprázdnit ve worksapce, případně v přidruženém skladu
         }
 
         public void FindHouse()
