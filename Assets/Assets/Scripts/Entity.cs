@@ -49,7 +49,7 @@ namespace Assets.Scripts
             if (water <= 0) FindGameObject<Well>();
             //TODO owning a house
             else if (sleep <= 0) FindGameObject<House>();
-            else if (lookingFor == null) _navMesh.SetDestination(workplace.transform.position);
+            else if (lookingFor == null) SetDestination(workplace);
         }
 
         public GameObject GetLookingFor() => lookingFor;
@@ -66,7 +66,32 @@ namespace Assets.Scripts
             catch {}
 
             //goes to workplace
-            if (lookingFor != null) _navMesh.SetDestination(lookingFor.transform.position);
+            if (lookingFor != null) SetDestination(lookingFor);
+        }
+
+        //sets destination and adds it to the lookingFor
+        public void SetDestination(GameObject gm)
+        {
+            if (gm != null)
+            {
+                _navMesh.SetDestination(gm.transform.position);
+                lookingFor = gm;
+                return;
+            }
+
+            gm = workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
+            _navMesh.SetDestination(gm.transform.position);
+            lookingFor = null;
+        }
+
+        public void FindHouse()
+        {
+            var houses = FindObjectsOfType<House>().ToList().Where(x => x.GetComponent<House>().HasFreeRoom());
+            if (!houses.Any())
+            {
+                //todo postavit dům
+            }
+
         }
 
         public int GetWater() => water;

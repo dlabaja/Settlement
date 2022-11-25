@@ -15,11 +15,5 @@ namespace Assets.Scripts
         }
         
         public static void SetGlobalInventoryText(string s) => _globalInventory.text = s;
-        
-        /*foreach (var obj in FindObjectsOfType<CustomObject>())
-            {
-                foreach (var item in obj.GetInventory())
-                    UpdateGlobalInventory(item);
-            }*/
     }
 }

@@ -2,36 +2,28 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Assets.Scripts.Interfaces;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Assets.Scripts.Buildings
 {
     public class House : Building, ICollideable
     {
-        public int capacity;
-        private readonly ObservableCollection<Entity> _occupants = new();
+        [SerializeField] private int capacity;
+        [SerializeField] private List<Entity> inhabitants = new();
 
         private void Start()
         {
-            _occupants.CollectionChanged += OnNewRoom;
         }
+
+        public bool HasFreeRoom() => capacity - inhabitants.Count != 0;
+        
 
         public async void OnCollision(Entity entity)
         {
             await entity.Stop(1000);
             entity.RefillSleep();
         }
-
-        private void OnNewRoom(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            NewRoom?.Invoke(this, gameObject);
-        }
-
-        public int GetOccupantsCount()
-        {
-            return _occupants.Count;
-        }
-
-        public static event EventHandler<GameObject> NewRoom;
     }
 }
