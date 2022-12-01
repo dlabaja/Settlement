@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace Assets.Scripts.Interfaces
 {
     public interface ICollideable
     {
-        public void OnCollision(Entity entity);
+        public Task OnCollision(Entity entity);
     }
 }

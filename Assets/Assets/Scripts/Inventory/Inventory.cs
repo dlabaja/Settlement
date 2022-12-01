@@ -9,6 +9,7 @@ namespace Assets.Scripts.Inventory
     public class Inventory : MonoBehaviour
     {
         [SerializeField] private int slots = 1;
+        private const int stackSize = 10;
         private Dictionary<Item, int> _inventory = new();
         [SerializeField] private List<Item> pickupableItems = new();
         [SerializeField] private List<Item> _itemy = new();
@@ -43,7 +44,7 @@ namespace Assets.Scripts.Inventory
         public int GetItemCount(Item item) => _inventory.GetValueOrDefault(item, 0);
 
         //returns max space for specific item
-        private int GetMaxItemRoom(Item item) => GetFreeSlots() * 100 + _inventory.GetValueOrDefault(item, 0);
+        private int GetMaxItemRoom(Item item) => GetFreeSlots() * stackSize + _inventory.GetValueOrDefault(item, 0);
 
         //returns slot unoccupied with items
         private int GetFreeSlots()
@@ -56,6 +57,8 @@ namespace Assets.Scripts.Inventory
 
             return value;
         }
+
+        public bool IsFull() => GetFreeSlots() == 0;
 
         //transfers items from sender (gameobject) to receiver
         public void TransferItems(GameObject receiver, Item item, int count)

@@ -11,7 +11,7 @@ namespace Assets.Scripts
             Spawn,
             Woodcutter,
             House,
-            Church
+            Tree
         }
 
         public enum Gender

@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3700236318666827969}
   - component: {fileID: 5385276125867530948}
+  - component: {fileID: 5231295192152510811}
   - component: {fileID: 2909677475992747848}
   - component: {fileID: 8336027199385722502}
   - component: {fileID: 8909119714183288814}
   - component: {fileID: 9103892792690696800}
   - component: {fileID: 1994113447328415659}
-  - component: {fileID: 5231295192152510811}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Entity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,25 @@ MonoBehaviour:
   water: 0
   sleep: 0
   workplace: {fileID: 0}
-  __lookingFor: []
+  house: {fileID: 0}
+  lookingFor: {fileID: 0}
+--- !u!114 &5231295192152510811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6794000756038210647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe88a21745994c0682ca23e08b79f132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: 1
+  pickupableItems: 
+  _itemy: 
+  _hodnoty: 
+  iinventory: 
 --- !u!33 &2909677475992747848
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -157,19 +175,3 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5231295192152510811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6794000756038210647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe88a21745994c0682ca23e08b79f132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots: 1
-  _itemy: 
-  _hodnoty: 
-  iinventory: 

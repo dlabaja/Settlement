@@ -3,7 +3,7 @@ using System.Linq;
 using Assets.Scripts.Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Buildings
 {
     public class Building : CustomObject
     {

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Assets.Scripts.Interfaces;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -20,7 +21,7 @@ namespace Assets.Scripts.Buildings
         public bool HasFreeRoom() => capacity - inhabitants.Count != 0;
         
 
-        public async void OnCollision(Entity entity)
+        public async Task OnCollision(Entity entity)
         {
             await entity.Stop(1000);
             entity.RefillSleep();

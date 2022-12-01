@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3014854604322073308}
   - component: {fileID: -4318074575190052911}
+  - component: {fileID: 9029656768288993032}
   - component: {fileID: 4094131659973612557}
   - component: {fileID: 500596580310754424}
   - component: {fileID: 3704600454974111776}
   - component: {fileID: -5066669166133138723}
-  - component: {fileID: 9029656768288993032}
   m_Layer: 0
   m_Name: Woodcutter
   m_TagString: Untagged
@@ -49,7 +49,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32bf846fdef79cee95f8c7b70391f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupableItems: 01000000
+  workObjects: 5
+--- !u!114 &9029656768288993032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3526459843486528791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe88a21745994c0682ca23e08b79f132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slots: 1
+  pickupableItems: 
+  _itemy: 
+  _hodnoty: 
+  iinventory: 
 --- !u!33 &4094131659973612557
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -130,18 +147,3 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &9029656768288993032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3526459843486528791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe88a21745994c0682ca23e08b79f132, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slots: 1
-  _itemy: 
-  _hodnoty: 

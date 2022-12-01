@@ -1,15 +1,16 @@
 using Assets.Scripts.Interfaces;
+using System.Threading.Tasks;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Buildings
 {
     public class Well : Building, ICollideable
     {
-        public async void OnCollision(Entity entity)
+        public async Task OnCollision(Entity entity)
         {
             entity.RefillWater();
             await entity.Stop(2000);
             //todo a) po stromech bude kvůli reforestaci zůstavat empty object
-            //     b) budou se spawnovat náhodně vedle sebe
+            //todo b) budou se spawnovat náhodně vedle sebe
         }
     }
 }

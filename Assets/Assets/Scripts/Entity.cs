@@ -1,3 +1,5 @@
+using Assets.Scripts.Buildings;
+using Assets.Scripts.Buildings.Workplace;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -5,7 +7,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
-using Assets.Scripts.Buildings;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AI;
 using static Assets.Scripts.Const;
@@ -48,7 +50,7 @@ namespace Assets.Scripts
             if (water <= 0) SetDestination(FindNearestObject<Well>());
             //TODO owning a house
             else if (sleep <= 0) SetDestination(house);
-            else if (lookingFor == null) SetDestination(workplace); //todo Work()
+            else if (lookingFor == null) Work();
         }
 
         public GameObject GetLookingFor() => lookingFor;
@@ -67,27 +69,57 @@ namespace Assets.Scripts
             return null;
         }
 
+        //parses CustomObject enum to list of CustomObjects and returns its second or first item  
+        public GameObject FindNearestObject(Const.CustomObject type)
+        {
+            var s = FindObjectsOfType(Type.GetType("Assets.Scripts.Buildings." + type))
+                .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
+                .ToList();
+            try
+            {
+                return (s[1] as CustomObject)?.gameObject;
+            }
+            catch
+            {
+                return WorkplaceOrDefault();
+            }
+
+        }
+
         //sets destination and adds it to the lookingFor, if null it finds workspace/spawn
         public void SetDestination(GameObject gm)
         {
-            if (gm != null)
+            if (gm == null)
             {
-                _navMesh.SetDestination(gm.transform.position);
-                lookingFor = gm;
+                SetDestination(WorkplaceOrDefault());
                 return;
             }
 
-            gm = workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
             _navMesh.SetDestination(gm.transform.position);
-            lookingFor = null;
+            lookingFor = gm;
         }
 
+        //works until inventory is full, then finds workplace
         public void Work()
         {
+            //if workspace == null
+            var workObjects = workplace.GetComponent<Workplace>().GetWorkObjects();
+            var inventory = gameObject.GetComponent<Inventory.Inventory>();
+
+            if (inventory.IsFull())
+            {
+                SetDestination(WorkplaceOrDefault()); //todo vyprázdnit do skladu
+                return;
+            }
+
+            SetDestination(FindNearestObject(workObjects));
+
             //z nějakýho listu workspacu zjistit kam chodit a co tam dělat
             //pracovat dokud se nenaplní inventář/nedojdou fyz. potřeby
             //po naplnění vyprázdnit ve worksapce, případně v přidruženém skladu
         }
+
+        public GameObject WorkplaceOrDefault() => workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
 
         public void FindHouse()
         {
@@ -115,7 +147,7 @@ namespace Assets.Scripts
 
         public Gender GetGender() => gender;
 
-        public void SetWorkspace(GameObject workplace)
+        public void SetWorkplace(GameObject workplace)
         {
             //sets job, event signal from Building
         }
