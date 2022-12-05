@@ -27,6 +27,7 @@ namespace Assets.Scripts.Inventory
         //TODO only temporary for debug
         [SerializeField] private string iinventory;
 
+        //todo temporary
         private void FixedUpdate()
         {
             var str = "";

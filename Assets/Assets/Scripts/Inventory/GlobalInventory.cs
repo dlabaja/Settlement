@@ -18,7 +18,7 @@ namespace Assets.Scripts.Inventory
         private void OnceASecUpdate()
         {
             UpdateGlobalInventory();
-            Gui.SetGlobalInventoryText(Utils.DictToString(_globalInventory));
+            Hud.SetGlobalInventoryText(Utils.DictToString(_globalInventory));
         }
 
         private static void UpdateGlobalInventory()

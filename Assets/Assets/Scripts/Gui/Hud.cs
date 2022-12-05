@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class Gui : MonoBehaviour
+    public class Hud : MonoBehaviour
     {
         private static TMP_Text _globalInventory;
 

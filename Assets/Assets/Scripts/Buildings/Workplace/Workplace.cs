@@ -8,8 +8,8 @@ namespace Assets.Scripts.Buildings.Workplace
     public class Workplace : Building
     {
         //objects the entity has to meet (eg tree for woodcutter job)
-        [SerializeField] private Const.CustomObject workObjects;
+        [SerializeField] private Const.CustomObjects workObjects;
 
-        public Const.CustomObject GetWorkObjects() => workObjects;
+        public Const.CustomObjects GetWorkObjects() => workObjects;
     }
 }

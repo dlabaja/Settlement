@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
     public static class Const
     {
-        public enum CustomObject
+        public enum CustomObjects
         {
             Entity,
             Well,
@@ -12,6 +12,18 @@ namespace Assets.Scripts
             Woodcutter,
             House,
             Tree
+        }
+
+        public enum Buildings
+        {
+            Tree,
+            Well,
+            House
+        }
+
+        public enum Workplaces
+        {
+            Woodcutter
         }
 
         public enum Gender
@@ -29,7 +41,8 @@ namespace Assets.Scripts
         public enum Parent
         {
             Entities,
-            Buildings
+            Buildings,
+            Canvas
         }
 
         public enum Job

@@ -7,7 +7,7 @@ namespace Assets.Scripts.Buildings.Workplace
     {
         public async Task OnCollision(Entity entity)
         {
-            await entity.Stop(2000);
+            await Task.Delay(2000);
             //entity.SetDestination(entity.FindNearestObject<Tree>());
         }
     }

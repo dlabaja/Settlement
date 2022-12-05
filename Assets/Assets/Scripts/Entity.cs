@@ -23,12 +23,29 @@ namespace Assets.Scripts
         [SerializeField] private int water;
         [SerializeField] private int sleep;
 
-        //todo zaměstnanci
+        //todo zaměstnanci + serializeInGui
         [SerializeField] private GameObject workplace;
 
         [SerializeField] private GameObject house;
         [SerializeField] private GameObject lookingFor;
         private NavMeshAgent _navMesh;
+
+        //todo serialize in gui
+        public GameObject Workplace
+        {
+            get => workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
+            private set
+            {
+                workplace = value;
+                if (workplace == null)
+                {
+                    workplace = Workplace;
+                    SetDestination(Workplace);
+                    return;
+                }
+                Work();
+            }
+        }
 
         private void Start()
         {
@@ -37,7 +54,7 @@ namespace Assets.Scripts
             gender = Utils.GenerateGender();
             name = Utils.GenerateName(gender);
             //todo rewrite to spawn
-            workplace = FindNearestObject<Woodcutter>();
+            Workplace = FindNearestObject<Woodcutter>();
             house = FindNearestObject<House>();
 
             ChangeLookingFor();
@@ -70,7 +87,7 @@ namespace Assets.Scripts
         }
 
         //parses CustomObject enum to list of CustomObjects and returns its second or first item  
-        public GameObject FindNearestObject(Const.CustomObject type)
+        public GameObject FindNearestObject(Const.CustomObjects type)
         {
             var s = FindObjectsOfType(Type.GetType("Assets.Scripts.Buildings." + type))
                 .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
@@ -81,7 +98,7 @@ namespace Assets.Scripts
             }
             catch
             {
-                return WorkplaceOrDefault();
+                return Workplace;
             }
 
         }
@@ -91,7 +108,7 @@ namespace Assets.Scripts
         {
             if (gm == null)
             {
-                SetDestination(WorkplaceOrDefault());
+                SetDestination(Workplace);
                 return;
             }
 
@@ -102,13 +119,12 @@ namespace Assets.Scripts
         //works until inventory is full, then finds workplace
         public void Work()
         {
-            //if workspace == null
-            var workObjects = workplace.GetComponent<Workplace>().GetWorkObjects();
+            var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
             var inventory = gameObject.GetComponent<Inventory.Inventory>();
 
             if (inventory.IsFull())
             {
-                SetDestination(WorkplaceOrDefault()); //todo vyprázdnit do skladu
+                SetDestination(Workplace); //todo vyprázdnit do skladu
                 return;
             }
 
@@ -119,11 +135,9 @@ namespace Assets.Scripts
             //po naplnění vyprázdnit ve worksapce, případně v přidruženém skladu
         }
 
-        public GameObject WorkplaceOrDefault() => workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
-
         public void FindHouse()
         {
-            var houses = FindObjectsOfType<House>().ToList().Where(x => x.GetComponent<House>().HasFreeRoom());
+            var houses = FindObjectsOfType<House>().Where(x => x.GetComponent<House>().HasFreeRoom());
             if (!houses.Any())
             {
                 //todo postavit dům
@@ -146,13 +160,7 @@ namespace Assets.Scripts
         public string GetName() => name;
 
         public Gender GetGender() => gender;
-
-        public void SetWorkplace(GameObject workplace)
-        {
-            //sets job, event signal from Building
-        }
-
-        public GameObject GetWorkplace => workplace;
+        
 
         public async Task Stop(int millis)
         {

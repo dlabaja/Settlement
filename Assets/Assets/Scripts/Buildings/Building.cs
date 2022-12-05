@@ -18,7 +18,7 @@ namespace Assets.Scripts.Buildings
             var entity = collider.gameObject.GetComponent<Entity>();
             //entity has building in lookingFor OR the lookingFor is empty and the building is its workspace
             if (entity.GetLookingFor() == gameObject ||
-                entity.GetLookingFor() == null && entity.GetWorkplace == gameObject)
+                entity.GetLookingFor() == null && entity.Workplace == gameObject)
             {
                 entity.ChangeLookingFor();
                 GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());

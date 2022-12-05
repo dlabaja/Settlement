@@ -1,3 +1,4 @@
+using Assets.Scripts.Gui;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ namespace Assets.Scripts.Keystrokes
         [SerializeField] private float cameraSpeed;
         [SerializeField] private float zoomSpeed;
         private InputAction _cameraDrag;
+        private InputAction _mouseClick;
         private InputAction _cameraMovement;
         private global::Keystrokes _keystrokes;
         private bool _rightClickPressed;
@@ -19,6 +21,27 @@ namespace Assets.Scripts.Keystrokes
             //init input system
             _keystrokes = new global::Keystrokes();
             _rigidbody = gameObject.GetComponent<Rigidbody>();
+            EnableMouse();
+            EnableCamera();
+        }
+
+        private void EnableMouse()
+        {
+            _mouseClick = _keystrokes.Mouse.Click;
+            _keystrokes.Mouse.Click.performed += OnMouseClicked;
+            _mouseClick.Enable();
+        }
+
+        private void EnableCamera()
+        {
+            //enabling input system, hooking events
+            _cameraMovement = _keystrokes.Camera.Movement;
+            _cameraMovement.Enable();
+
+            _cameraDrag = _keystrokes.Camera.Drag;
+            _keystrokes.Camera.Drag.performed += OnRightClick;
+            _keystrokes.Camera.Drag.canceled += OnNotRightClick;
+            _cameraDrag.Enable();
         }
 
         private void FixedUpdate()
@@ -50,26 +73,14 @@ namespace Assets.Scripts.Keystrokes
             }
         }
 
-        private void OnEnable()
+        void OnMouseClicked(InputAction.CallbackContext obj)
         {
-            EnableCamera();
-        }
-
-        private void OnDisable()
-        {
-            DisableCamera();
-        }
-
-        private void EnableCamera()
-        {
-            //enabling input system, hooking events
-            _cameraMovement = _keystrokes.Camera.Movement;
-            _cameraMovement.Enable();
-
-            _cameraDrag = _keystrokes.Camera.Drag;
-            _keystrokes.Camera.Drag.performed += OnRightClick;
-            _keystrokes.Camera.Drag.canceled += OnNotRightClick;
-            _cameraDrag.Enable();
+            Ray ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                Stats.DrawStats(hit.collider.gameObject);
+            }
+            //todo pokud je to terén/nezařazeno zavři všechny okna
         }
 
         private void OnNotRightClick(InputAction.CallbackContext obj)
@@ -80,15 +91,6 @@ namespace Assets.Scripts.Keystrokes
         private void OnRightClick(InputAction.CallbackContext obj)
         {
             _rightClickPressed = true;
-        }
-
-        private void DisableCamera()
-        {
-            //disabling input system
-            _cameraMovement.Disable();
-
-            _cameraDrag.performed -= OnRightClick;
-            _cameraDrag.Disable();
         }
     }
 }

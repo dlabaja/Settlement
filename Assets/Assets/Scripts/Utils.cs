@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
@@ -48,10 +49,10 @@ namespace Assets.Scripts
             return typeof(T) == typeof(Entity) ? Const.Parent.Entities : Const.Parent.Buildings;
         }
 
-        public static GameObject LoadGameObject(string prefabName, string parentName)
+        public static GameObject LoadGameObject(string prefabName, Const.Parent parentName)
         {
             return Object.Instantiate(Resources.Load(prefabName, typeof(GameObject)),
-                GameObject.Find(parentName).transform) as GameObject;
+                GameObject.Find(parentName.ToString()).transform) as GameObject;
         }
 
         public static bool HasComponent<T>(GameObject gm)
