@@ -1,4 +1,5 @@
 using Assets.Scripts.Gui;
+using Assets.Scripts.Gui.Stats;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
