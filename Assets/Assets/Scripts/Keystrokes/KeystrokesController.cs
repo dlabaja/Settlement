@@ -1,5 +1,6 @@
 using Assets.Scripts.Gui;
 using Assets.Scripts.Gui.Stats;
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -79,7 +80,8 @@ namespace Assets.Scripts.Keystrokes
             Ray ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Stats.DrawStats(hit.collider.gameObject);
+                if (hit.collider.gameObject.HasComponent<IStats>())
+                    hit.collider.gameObject.GetComponent<IStats>().DrawStats();
             }
             //todo pokud je to terén/nezařazeno zavři všechny okna
         }

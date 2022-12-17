@@ -1,6 +1,9 @@
 using Assets.Scripts.Buildings;
 using Assets.Scripts.Buildings.Workplace;
+using Assets.Scripts.Gui.Stats;
+using Assets.Scripts.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -16,7 +19,7 @@ using UnityEngine.Serialization;
 
 namespace Assets.Scripts
 {
-    public class Entity : CustomObject
+    public class Entity : CustomObject, IStats
     {
         [SerializeField] private new string name;
         [SerializeField] private Gender gender;
@@ -142,7 +145,12 @@ namespace Assets.Scripts
             {
                 //todo postavit dům
             }
-
+        }
+        
+        public void DrawStats()
+        {
+            var gm = Utils.LoadGameObject("StatsEntity", Const.Parent.Canvas);
+            var drawEntityStats = StartCoroutine(gm.GetComponent<Stats>().DrawEntityStats(gameObject.GetComponent<Entity>()));
         }
 
         public int GetWater() => water;

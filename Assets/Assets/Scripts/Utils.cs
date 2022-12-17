@@ -55,7 +55,7 @@ namespace Assets.Scripts
                 GameObject.Find(parentName.ToString()).transform) as GameObject;
         }
 
-        public static bool HasComponent<T>(GameObject gm)
+        public static bool HasComponent<T>(this GameObject gm)
         {
             return gm.GetComponent<T>() is not null;
         }
