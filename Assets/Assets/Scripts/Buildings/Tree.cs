@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Buildings
 {
-    public class Tree : Building, ICollideable, IGlobalInventoryBlacklist
+    public class Tree : Building, ICollideable, IIgnoreGlobalInventory
     {
         public async Task OnCollision(Entity entity)
         {

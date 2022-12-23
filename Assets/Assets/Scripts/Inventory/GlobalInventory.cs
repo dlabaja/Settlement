@@ -27,13 +27,13 @@ namespace Assets.Scripts.Inventory
             foreach (var item in customObjects) //all object inventories
             {
                 var gm = item.gameObject;
-                if (!Utils.HasComponent<IGlobalInventoryBlacklist>(gm) && Utils.HasComponent<Inventory>(gm)) //has inventory and isn't blacklisted
+                if (gm.HasComponent<IIgnoreGlobalInventory>() || !gm.HasComponent<Inventory>()) return; //has inventory and isn't blacklisted
+
+                foreach (var i in gm.GetComponent<Inventory>().GetInventory()) //all items in object inventory
                 {
-                    foreach (var i in gm.GetComponent<Inventory>().GetInventory()) //all items in object inventory
-                    {
-                        UpsertGlobalInventory(i.Key, i.Value);
-                    }
+                    UpsertGlobalInventory(i.Key, i.Value);
                 }
+
             }
         }
 

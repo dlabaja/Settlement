@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 namespace Assets.Scripts.Buildings.Workplace
 {
-    public class Workplace : Building, IStats
+    public class Workplace : Building
     {
         //objects the entity has to meet (eg tree for woodcutter job)
         [SerializeField] private Const.CustomObjects workObjects;

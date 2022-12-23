@@ -16,10 +16,11 @@ using UnityEngine.AI;
 using static Assets.Scripts.Const;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Serialization;
+using Stats = Assets.Scripts.Gui.Stats.Stats;
 
 namespace Assets.Scripts
 {
-    public class Entity : CustomObject, IStats
+    public class Entity : CustomObject
     {
         [SerializeField] private new string name;
         [SerializeField] private Gender gender;
@@ -46,6 +47,7 @@ namespace Assets.Scripts
                     SetDestination(Workplace);
                     return;
                 }
+
                 Work();
             }
         }
@@ -146,12 +148,6 @@ namespace Assets.Scripts
                 //todo postavit dům
             }
         }
-        
-        public void DrawStats()
-        {
-            var gm = Utils.LoadGameObject("StatsEntity", Const.Parent.Canvas);
-            var drawEntityStats = StartCoroutine(gm.GetComponent<Stats>().DrawEntityStats(gameObject.GetComponent<Entity>()));
-        }
 
         public int GetWater() => water;
 
@@ -168,7 +164,7 @@ namespace Assets.Scripts
         public string GetName() => name;
 
         public Gender GetGender() => gender;
-        
+
 
         public async Task Stop(int millis)
         {

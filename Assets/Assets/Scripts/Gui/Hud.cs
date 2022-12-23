@@ -11,7 +11,8 @@ namespace Assets.Scripts
 
         private void Start()
         {
-            _globalInventory = FindObjectsOfType<TMP_Text>().FirstOrDefault(x => x.name == "globalInventory");
+            _globalInventory = FindObjectsOfType<TMP_Text>().
+                FirstOrDefault(x => x.name == "globalInventory");
         }
         
         public static void SetGlobalInventoryText(string s) => _globalInventory.text = s;

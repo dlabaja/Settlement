@@ -80,8 +80,7 @@ namespace Assets.Scripts.Keystrokes
             Ray ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                if (hit.collider.gameObject.HasComponent<IStats>())
-                    hit.collider.gameObject.GetComponent<IStats>().DrawStats();
+                Stats.GenerateStats(hit.collider.gameObject);
             }
             //todo pokud je to terén/nezařazeno zavři všechny okna
         }

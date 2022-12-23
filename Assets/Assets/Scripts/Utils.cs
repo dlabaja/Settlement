@@ -49,9 +49,9 @@ namespace Assets.Scripts
             return typeof(T) == typeof(Entity) ? Const.Parent.Entities : Const.Parent.Buildings;
         }
 
-        public static GameObject LoadGameObject(string prefabName, Const.Parent parentName)
+        public static GameObject LoadGameObject(string path, Const.Parent parentName)
         {
-            return Object.Instantiate(Resources.Load(prefabName, typeof(GameObject)),
+            return Object.Instantiate(Resources.Load(path, typeof(GameObject)),
                 GameObject.Find(parentName.ToString()).transform) as GameObject;
         }
 
