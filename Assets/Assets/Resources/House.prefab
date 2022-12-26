@@ -47,10 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc88a58b1199a69888eb8f454f8ba829, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSlotLimit: 0
-  _inventory: []
-  pickupableItems: 
   capacity: 0
+  inhabitants: []
 --- !u!33 &2181164950543358906
 MeshFilter:
   m_ObjectHideFlags: 0

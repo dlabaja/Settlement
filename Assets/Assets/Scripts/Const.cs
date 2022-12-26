@@ -4,13 +4,6 @@ namespace Assets.Scripts
 {
     public static class Const
     {
-        public enum Stats
-        {
-            Entity,
-            Stats
-            
-        }
-        
         public enum CustomObjects
         {
             Entity,

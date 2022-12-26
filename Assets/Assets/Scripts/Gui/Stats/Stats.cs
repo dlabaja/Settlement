@@ -4,16 +4,21 @@ using UnityEngine;
 using Assets.Scripts.Gui.Stats;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Stats
 {
     public class Stats : MonoBehaviour
     {
+        private GameObject _sender;
+        public GameObject GetSender() => _sender;
         private void Awake()
         {
             var ui = gameObject.GetComponent<RectTransform>();
@@ -24,6 +29,7 @@ namespace Assets.Scripts.Gui.Stats
 
         public static void GenerateStats(GameObject gm)
         {
+            if(CheckDuplicates(gm)) return; //only one stat per gameobject
             if (gm.HasComponent<Entity>())
             {
                 Utils.LoadGameObject("Stats/Entity", Const.Parent.Canvas)
@@ -35,6 +41,15 @@ namespace Assets.Scripts.Gui.Stats
                 print("workplace stats");
         }
 
-        public void CloseStats() => Destroy(gameObject);
+        public static bool CheckDuplicates(GameObject gm)
+        {
+            return FindObjectsOfType<Stats>().Select(x => x.GetSender() == gm).ToList().Count != 0;
+        }
+
+        //todo neotvírat pokud už objekt má
+        public void CloseStats()
+        {
+            Destroy(gameObject);
+        }
     }
 }
