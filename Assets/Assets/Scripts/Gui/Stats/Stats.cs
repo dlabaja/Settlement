@@ -15,7 +15,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Gui.Stats
 {
-    public class Stats : MonoBehaviour
+    public class Stats : Window
     {
         private GameObject _sender;
         public GameObject GetSender() => _sender;
@@ -41,15 +41,9 @@ namespace Assets.Scripts.Gui.Stats
                 print("workplace stats");
         }
 
-        public static bool CheckDuplicates(GameObject gm)
-        {
-            return FindObjectsOfType<Stats>().Select(x => x.GetSender() == gm).ToList().Count != 0;
-        }
-
-        //todo neotvírat pokud už objekt má
-        public void CloseStats()
-        {
-            Destroy(gameObject);
-        }
+        public static bool CheckDuplicates(GameObject gm) => 
+            FindObjectsOfType<Stats>()
+            .Select(x => x.GetSender() == gm)
+            .ToList().Count != 0;
     }
 }

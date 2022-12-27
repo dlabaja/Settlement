@@ -1,17 +1,18 @@
 using System;
 using System.Linq;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class Hud : MonoBehaviour
     {
-        private static TMP_Text _globalInventory;
+        //todo přepsat
+        private static Text _globalInventory;
 
         private void Start()
         {
-            _globalInventory = FindObjectsOfType<TMP_Text>().
+            _globalInventory = FindObjectsOfType<Text>().
                 FirstOrDefault(x => x.name == "globalInventory");
         }
         

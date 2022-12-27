@@ -37,7 +37,7 @@ namespace Assets.Scripts
         //todo serialize in gui
         public GameObject Workplace
         {
-            get => workplace ? workplace : FindObjectOfType<Spawn>().gameObject;
+            get { return workplace ? workplace : FindObjectOfType<Spawn>().gameObject; }
             private set
             {
                 workplace = value;
