@@ -21,7 +21,8 @@ namespace Assets.Scripts.Buildings
                 entity.GetLookingFor() == null && entity.Workplace == gameObject)
             {
                 entity.ChangeLookingFor();
-                GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>()); //todo chyba
+                if (gameObject.HasComponent<ICollideable>())
+                    GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
             }
         }
     }

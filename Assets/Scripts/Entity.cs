@@ -41,13 +41,6 @@ namespace Assets.Scripts
             set
             {
                 workplace = value;
-                if (workplace == null)
-                {
-                    workplace = Workplace;
-                    SetDestination(Workplace);
-                    return;
-                }
-
                 Work();
             }
         }
@@ -122,24 +115,23 @@ namespace Assets.Scripts
         //works until inventory is full, then finds workplace
         public void Work()
         {
-            try
-            {
-                var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
-                var inventory = gameObject.GetComponent<Inventory.Inventory>();
 
-                if (inventory.IsFull())
-                {
-                    SetDestination(Workplace); //todo vyprázdnit do skladu
-                    return;
-                }
-
-                SetDestination(FindNearestObject(workObjects));
-            }
-            catch
+            if (Workplace.HasComponent<Spawn>())
             {
                 SetDestination(GameObject.Find("Spawn"));
+                return;
             }
-            
+
+            var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
+            var inventory = gameObject.GetComponent<Inventory.Inventory>();
+
+            if (inventory.IsFull())
+            {
+                SetDestination(Workplace); //todo vyprázdnit do skladu
+                return;
+            }
+
+            SetDestination(FindNearestObject(workObjects));
             //z nějakýho listu workspacu zjistit kam chodit a co tam dělat
             //pracovat dokud se nenaplní inventář/nedojdou fyz. potřeby
             //po naplnění vyprázdnit ve worksapce, případně v přidruženém skladu
@@ -177,4 +169,5 @@ namespace Assets.Scripts
             _navMesh.isStopped = false;
         }
     }
+
 }

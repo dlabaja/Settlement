@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = System.Random;
 
 namespace Assets.Scripts
@@ -60,14 +57,22 @@ namespace Assets.Scripts
             return gm.GetComponent<T>() is not null;
         }
 
-        public static GameObject StringToGameObject(string name, List<GameObject> list)
+        public static IEnumerator SlerpMove(Transform source, Vector3 posToMove)
         {
-            foreach (var item in list)
+            while (Vector3Int.RoundToInt(source.position) != Vector3Int.RoundToInt(posToMove))
             {
-                if (item.ToString() == name) return item;
+                source.position = Vector3.Slerp(source.position, posToMove, 0.02f);
+                yield return new WaitForEndOfFrame();
             }
+        }
 
-            return null;
+        public static IEnumerator SlerpRotation(Transform source, Quaternion rotToMove)
+        {
+            while(source.rotation != rotToMove)
+            {
+                source.rotation = Quaternion.Slerp(source.rotation, rotToMove, 0.02f);
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }

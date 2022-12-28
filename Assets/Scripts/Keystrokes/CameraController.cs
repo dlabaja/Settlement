@@ -11,6 +11,7 @@ namespace Assets.Scripts.Keystrokes
         [SerializeField] private float zoomSpeed;
         private InputAction _cameraDrag;
         private InputAction _cameraMovement;
+
         public void Start()
         {
             _cameraMovement = _keystrokes.Camera.Movement;
@@ -19,7 +20,11 @@ namespace Assets.Scripts.Keystrokes
             _cameraDrag = _keystrokes.Camera.Drag;
             _cameraDrag.Enable();
         }
-        
+
+        public float GetCameraDragSpeed() => cameraDragSpeed;
+        public float GetCameraSpeed() => cameraSpeed;
+        public float GetZoomSpeed() => zoomSpeed;
+
         public void CameraZoom()
         {
             var invert = 1;
@@ -30,7 +35,7 @@ namespace Assets.Scripts.Keystrokes
             _rigidbody.AddRelativeForce(Vector3.Normalize(Vector3.forward * (Time.deltaTime * zoomSpeed * Mouse.current.scroll.ReadValue().y * invert)),
                 ForceMode.Force);
         }
-        
+
         public void CameraDrag()
         {
             var x = Mouse.current.delta.x.ReadValue() * cameraDragSpeed;
@@ -42,7 +47,7 @@ namespace Assets.Scripts.Keystrokes
                 Vector3.Lerp(eulerAngles, eulerAngles + new Vector3(-y, x, 0), 2f);
             transform.eulerAngles = eulerAngles;
         }
-        
+
         public void CameraMovement()
         {
             var movement = _cameraMovement.ReadValue<Vector3>() * cameraSpeed;

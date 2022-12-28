@@ -15,10 +15,6 @@ namespace Assets.Scripts.Buildings
         [SerializeField] private int capacity;
         [SerializeField] private List<Entity> inhabitants = new();
 
-        private void Start()
-        {
-        }
-
         public bool HasFreeRoom() => capacity - inhabitants.Count != 0;
         
         public async Task OnCollision(Entity entity)
