@@ -59,5 +59,15 @@ namespace Assets.Scripts
         {
             return gm.GetComponent<T>() is not null;
         }
+
+        public static GameObject StringToGameObject(string name, List<GameObject> list)
+        {
+            foreach (var item in list)
+            {
+                if (item.ToString() == name) return item;
+            }
+
+            return null;
+        }
     }
 }

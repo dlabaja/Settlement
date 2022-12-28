@@ -38,7 +38,7 @@ namespace Assets.Scripts
         public GameObject Workplace
         {
             get { return workplace ? workplace : FindObjectOfType<Spawn>().gameObject; }
-            private set
+            set
             {
                 workplace = value;
                 if (workplace == null)
@@ -58,8 +58,6 @@ namespace Assets.Scripts
 
             gender = Utils.GenerateGender();
             name = Utils.GenerateName(gender);
-            //todo rewrite to spawn
-            Workplace = FindNearestObject<Woodcutter>();
             house = FindNearestObject<House>();
 
             ChangeLookingFor();
@@ -124,17 +122,24 @@ namespace Assets.Scripts
         //works until inventory is full, then finds workplace
         public void Work()
         {
-            var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
-            var inventory = gameObject.GetComponent<Inventory.Inventory>();
-
-            if (inventory.IsFull())
+            try
             {
-                SetDestination(Workplace); //todo vyprázdnit do skladu
-                return;
+                var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
+                var inventory = gameObject.GetComponent<Inventory.Inventory>();
+
+                if (inventory.IsFull())
+                {
+                    SetDestination(Workplace); //todo vyprázdnit do skladu
+                    return;
+                }
+
+                SetDestination(FindNearestObject(workObjects));
             }
-
-            SetDestination(FindNearestObject(workObjects));
-
+            catch
+            {
+                SetDestination(GameObject.Find("Spawn"));
+            }
+            
             //z nějakýho listu workspacu zjistit kam chodit a co tam dělat
             //pracovat dokud se nenaplní inventář/nedojdou fyz. potřeby
             //po naplnění vyprázdnit ve worksapce, případně v přidruženém skladu
@@ -164,7 +169,6 @@ namespace Assets.Scripts
         public string GetName() => name;
 
         public Gender GetGender() => gender;
-
 
         public async Task Stop(int millis)
         {

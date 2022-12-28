@@ -906,6 +906,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   - component: {fileID: 963194233}
+  - component: {fileID: 963194234}
   - component: {fileID: 963194231}
   - component: {fileID: 963194232}
   m_Layer: 3
@@ -1068,6 +1069,18 @@ MonoBehaviour:
   cameraDragSpeed: 0.25
   cameraSpeed: 0.5
   zoomSpeed: 15
+--- !u!114 &963194234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388b0f0d30514b2e9ed23a6debefe618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1041295301 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3160153327746802799, guid: 8c426d58bf80f30a48c3a9e8bf7d366b, type: 3}

@@ -19,6 +19,7 @@ namespace Assets.Scripts.Gui.Stats
     {
         private GameObject _sender;
         public GameObject GetSender() => _sender;
+        
         private void Awake()
         {
             var ui = gameObject.GetComponent<RectTransform>();
