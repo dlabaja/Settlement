@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workObjects: 5
+  workers: []
+  maxWorkers: 4
 --- !u!114 &9029656768288993032
 MonoBehaviour:
   m_ObjectHideFlags: 0

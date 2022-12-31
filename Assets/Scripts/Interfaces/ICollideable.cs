@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Interfaces
+namespace Interfaces
 {
     public interface ICollideable
     {

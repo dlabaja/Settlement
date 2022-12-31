@@ -1,16 +1,11 @@
-using Assets.Scripts.Buildings.Workplace;
-using Gui;
-using System;
+using Buildings.Workplace;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Gui.Stats
+namespace Gui.Stats
 {
     public class EntityStats : Stats
     {
@@ -36,14 +31,16 @@ namespace Assets.Scripts.Gui.Stats
             StartCoroutine(UpdateData(lookingFor, water, sleep, entity, workplace));
         }
 
-        private IEnumerator UpdateData(Text lookingFor, Text water, Text sleep, Entity entity, Transform workplace)
+        private static IEnumerator UpdateData(Text lookingFor, Text water, Text sleep, Entity entity, Transform workplace)
         {
             var dropdownExt = workplace.GetComponent<DropdownExt>();
             while (true)
             {
                 //todo house
                 dropdownExt.UpdateData(
-                    FindObjectsOfType<Workplace>().OrderBy(x => x.name).Select(x => x.gameObject).ToList());
+                    FindObjectsOfType<Workplace>().OrderBy(x => x.name)
+                        .Where(x => !x.IsFull())
+                        .Select(x => x.gameObject).ToList());
 
                 lookingFor.text = Regex.Replace(entity.GetLookingFor().ToString(), @"\((.*?)\)", "");
                 water.text = entity.GetWater().ToString();

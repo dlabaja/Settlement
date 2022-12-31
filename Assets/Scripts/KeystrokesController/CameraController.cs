@@ -1,8 +1,7 @@
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Scripts.Keystrokes
+namespace KeystrokesController
 {
     public class CameraController : KeystrokesController
     {

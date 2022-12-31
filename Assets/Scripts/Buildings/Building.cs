@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using Assets.Scripts.Interfaces;
+using Interfaces;
 using UnityEngine;
 
-namespace Assets.Scripts.Buildings
+namespace Buildings
 {
     public class Building : CustomObject
     {

@@ -1,8 +1,8 @@
-using Assets.Scripts.Gui.Stats;
+using Gui.Stats;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Scripts.Keystrokes
+namespace KeystrokesController
 {
     public class MouseController : KeystrokesController
     {

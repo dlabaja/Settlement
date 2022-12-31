@@ -1,20 +1,33 @@
-using Assets.Scripts.Interfaces;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Assets.Scripts.Buildings.Workplace
+namespace Buildings.Workplace
 {
     public class Workplace : Building
     {
         //objects the entity has to meet (eg tree for woodcutter job)
         [SerializeField] private Const.CustomObjects workObjects;
+        [SerializeField] private List<GameObject> workers;
+        [SerializeField] private int maxWorkers;
 
         public Const.CustomObjects GetWorkObjects() => workObjects;
-        public void DrawStats()
+
+        public int GetMaxWorkers() => maxWorkers;
+
+        public List<GameObject> GetWorkers() => workers;
+
+        public bool AssignWorker(GameObject worker)
         {
-            throw new NotImplementedException();
+            if (workers.Count >= maxWorkers) return false;
+            workers.Add(worker);
+            return true;
         }
+
+        public void FireWorker(GameObject worker)
+        {
+            workers.Remove(worker);
+        }
+
+        public bool IsFull() => workers.Count == maxWorkers;
     }
 }

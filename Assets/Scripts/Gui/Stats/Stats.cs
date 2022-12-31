@@ -1,19 +1,10 @@
-using Assets.Scripts.Buildings;
-using Assets.Scripts.Buildings.Workplace;
-using UnityEngine;
-using Assets.Scripts.Gui.Stats;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Buildings;
+using Buildings.Workplace;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Threading;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
-namespace Assets.Scripts.Gui.Stats
+namespace Gui.Stats
 {
     public class Stats : Window
     {

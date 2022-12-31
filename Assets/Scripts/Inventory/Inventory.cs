@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static Assets.Scripts.Const;
+using static Const;
 
-namespace Assets.Scripts.Inventory
+namespace Inventory
 {
     public class Inventory : MonoBehaviour
     {
         [SerializeField] private int slots = 1;
         private const int stackSize = 10;
         private Dictionary<Item, int> _inventory = new();
-        [SerializeField] private List<Item> pickupableItems = new();
         [SerializeField] private List<Item> _itemy = new();
         [SerializeField] private List<int> _hodnoty = new();
 
@@ -24,7 +22,7 @@ namespace Assets.Scripts.Inventory
             }
         }
 
-        //TODO only temporary for debug
+        //TODO only temporary for debug, add to stats
         [SerializeField] private string iinventory;
 
         //todo temporary

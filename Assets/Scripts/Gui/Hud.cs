@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts
+namespace Gui
 {
     public class Hud : MonoBehaviour
     {

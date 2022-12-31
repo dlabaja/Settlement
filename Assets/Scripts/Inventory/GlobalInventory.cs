@@ -1,10 +1,9 @@
+using Gui;
+using Interfaces;
 using System.Collections.Generic;
-using Assets.Scripts;
-using Assets.Scripts.Interfaces;
-using System;
 using UnityEngine;
 
-namespace Assets.Scripts.Inventory
+namespace Inventory
 {
     public class GlobalInventory : MonoBehaviour
     {

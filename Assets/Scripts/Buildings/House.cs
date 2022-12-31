@@ -1,14 +1,9 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using Assets.Scripts.Interfaces;
+using Interfaces;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Assets.Scripts.Buildings
+namespace Buildings
 {
     public class House : Building, ICollideable
     {

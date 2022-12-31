@@ -1,7 +1,6 @@
-using Assets.Scripts;
 using UnityEngine;
 
-namespace Gui.Stats
+namespace Gui
 {
     public class FocusButton : DropdownExt
     {

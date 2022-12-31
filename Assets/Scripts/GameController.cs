@@ -1,23 +1,20 @@
 using UnityEngine;
 
-namespace Assets.Scripts
+public class GameController : MonoBehaviour
 {
-    public class GameController : MonoBehaviour
+    private void Start()
     {
-        private void Start()
-        {
-            CustomObject.Spawn<Entity>();
-            //TODO Time.timeScale = Const.GameSpeed;
-        }
+        CustomObject.Spawn<Entity>();
+        //TODO Time.timeScale = Const.GameSpeed;
+    }
 
-        private void FixedUpdate()
+    private void FixedUpdate()
+    {
+        var entities = FindObjectsOfType<Entity>();
+        foreach (var entity in entities)
         {
-            var entities = FindObjectsOfType<Entity>();
-            foreach (var entity in entities)
-            {
-                if (Utils.RndTick(Const.WaterDecreaseChance)) entity.DecreaseWater();
-                if (Utils.RndTick(Const.SleepDecreaseChance)) entity.DecreaseSleep();
-            }
+            if (Utils.RndTick(Const.WaterDecreaseChance)) entity.DecreaseWater();
+            if (Utils.RndTick(Const.SleepDecreaseChance)) entity.DecreaseSleep();
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace Assets.Scripts.Buildings.Workplace
+namespace Buildings.Workplace
 {
     public class Spawn : Workplace
     {

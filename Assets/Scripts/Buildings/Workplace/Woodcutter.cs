@@ -1,7 +1,7 @@
-using Assets.Scripts.Interfaces;
+using Interfaces;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Buildings.Workplace
+namespace Buildings.Workplace
 {
     public class Woodcutter : Workplace, ICollideable
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Gui
 {
     public class Window : MonoBehaviour
     {

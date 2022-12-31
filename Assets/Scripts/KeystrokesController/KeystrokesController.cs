@@ -1,14 +1,11 @@
-using Assets.Scripts.Gui;
-using Assets.Scripts.Gui.Stats;
-using Assets.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Scripts.Keystrokes
+namespace KeystrokesController
 {
     public class KeystrokesController : MonoBehaviour
     {
-        protected global::Keystrokes _keystrokes;
+        protected Keystrokes _keystrokes;
         private bool _rightClickPressed;
         protected Rigidbody _rigidbody;
         private CameraController _camera;
@@ -16,7 +13,7 @@ namespace Assets.Scripts.Keystrokes
 
         private void Awake()
         {
-            _keystrokes = new global::Keystrokes();
+            _keystrokes = new Keystrokes();
             _rigidbody = gameObject.GetComponent<Rigidbody>();
             _keystrokes.Camera.Drag.performed += OnRightClick;
             _keystrokes.Camera.Drag.canceled += OnNotRightClick;
