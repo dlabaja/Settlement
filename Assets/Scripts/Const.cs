@@ -32,6 +32,7 @@ public static class Const
 
     public enum Item
     {
+        None,
         Wood,
         Stone
     }

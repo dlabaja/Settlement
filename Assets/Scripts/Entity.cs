@@ -99,18 +99,18 @@ public class Entity : CustomObject
     //works until inventory is full, then finds workplace
     private void Work()
     {
+        var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
+        var inventory = gameObject.GetComponent<Inventory.Inventory>();
+        
+        if (inventory.IsFull())
+        {
+            SetDestination(Workplace);
+            return;
+        }
+        
         if (Workplace.HasComponent<Spawn>())
         {
             SetDestination(GameObject.Find("Spawn"));
-            return;
-        }
-
-        var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
-        var inventory = gameObject.GetComponent<Inventory.Inventory>();
-
-        if (inventory.IsFull())
-        {
-            SetDestination(Workplace); //todo vyprázdnit do skladu
             return;
         }
 

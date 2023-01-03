@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static Const;
 
@@ -8,93 +9,123 @@ namespace Inventory
     public class Inventory : MonoBehaviour
     {
         [SerializeField] private int slots = 1;
-        private const int stackSize = 10;
-        private Dictionary<Item, int> _inventory = new();
-        [SerializeField] private List<Item> _itemy = new();
-        [SerializeField] private List<int> _hodnoty = new();
+        private const int stackSize = 100;
+        private Dictionary<int, ItemStruct> _inventory = new();
+        //todo inspector debug
+        [SerializeField] private List<ItemStruct> _startValues = new();
 
-        //TODO loads items from inspector at start, also temporary
+        //todo inspector debug
         private void Awake()
         {
-            for (int i = 0; i < _itemy.Count; i++)
-            {
-                _inventory.Add(_itemy[i], _hodnoty[i]);
-            }
+            for (int i = 0; i < slots; i++)
+                _inventory.Add(i, new ItemStruct(Item.None, 0));
+
+            for (int i = 0; i < _startValues.Count; i++)
+                AddItems(_startValues[i].item, _startValues[i].count);
+            
         }
 
         //TODO only temporary for debug, add to stats
-        [SerializeField] private string iinventory;
+        [SerializeField] private List<ItemStruct> _values;
 
         //todo temporary
         private void FixedUpdate()
         {
-            var str = "";
-            foreach (var i in _inventory)
-            {
-                str += ($"{i.Key}:{i.Value}\n");
-            }
-
-            iinventory = str;
+            _values = _inventory.Values.ToList();
         }
 
-        public Dictionary<Item, int> GetInventory() => _inventory;
+        public Dictionary<int, ItemStruct> GetInventory() => _inventory;
 
-        //current number of item in inventory
-        public int GetItemCount(Item item) => _inventory.GetValueOrDefault(item, 0);
-
-        //returns max space for specific item
-        private int GetMaxItemRoom(Item item) => GetFreeSlots() * stackSize + _inventory.GetValueOrDefault(item, 0);
-
-        //returns slot unoccupied with items
-        private int GetFreeSlots()
+        private int AddItems(Item item, int count)
         {
-            var value = slots;
+            for (int i = 0; i < _inventory.Count; i++)
+            {
+                if (_inventory[i].item == item || _inventory[i].item == Item.None)
+                    while (_inventory[i].count < stackSize && count > 0)
+                    {
+                        _inventory[i] = new ItemStruct(item, _inventory[i].count + 1);
+                        count--;
+                    }
+
+                if (count == 0)
+                    break;
+            }
+
+            return count;
+        }
+
+        public int GetItemCount(Item item)
+        {
+            var val = 0;
+            foreach (var i in _inventory.Values)
+            {
+                if (i.item == item)
+                    val += i.count;
+            }
+
+            return val;
+        }
+
+        private int RemoveItems(Item item, int count)
+        {
+            var defaultCount = count;
+            for (int i = 0; i < _inventory.Count; i++)
+            {
+                if (_inventory[i].item == item)
+                    while (_inventory[i].count > 0 && count > 0)
+                    {
+                        _inventory[i] = new ItemStruct(item, _inventory[i].count - 1);
+                        count--;
+                    }
+
+                if (count == 0)
+                    break;
+            }
+
+            return defaultCount - count;
+        }
+
+        public int CountAllItems()
+        {
+            var val = 0;
             foreach (var item in _inventory.Values)
             {
-                value -= (int)Math.Ceiling((double)(item / 100));
+                if (item.item == Item.None) continue;
+                val += item.count;
             }
 
-            return value;
+            return val;
         }
 
-        public bool IsFull() => GetFreeSlots() == 0;
+        public bool IsFull() => slots * stackSize == CountAllItems();
 
-        //transfers items from sender (gameobject) to receiver
-        public void TransferItems(GameObject receiver, Item item, int count)
+        public bool IsEmpty() => CountAllItems() == 0;
+
+        public bool TransferItems(Item item, int count, GameObject receiver = null, GameObject sender = null)
         {
-            var senderInv = gameObject.GetComponent<Inventory>();
-            var receiverInv = receiver.GetComponent<Inventory>();
-            var maxitems = receiverInv.GetMaxItemRoom(item);
-            if (!senderInv.RemoveItems(item, count)) return;
-
-            //receiver is full
-            if (maxitems == 0)
-            {
-                senderInv.UpsertInventory(item, count);
-            }
-            //sender gives more than receiver can carry
-            else if (count > maxitems)
-            {
-                receiverInv.UpsertInventory(item, maxitems);
-                senderInv.UpsertInventory(item, count - maxitems);
-            }
-            //all fine
-            else receiverInv.UpsertInventory(item, count);
-        }
-
-        //removes items, use TransferItems instead
-        private bool RemoveItems(Item item, int count)
-        {
-            if (!_inventory.ContainsKey(item)) return false;
-            _inventory[item] -= count;
-            if (_inventory[item] <= 0) _inventory.Remove(item);
+            if (sender == null) sender = gameObject;
+            if (receiver == null) receiver = gameObject;
+            //přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
+            if (receiver.GetComponent<Inventory>().IsFull()) return false;
+            
+            var removed = sender.GetComponent<Inventory>().RemoveItems(item, count);
+            sender.GetComponent<Inventory>().AddItems(item, receiver.GetComponent<Inventory>().AddItems(item, removed));
             return true;
         }
+    }
 
-        //adds items to stack or creates new slot for them
-        private void UpsertInventory(Item item, int count)
+    [Serializable]
+    public struct ItemStruct
+    {
+        public ItemStruct(Item item, int count)
         {
-            if (!_inventory.TryAdd(item, count)) _inventory[item] += count; //there are items already, adding them up
+            this.item = item;
+            this.count = count;
         }
+
+        public Item item;
+        public int count;
+
+        public override string ToString() => $"({item}, {count})";
     }
 }

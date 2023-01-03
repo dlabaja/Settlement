@@ -1,6 +1,10 @@
+using Buildings.Workplace;
 using Gui;
 using Interfaces;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Inventory
@@ -11,35 +15,37 @@ namespace Inventory
 
         private void Start()
         {
-            InvokeRepeating(nameof(OnceASecUpdate), 1, 1);
+            foreach (var i in Enum.GetValues(typeof(Const.Item)).Cast<Const.Item>())
+                if (i != Const.Item.None)
+                    _globalInventory.TryAdd(i, 0);
+            StartCoroutine(UpdateGlobalInventory());
         }
 
-        private void OnceASecUpdate()
+        private static IEnumerator UpdateGlobalInventory()
         {
-            UpdateGlobalInventory();
-            Hud.SetGlobalInventoryText(Utils.DictToString(_globalInventory));
-        }
-
-        private static void UpdateGlobalInventory()
-        {
-            var customObjects = FindObjectsOfType<CustomObject>();
-            foreach (var item in customObjects) //all object inventories
+            while (true)
             {
-                var gm = item.gameObject;
-                if (gm.HasComponent<IIgnoreGlobalInventory>() || !gm.HasComponent<Inventory>()) return; //has inventory and isn't blacklisted
-
-                foreach (var i in gm.GetComponent<Inventory>().GetInventory()) //all items in object inventory
-                {
-                    UpsertGlobalInventory(i.Key, i.Value);
-                }
-
+                UpdateGlobalInventoryValues();
+                Hud.SetGlobalInventoryText(Utils.DictToString(_globalInventory));
+                yield return new WaitForSeconds(1);
             }
         }
 
-        //adds items to stack or creates new slot for them
-        private static void UpsertGlobalInventory(Const.Item item, int count)
+        private static void UpdateGlobalInventoryValues()
         {
-            if (!_globalInventory.TryAdd(item, count)) _globalInventory[item] = count;
+            //todo není tam dřevorubec
+            foreach (var key in _globalInventory.Keys.ToList()) { _globalInventory[key] = 0; }
+            foreach (var item in FindObjectsOfType<Inventory>()) //all object inventories
+            {
+                if (item.gameObject.HasComponent<IIgnoreGlobalInventory>()) return; //has inventory and isn't blacklisted
+
+                foreach (var i in item.GetInventory().Values) //all items in object inventory
+                {
+                    if (i.item == Const.Item.None) continue;
+                    _globalInventory[i.item] += i.count;
+                }
+
+            }
         }
     }
 }

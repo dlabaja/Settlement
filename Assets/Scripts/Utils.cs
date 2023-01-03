@@ -66,8 +66,9 @@ public static class Utils
 
     public static IEnumerator SlerpRotation(Transform source, Quaternion rotToMove)
     {
-        while(source.rotation != rotToMove)
+        for (int i = 0; i < 400; i++)
         {
+            if (source.rotation == rotToMove) break;
             source.rotation = Quaternion.Slerp(source.rotation, rotToMove, 0.02f);
             yield return new WaitForEndOfFrame();
         }

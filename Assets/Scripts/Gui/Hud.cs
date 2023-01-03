@@ -9,7 +9,7 @@ namespace Gui
         //todo přepsat
         private static Text _globalInventory;
 
-        private void Start()
+        private void Awake()
         {
             _globalInventory = FindObjectsOfType<Text>().
                 FirstOrDefault(x => x.name == "globalInventory");
