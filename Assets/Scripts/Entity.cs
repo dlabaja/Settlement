@@ -1,6 +1,7 @@
 using Buildings;
 using Buildings.Workplace;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class Entity : CustomObject
     [SerializeField] private GameObject workplace;
     [SerializeField] private GameObject house;
     [SerializeField] private GameObject lookingFor;
+    private Inventory.Inventory _inventory;
     private NavMeshAgent _navMesh;
 
     public GameObject Workplace
@@ -34,11 +36,14 @@ public class Entity : CustomObject
     private void Awake()
     {
         _navMesh = GetComponent<NavMeshAgent>();
+        _inventory = GetComponent<Inventory.Inventory>();
 
         gender = Utils.GenerateGender();
         name = Utils.GenerateName(gender);
         house = FindNearestObject<House>();
         Workplace = GameObject.Find(Const.CustomObjects.Spawn.ToString());
+        RefillWater();
+        RefillSleep();
 
         ChangeLookingFor();
     }
@@ -46,51 +51,31 @@ public class Entity : CustomObject
     //updates tasks the entity has to do
     public void ChangeLookingFor()
     {
-        lookingFor = null;
         if (water <= 0) SetDestination(FindNearestObject<Well>());
         else if (sleep <= 0) SetDestination(house); //todo FindHouse()
-        else if (lookingFor == null) Work();
+        else Work();
     }
 
     //returns nearest object of type T and adds it to the lookingFor
     private GameObject FindNearestObject<T>() where T : CustomObject
     {
-        try
-        {
-            return FindObjectsOfType<T>()
-                .OrderBy(t => (t.transform.position - transform.position).sqrMagnitude)
-                .ToList().FirstOrDefault()!.gameObject;
-        }
-        catch {}
-
-        return null;
+        var s = FindObjectsOfType<T>().OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).ToList().FirstOrDefault()!.gameObject;
+        return s ? s : null;
     }
 
     //parses CustomObject enum to list of CustomObjects and returns its second or first item  
-    private GameObject FindNearestObject(Const.CustomObjects type)
-    {
-        var s = FindObjectsOfType(Type.GetType("Buildings." + type))
-            .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
-            .ToList();
-        try
-        {
-            return (s[1] as CustomObject)?.gameObject;
-        }
-        catch
-        {
-            return Workplace;
-        }
-
-    }
+    private List<GameObject> FindNearestObject(Const.CustomObjects type) => FindObjectsOfType(
+            Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
+        .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
+        .Cast<CustomObject>()
+        .Select(x => x.gameObject)
+        .ToList();
 
     //sets destination and adds it to the lookingFor, if null it finds workspace/spawn
     private void SetDestination(GameObject gm)
     {
         if (gm == null)
-        {
-            SetDestination(Workplace);
-            return;
-        }
+            gm = Workplace;
 
         _navMesh.SetDestination(gm.transform.position);
         lookingFor = gm;
@@ -99,23 +84,15 @@ public class Entity : CustomObject
     //works until inventory is full, then finds workplace
     private void Work()
     {
-        var workObjects = Workplace.GetComponent<Workplace>().GetWorkObjects();
-        var inventory = gameObject.GetComponent<Inventory.Inventory>();
-        
-        if (inventory.IsFull())
+        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObjects());
+
+        if (_inventory.IsFull())
         {
             SetDestination(Workplace);
             return;
         }
-        
-        if (Workplace.HasComponent<Spawn>())
-        {
-            SetDestination(GameObject.Find("Spawn"));
-            return;
-        }
 
-        SetDestination(FindNearestObject(workObjects));
-        //todo check po naplnění vyprázdnit ve worksapce, případně v přidruženém skladu
+        SetDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
     public void FindHouse()

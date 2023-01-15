@@ -12,18 +12,6 @@ public static class Const
         Tree
     }
 
-    public enum Buildings
-    {
-        Tree,
-        Well,
-        House
-    }
-
-    public enum Workplaces
-    {
-        Woodcutter
-    }
-
     public enum Gender
     {
         Male,

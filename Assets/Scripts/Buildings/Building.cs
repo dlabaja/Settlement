@@ -5,7 +5,6 @@ namespace Buildings
 {
     public class Building : CustomObject
     {
-        //todo waitTime
         private void OnCollisionStay(Collision collision)
         {
             OnTriggerStay(collision.collider);

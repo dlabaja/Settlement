@@ -9,8 +9,6 @@ namespace Buildings.Workplace
         [SerializeField] private Const.CustomObjects workObjects;
         [SerializeField] private List<GameObject> workers;
         [SerializeField] private int maxWorkers;
-        [SerializeField] private List<Const.Item> _keys;
-        [SerializeField] private List<int> _values;
 
         public Const.CustomObjects GetWorkObjects() => workObjects;
 

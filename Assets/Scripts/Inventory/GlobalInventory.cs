@@ -30,21 +30,21 @@ namespace Inventory
                 yield return new WaitForSeconds(1);
             }
         }
-
+        
         private static void UpdateGlobalInventoryValues()
         {
-            //todo není tam dřevorubec
-            foreach (var key in _globalInventory.Keys.ToList()) { _globalInventory[key] = 0; }
-            foreach (var item in FindObjectsOfType<Inventory>()) //all object inventories
-            {
-                if (item.gameObject.HasComponent<IIgnoreGlobalInventory>()) return; //has inventory and isn't blacklisted
+            _globalInventory.Clear();
 
-                foreach (var i in item.GetInventory().Values) //all items in object inventory
+            foreach (var item in FindObjectsOfType<Inventory>())
+            {
+                if (item.gameObject.HasComponent<IIgnoreGlobalInventory>()) continue;
+
+                foreach (var i in item.GetInventory().Values)
                 {
                     if (i.item == Const.Item.None) continue;
+                    if (!_globalInventory.ContainsKey(i.item)) _globalInventory[i.item] = 0;
                     _globalInventory[i.item] += i.count;
                 }
-
             }
         }
     }

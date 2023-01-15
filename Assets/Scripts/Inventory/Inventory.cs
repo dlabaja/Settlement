@@ -9,7 +9,7 @@ namespace Inventory
     public class Inventory : MonoBehaviour
     {
         [SerializeField] private int slots = 1;
-        private const int stackSize = 100;
+        [SerializeField] private int stackSize = 100;
         private Dictionary<int, ItemStruct> _inventory = new();
         //todo inspector debug
         [SerializeField] private List<ItemStruct> _startValues = new();
@@ -22,7 +22,7 @@ namespace Inventory
 
             for (int i = 0; i < _startValues.Count; i++)
                 AddItems(_startValues[i].item, _startValues[i].count);
-            
+
         }
 
         //TODO only temporary for debug, add to stats
@@ -107,7 +107,7 @@ namespace Inventory
             if (receiver == null) receiver = gameObject;
             //přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
             if (receiver.GetComponent<Inventory>().IsFull()) return false;
-            
+
             var removed = sender.GetComponent<Inventory>().RemoveItems(item, count);
             sender.GetComponent<Inventory>().AddItems(item, receiver.GetComponent<Inventory>().AddItems(item, removed));
             return true;
