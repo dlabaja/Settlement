@@ -28,6 +28,7 @@ public class Entity : CustomObject
             catch {}
 
             if (!value.GetComponent<Workplace>().AssignWorker(gameObject)) return;
+            EmptyInventory(workplace);
             workplace = value;
             Work();
         }
@@ -72,7 +73,7 @@ public class Entity : CustomObject
         .ToList();
 
     //sets destination and adds it to the lookingFor, if null it finds workspace/spawn
-    private void SetDestination(GameObject gm)
+    public void SetDestination(GameObject gm)
     {
         if (gm == null)
             gm = Workplace;
@@ -91,7 +92,7 @@ public class Entity : CustomObject
             SetDestination(Workplace);
             return;
         }
-
+        
         SetDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
@@ -102,6 +103,12 @@ public class Entity : CustomObject
         {
             //todo postavit dům
         }
+    }
+
+    private void EmptyInventory(GameObject gm)
+    {
+        SetDestination(gm);
+        _inventory.TransferItems(_inventory.GetInventory()[0].item, _inventory.GetInventory()[0].count, gm);
     }
 
     public GameObject GetLookingFor() => lookingFor;

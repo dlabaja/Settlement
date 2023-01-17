@@ -22,7 +22,6 @@ namespace Inventory
 
             for (int i = 0; i < _startValues.Count; i++)
                 AddItems(_startValues[i].item, _startValues[i].count);
-
         }
 
         //TODO only temporary for debug, add to stats
@@ -36,7 +35,7 @@ namespace Inventory
 
         public Dictionary<int, ItemStruct> GetInventory() => _inventory;
 
-        private int AddItems(Item item, int count)
+        public int AddItems(Item item, int count)
         {
             for (int i = 0; i < _inventory.Count; i++)
             {
@@ -81,8 +80,15 @@ namespace Inventory
                 if (count == 0)
                     break;
             }
-
+            
             return defaultCount - count;
+        }
+
+        private void ReplaceWithNone()
+        {
+            for (var i = 0; i < _inventory.Count; i++)
+                if (_inventory[i].count == 0)
+                    _inventory[i] = new ItemStruct(Item.None, 0);
         }
 
         public int CountAllItems()
@@ -105,11 +111,18 @@ namespace Inventory
         {
             if (sender == null) sender = gameObject;
             if (receiver == null) receiver = gameObject;
-            //přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
-            if (receiver.GetComponent<Inventory>().IsFull()) return false;
 
-            var removed = sender.GetComponent<Inventory>().RemoveItems(item, count);
-            sender.GetComponent<Inventory>().AddItems(item, receiver.GetComponent<Inventory>().AddItems(item, removed));
+            var senderInv = sender.GetComponent<Inventory>();
+            var receiverInv = receiver.GetComponent<Inventory>();
+
+            //přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
+            if (receiverInv.IsFull()) return false;
+
+            var removed = senderInv.RemoveItems(item, count);
+            senderInv.AddItems(item, receiverInv.AddItems(item, removed));
+            
+            senderInv.ReplaceWithNone();
+            receiverInv.ReplaceWithNone();
             return true;
         }
     }

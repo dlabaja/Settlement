@@ -9,7 +9,8 @@ public static class Const
         Spawn,
         Woodcutter,
         House,
-        Tree
+        Tree,
+        Stone
     }
 
     public enum Gender
