@@ -54,7 +54,7 @@ public class Entity : CustomObject
     {
         if (water <= 0) SetDestination(FindNearestObject<Well>());
         else if (sleep <= 0) SetDestination(house); //todo FindHouse()
-        else Work();
+        Work();
     }
 
     //returns nearest object of type T and adds it to the lookingFor
@@ -83,11 +83,11 @@ public class Entity : CustomObject
     }
 
     //works until inventory is full, then finds workplace
-    private void Work()
+    public void Work()
     {
         var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObjects());
 
-        if (_inventory.IsFull())
+        if (_inventory.IsFull()) //todo plnej itemů jiného typu (GetItemRoom?)
         {
             SetDestination(Workplace);
             return;

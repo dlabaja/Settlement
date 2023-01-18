@@ -5,22 +5,14 @@ namespace Buildings
 {
     public class Building : CustomObject
     {
-        private void OnCollisionStay(Collision collision)
-        {
-            OnTriggerStay(collision.collider);
-        }
+        private void OnCollisionEnter(Collision collision) => OnTriggerEnter(collision.collider);
 
-        private void OnTriggerStay(Collider collider)
+        private void OnTriggerEnter(Collider collider)
         {
             var entity = collider.gameObject.GetComponent<Entity>();
-            //entity has building in lookingFor OR the lookingFor is empty and the building is its workspace
-            if (entity.GetLookingFor() == gameObject ||
-                entity.GetLookingFor() == null && entity.Workplace == gameObject)
-            {
-                entity.ChangeLookingFor();
-                if (gameObject.HasComponent<ICollideable>())
-                    GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
-            }
+            if (entity.GetLookingFor() != gameObject) return;
+            GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
+            entity.ChangeLookingFor();
         }
     }
 }
