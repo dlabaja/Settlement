@@ -1348,33 +1348,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 493284312}
     m_Modifications:
-    - target: {fileID: -5066669166133138723, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4318074575190052911, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: _workObjects
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4318074575190052911, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: pickupableItems.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -4318074575190052911, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: pickupableItems.Array.data[0]
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.7271566
-      objectReference: {fileID: 0}
-    - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 4.249
       objectReference: {fileID: 0}
     - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1419,18 +1395,6 @@ PrefabInstance:
     - target: {fileID: 3526459843486528791, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
       propertyPath: m_Name
       value: Woodcutter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704600454974111776, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3704600454974111776, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9029656768288993032, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
-      propertyPath: slots
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35365b15a1942dfa096395206cd47b40, type: 3}

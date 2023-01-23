@@ -8,7 +8,7 @@ namespace Buildings.Workplace
     {
         public async Task OnCollision(Entity entity)
         {
-            await Task.Delay(2000);
+            await entity.Stop(2000);
             GetComponent<Inventory.Inventory>().TransferItems(Const.Item.Wood,
                 entity.GetComponent<Inventory.Inventory>().GetItemCount(Const.Item.Wood), gameObject, entity.gameObject);
         }

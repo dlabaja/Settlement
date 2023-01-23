@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3526459843486528791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 44.21, y: -0.1164763, z: 10.140669}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.7271566, y: 1, z: 4.249}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,10 +65,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: 1
-  pickupableItems: 
-  _itemy: 
-  _hodnoty: 
-  iinventory: 
+  stackSize: 100
+  _startValues: []
+  _values: []
 --- !u!33 &4094131659973612557
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -140,7 +139,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3526459843486528791}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.5, y: 1, z: 0.5}

@@ -65,12 +65,11 @@ public class Entity : CustomObject
     }
 
     //parses CustomObject enum to list of CustomObjects and returns its second or first item  
-    private List<GameObject> FindNearestObject(Const.CustomObjects type) => FindObjectsOfType(
+    private IEnumerable<GameObject> FindNearestObject(Const.CustomObjects type) => FindObjectsOfType(
             Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
         .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
         .Cast<CustomObject>()
-        .Select(x => x.gameObject)
-        .ToList();
+        .Select(x => x.gameObject);
 
     //sets destination and adds it to the lookingFor, if null it finds workspace/spawn
     public void SetDestination(GameObject gm)

@@ -7,11 +7,11 @@ namespace Buildings
     {
         private void OnCollisionEnter(Collision collision) => OnTriggerEnter(collision.collider);
 
-        private void OnTriggerEnter(Collider collider)
+        async private void OnTriggerEnter(Collider collider)
         {
             var entity = collider.gameObject.GetComponent<Entity>();
             if (entity.GetLookingFor() != gameObject) return;
-            GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
+            await GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
             entity.ChangeLookingFor();
         }
     }
