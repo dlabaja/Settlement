@@ -1,3 +1,4 @@
+using Buildings.Workplace;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,11 +12,16 @@ namespace Gui
         private List<GameObject> gameObjects = new List<GameObject>();
         [SerializeField] private float cooldown;
         private float lastClicked;
+        public GameObject sender;
 
-        private void UpdateDropdown()
+        private void UpdateDropdown(string firstItem)
         {
-            gameObject.GetComponent<Dropdown>().options = gameObjects
-                .Select(x => new Dropdown.OptionData(x.ToString())).ToList();
+            var data = new List<Dropdown.OptionData>();
+            data.AddRange(gameObjects
+                .Select(x => new Dropdown.OptionData(x.ToString()))
+                .Prepend(new Dropdown.OptionData(firstItem))
+                .ToList());
+            gameObject.GetComponent<Dropdown>().options = data;
         }
 
         public GameObject GetChosenElement()
@@ -23,12 +29,12 @@ namespace Gui
             return gameObjects.ElementAt(GetComponent<Dropdown>().value);
         }
 
-        public void UpdateData(List<GameObject> items)
+        public void UpdateData(List<GameObject> items, string firstItem = null)
         {
             gameObjects = items;
-            UpdateDropdown();
+            UpdateDropdown(firstItem);
         }
-        
+
         public void OnFocusClicked()
         {
             if (time - lastClicked < cooldown) return;
@@ -40,10 +46,21 @@ namespace Gui
             var objPos = new Vector3(obj.x,
                 obj.y + 5,
                 obj.z) + Vector3.back * 3;
-            
+
             StartCoroutine(Utils.SlerpMove(cam, objPos));
-            StartCoroutine(Utils.SlerpRotation(cam, 
+            StartCoroutine(Utils.SlerpRotation(cam,
                 Quaternion.Euler(50f, rotation.y, rotation.z)));
+        }
+
+        public void OnAssignClicked()
+        {
+            sender.GetComponent<Workplace>().AssignWorker(
+                FindObjectsOfType<Entity>().FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString())?.gameObject);
+        }
+
+        public void OnUnassignClicked()
+        {
+            sender.GetComponent<Workplace>().FireWorker(GetChosenElement());
         }
     }
 }

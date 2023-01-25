@@ -19,6 +19,7 @@ namespace Buildings.Workplace
         public bool AssignWorker(GameObject worker)
         {
             if (workers.Count >= maxWorkers) return false;
+            if (workers.Contains(worker)) return false;
             workers.Add(worker);
             return true;
         }

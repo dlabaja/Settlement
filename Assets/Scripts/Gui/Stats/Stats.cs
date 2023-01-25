@@ -10,7 +10,7 @@ namespace Gui.Stats
     {
         private GameObject _sender;
         public GameObject GetSender() => _sender;
-        
+
         private void Awake()
         {
             var ui = gameObject.GetComponent<RectTransform>();
@@ -21,21 +21,20 @@ namespace Gui.Stats
 
         public static void GenerateStats(GameObject gm)
         {
-            if(CheckDuplicates(gm)) return; //only one stat per gameobject
+            if (CheckDuplicates(gm)) return; //only one stat per gameobject
             if (gm.HasComponent<Entity>())
-            {
                 Utils.LoadGameObject("Stats/Entity", Const.Parent.Canvas)
                     .GetComponent<EntityStats>().DrawEntityStats(gm.GetComponent<Entity>());
-            }
             else if (gm.HasComponent<House>())
                 print("dum stats");
             else if (gm.HasComponent<Workplace>())
-                print("workplace stats");
+                Utils.LoadGameObject("Stats/Workplace", Const.Parent.Canvas)
+                    .GetComponent<WorkplaceStats>().DrawWorkplaceStats(gm.GetComponent<Workplace>());
         }
 
-        public static bool CheckDuplicates(GameObject gm) => 
+        public static bool CheckDuplicates(GameObject gm) =>
             FindObjectsOfType<Stats>()
-            .Select(x => x.GetSender() == gm)
-            .ToList().Count != 0;
+                .Select(x => x.GetSender() == gm)
+                .ToList().Count != 0;
     }
 }
