@@ -17,7 +17,7 @@ namespace Gui.Stats
             var name = child.Find("Name").GetComponent<Text>();
             var gender = child.Find("Gender").GetComponent<Text>();
             var lookingFor = child.Find("LookingFor").GetComponent<Text>();
-            var workplace = child.Find("Workplace");
+            var workplace = child.Find("Workplace").GetComponent<FocusDropdown>();
             var inventory = child.Find("Inventory").GetComponent<Text>();
             var water = child.Find("Water").GetComponent<Text>();
             var sleep = child.Find("Sleep").GetComponent<Text>();
@@ -27,19 +27,18 @@ namespace Gui.Stats
 
             workplace.GetComponent<Dropdown>().onValueChanged.AddListener(delegate
             {
-                entity.Workplace = workplace.GetComponent<DropdownExt>().GetChosenElement();
+                entity.Workplace = workplace.GetChosenElement();
             });
 
             StartCoroutine(UpdateData(lookingFor, water, sleep, entity, workplace, inventory));
         }
 
-        private static IEnumerator UpdateData(Text lookingFor, Text water, Text sleep, Entity entity, Component workplace, Text inventory)
+        private static IEnumerator UpdateData(Text lookingFor, Text water, Text sleep, Entity entity, FocusDropdown workplace, Text inventory)
         {
-            var dropdownExt = workplace.GetComponent<DropdownExt>();
             while (true)
             {
                 //todo house
-                dropdownExt.UpdateData(
+                workplace.UpdateData(
                     FindObjectsOfType<Workplace>().OrderBy(x => x.name)
                         .Where(x => !x.IsFull())
                         .Select(x => x.gameObject).ToList());

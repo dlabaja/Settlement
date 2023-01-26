@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = System.Random;
 
 public static class Utils
@@ -55,13 +57,14 @@ public static class Utils
         return gm.GetComponent<T>() is not null;
     }
 
-    public static IEnumerator SlerpMove(Transform source, Vector3 posToMove)
+    public static IEnumerator SlerpMove(Transform source, Vector3 posToMove, Action onComplete)
     {
-        while (Vector3Int.RoundToInt(source.position) != Vector3Int.RoundToInt(posToMove))
+        for (int i = 0; i < 400; i++)
         {
             source.position = Vector3.Slerp(source.position, posToMove, 0.02f);
             yield return new WaitForEndOfFrame();
         }
+        onComplete.Invoke();
     }
 
     public static IEnumerator SlerpRotation(Transform source, Quaternion rotToMove)

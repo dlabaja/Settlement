@@ -881,9 +881,9 @@ GameObject:
   - component: {fileID: 3106660841824522898}
   - component: {fileID: 6065272244191727596}
   - component: {fileID: 3643668008094343741}
-  - component: {fileID: -244782588934644886}
+  - component: {fileID: 1352754815912265308}
   m_Layer: 5
-  m_Name: BetterDropdown
+  m_Name: FocusDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1006,7 +1006,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
---- !u!114 &-244782588934644886
+--- !u!114 &1352754815912265308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1015,10 +1015,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7721646912787986318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 674a9b7bfaa64aa39f880618eb2a6c12, type: 3}
+  m_Script: {fileID: 11500000, guid: 8342f8659ba3432aa7fa8d9b1085ca22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 5
+  cooldown: 0.5
 --- !u!1 &7840930304917061669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1305,8 +1305,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -244782588934644886}
-        m_TargetAssemblyTypeName: Gui.DropdownExt, Assembly-CSharp
+      - m_Target: {fileID: 1352754815912265308}
+        m_TargetAssemblyTypeName: Gui.FocusDropdown, Assembly-CSharp
         m_MethodName: OnFocusClicked
         m_Mode: 1
         m_Arguments:

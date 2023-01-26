@@ -5,7 +5,7 @@ namespace KeystrokesController
 {
     public class KeystrokesController : MonoBehaviour
     {
-        protected Keystrokes _keystrokes;
+        protected static Keystrokes _keystrokes;
         private bool _rightClickPressed;
         protected Rigidbody _rigidbody;
         private CameraController _camera;
@@ -33,6 +33,9 @@ namespace KeystrokesController
             if (_rightClickPressed)
                 _camera.CameraDrag();
         }
+
+        public static void DisableInput() => _keystrokes.Disable();
+        public static void EnableInput() => _keystrokes.Enable();
 
         private void OnNotRightClick(InputAction.CallbackContext obj) => _rightClickPressed = false;
         private void OnRightClick(InputAction.CallbackContext obj) => _rightClickPressed = true;

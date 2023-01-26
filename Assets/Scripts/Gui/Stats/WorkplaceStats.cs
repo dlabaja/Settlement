@@ -17,7 +17,7 @@ namespace Gui.Stats
             var ui = gameObject.GetComponent<RectTransform>();
             var child = ui.transform.Find("Image");
             var name = child.Find("Name").GetComponent<Text>();
-            var workers = child.Find("Workers").GetComponent<DropdownExt>();
+            var workers = child.Find("Workers").GetComponent<AssignDropdown>();
             var producing = child.Find("Producing").GetComponent<Text>();
             var inventory = child.Find("Inventory").GetComponent<Text>();
 
@@ -28,7 +28,7 @@ namespace Gui.Stats
             StartCoroutine(UpdateData(workplace, workers, inventory));
         }
 
-        private IEnumerator UpdateData(Workplace workplace, DropdownExt workers, Text inventory)
+        private IEnumerator UpdateData(Workplace workplace, AssignDropdown workers, Text inventory)
         {
             while (true)
             {
