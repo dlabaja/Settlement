@@ -24,11 +24,9 @@ public class Entity : CustomObject
         get { return workplace ? workplace : FindObjectOfType<Spawn>().gameObject; }
         set
         {
-            try { workplace.GetComponent<Workplace>().FireWorker(gameObject); }
+            try { EmptyInventory(workplace); }
             catch {}
 
-            if (!value.GetComponent<Workplace>().AssignWorker(gameObject)) return;
-            EmptyInventory(workplace);
             workplace = value;
             Work();
         }
@@ -91,7 +89,7 @@ public class Entity : CustomObject
             SetDestination(Workplace);
             return;
         }
-        
+
         SetDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 

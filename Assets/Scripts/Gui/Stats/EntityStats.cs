@@ -10,8 +10,9 @@ namespace Gui.Stats
 {
     public class EntityStats : Stats
     {
-        public void DrawEntityStats(Entity entity)
+        public void Start()
         {
+            var entity = _sender.GetComponent<Entity>();
             var ui = gameObject.GetComponent<RectTransform>();
             var child = ui.transform.Find("Image");
             var name = child.Find("Name").GetComponent<Text>();
@@ -27,7 +28,7 @@ namespace Gui.Stats
 
             workplace.GetComponent<Dropdown>().onValueChanged.AddListener(delegate
             {
-                entity.Workplace = workplace.GetChosenElement();
+                workplace.GetChosenElement().GetComponent<Workplace>().AssignWorker(entity);
             });
 
             StartCoroutine(UpdateData(lookingFor, water, sleep, entity, workplace, inventory));

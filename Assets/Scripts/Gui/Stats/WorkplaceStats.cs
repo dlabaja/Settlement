@@ -11,9 +11,10 @@ namespace Gui.Stats
 {
     public class WorkplaceStats : Stats
     {
-        public void DrawWorkplaceStats(Workplace workplace)
+        public void Start()
         {
             //producing -> planks for wood
+            var workplace = _sender.GetComponent<Workplace>();
             var ui = gameObject.GetComponent<RectTransform>();
             var child = ui.transform.Find("Image");
             var name = child.Find("Name").GetComponent<Text>();
@@ -34,7 +35,7 @@ namespace Gui.Stats
             {
                 //todo house
                 workers.UpdateData(
-                    workplace.GetWorkers(),
+                    workplace.GetWorkers().Select(x => x.gameObject).ToList(),
                     $"Workers: {workplace.GetWorkers().Count}/{workplace.GetMaxWorkers()}"
                 );
 

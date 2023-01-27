@@ -1,4 +1,5 @@
 using Buildings.Workplace;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,31 +12,21 @@ namespace Gui
     {
         public GameObject sender;
 
-        private void UpdateDropdown(string firstItem)
-        {
-            var data = new List<Dropdown.OptionData>();
-            data.AddRange(gameObjects
+        private void UpdateDropdown() =>
+            gameObject.GetComponent<Dropdown>().options = gameObjects
                 .Select(x => new Dropdown.OptionData(x.ToString()))
-                .Prepend(new Dropdown.OptionData(firstItem))
-                .ToList());
-            gameObject.GetComponent<Dropdown>().options = data;
-        }
-        
-        public void UpdateData(List<GameObject> items, string firstItem)
+                .ToList();
+
+        public void UpdateData(List<GameObject> items, string label)
         {
             gameObjects = items;
-            UpdateDropdown(firstItem);
+            gameObject.transform.Find("Text").GetComponent<Text>().text = label;
+            UpdateDropdown();
         }
 
-        public void OnAssignClicked()
-        {
-            sender.GetComponent<Workplace>().AssignWorker(
-                FindObjectsOfType<Entity>().FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString())?.gameObject);
-        }
+        public void OnAssignClicked() => sender.GetComponent<Workplace>().AssignWorker(
+            FindObjectsOfType<Entity>().FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString()));
 
-        public void OnUnassignClicked()
-        {
-            sender.GetComponent<Workplace>().FireWorker(GetChosenElement());
-        }
+        public void OnUnassignClicked() => sender.GetComponent<Workplace>().FireWorker(GetChosenElement().GetComponent<Entity>());
     }
 }
