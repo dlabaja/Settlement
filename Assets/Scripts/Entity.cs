@@ -1,6 +1,7 @@
 using Buildings;
 using Buildings.Workplace;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,6 +33,16 @@ public class Entity : CustomObject
         }
     }
 
+    private IEnumerator UnstuckMechanism()
+    {
+        while (true)
+        {
+            if (!lookingFor.activeSelf || lookingFor == null)
+                Work();
+            yield return new WaitForSeconds(1);
+        }
+    }
+
     private void Awake()
     {
         _navMesh = GetComponent<NavMeshAgent>();
@@ -45,6 +56,7 @@ public class Entity : CustomObject
         RefillSleep();
 
         ChangeLookingFor();
+        StartCoroutine(UnstuckMechanism());
     }
 
     //updates tasks the entity has to do

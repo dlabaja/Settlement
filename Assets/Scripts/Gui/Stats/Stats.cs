@@ -1,7 +1,6 @@
 using Buildings;
 using Buildings.Workplace;
-using System;
-using System.Collections.Generic;
+using Interfaces;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,7 +22,7 @@ namespace Gui.Stats
 
         public static void GenerateStats(GameObject gm)
         {
-            if (HasDuplicates(gm)) return; //only one stat per gameobject
+            if (HasDuplicates(gm) || gm.HasComponent<IStatsBlacklist>()) return;
             if (gm.HasComponent<Entity>())
                 Utils.LoadGameObject("Stats/Entity", Const.Parent.Canvas)
                     .GetComponent<EntityStats>().NewStats(gm);
@@ -36,6 +35,5 @@ namespace Gui.Stats
 
         private static bool HasDuplicates(GameObject gm) =>
             FindObjectsOfType<Stats>().Count(x => x._sender == gm) != 0;
-
     }
 }
