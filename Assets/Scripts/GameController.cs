@@ -5,6 +5,8 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         CustomObject.Spawn<Entity>();
+        CustomObject.Spawn<Entity>();
+        CustomObject.Spawn<Entity>();
         //TODO Time.timeScale = Const.GameSpeed;
     }
 

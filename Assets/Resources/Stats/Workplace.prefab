@@ -1033,9 +1033,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1166135473031769992, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166135473031769992, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1166135473031769992, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252775027643457072, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00009918213
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472178524318268506, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7721646912787986318, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
       propertyPath: m_Name
       value: Workers
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005410951691134252, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005410951691134252, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005410951691134252, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}

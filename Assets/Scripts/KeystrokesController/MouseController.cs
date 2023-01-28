@@ -1,12 +1,16 @@
 using Gui.Stats;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace KeystrokesController
 {
     public class MouseController : KeystrokesController
     {
         private InputAction _mouseClick;
+
         private void Start()
         {
             _mouseClick = _keystrokes.Mouse.Click;
@@ -21,12 +25,19 @@ namespace KeystrokesController
 
         private void ShootRay()
         {
-            Ray ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var pointer = Mouse.current.position.ReadValue();
+            Ray ray = Camera.main!.ScreenPointToRay(pointer);
+            var pointerEventData = new PointerEventData(EventSystem.current);
+            pointerEventData.position = pointer;
+            var raycastResults = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+
+            if (raycastResults.Count > 0) return;
+
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 Stats.GenerateStats(hit.collider.gameObject);
             }
-            //todo pokud je to terén/nezařazeno zavři všechny okna
         }
     }
 }

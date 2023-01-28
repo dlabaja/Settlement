@@ -35,8 +35,7 @@ namespace Gui.Stats
         }
 
         private static bool HasDuplicates(GameObject gm) =>
-            FindObjectsOfType<Stats>()
-                .Select(x => x._sender == gm)
-                .ToList().Count > 1;
+            FindObjectsOfType<Stats>().Count(x => x._sender == gm) != 0;
+
     }
 }
