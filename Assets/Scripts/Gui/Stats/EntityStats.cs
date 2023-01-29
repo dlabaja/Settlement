@@ -41,8 +41,8 @@ namespace Gui.Stats
                 //todo house
                 workplace.UpdateData(
                     FindObjectsOfType<Workplace>().OrderBy(x => x.name)
-                        .Where(x => !x.IsFull())
-                        .Select(x => x.gameObject).ToList());
+                        .Where(x => !x.IsFull() && x.gameObject != entity.Workplace)
+                        .Select(x => x.gameObject).ToList(), entity.Workplace.name);
 
                 lookingFor.text = Regex.Replace(entity.GetLookingFor().ToString(), @"\((.*?)\)", "");
                 

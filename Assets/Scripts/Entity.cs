@@ -50,6 +50,7 @@ public class Entity : CustomObject
 
         gender = Utils.GenerateGender();
         name = Utils.GenerateName(gender);
+        gameObject.name = name;
         house = FindNearestObject<House>();
         Workplace = GameObject.Find(Const.CustomObjects.Spawn.ToString());
         RefillWater();
@@ -96,7 +97,7 @@ public class Entity : CustomObject
     {
         var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObjects());
 
-        if (_inventory.IsFull()) //todo plnej itemů jiného typu (GetItemRoom?)
+        if (_inventory.IsFull()) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
         {
             SetDestination(Workplace);
             return;

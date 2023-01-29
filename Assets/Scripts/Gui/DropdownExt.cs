@@ -7,22 +7,19 @@ namespace Gui
 {
     public class DropdownExt : MonoBehaviour
     {
-        protected List<GameObject> gameObjects = new List<GameObject>();
+        private List<GameObject> gameObjects = new List<GameObject>();
 
-        private void UpdateDropdown()
-        {
+        private void UpdateDropdown() =>
             gameObject.GetComponent<Dropdown>().options = gameObjects
-                .Select(x => new Dropdown.OptionData(x.ToString())).ToList();
-        }
+                .Select(x => new Dropdown.OptionData(x.name))
+                .ToList();
 
-        public GameObject GetChosenElement()
-        {
-            return gameObjects.ElementAt(GetComponent<Dropdown>().value);
-        }
+        public GameObject GetChosenElement() => gameObjects.ElementAt(GetComponent<Dropdown>().value);
 
-        public void UpdateData(List<GameObject> items)
+        public void UpdateData(List<GameObject> items, string label)
         {
             gameObjects = items;
+            gameObject.transform.Find("Text").GetComponent<Text>().text = label;
             UpdateDropdown();
         }
     }

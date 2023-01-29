@@ -12,18 +12,6 @@ namespace Gui
     {
         public GameObject sender;
 
-        private void UpdateDropdown() =>
-            gameObject.GetComponent<Dropdown>().options = gameObjects
-                .Select(x => new Dropdown.OptionData(x.ToString()))
-                .ToList();
-
-        public void UpdateData(List<GameObject> items, string label)
-        {
-            gameObjects = items;
-            gameObject.transform.Find("Text").GetComponent<Text>().text = label;
-            UpdateDropdown();
-        }
-
         public void OnAssignClicked() => sender.GetComponent<Workplace>().AssignWorker(
             FindObjectsOfType<Entity>().FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString()));
 

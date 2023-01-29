@@ -24,7 +24,7 @@ namespace Gui.Stats
 
             name.text = workplace.name;
             workers.sender = workplace.gameObject;
-            producing.text = "Nic lol";
+            producing.text = ProducingTextGen(workplace.producingItems);
 
             StartCoroutine(UpdateData(workplace, workers, inventory));
         }
@@ -44,6 +44,26 @@ namespace Gui.Stats
 
                 yield return new WaitForSeconds(.5f);
             }
+        }
+
+        private string ProducingTextGen(Dictionary<List<Const.Item>, List<Const.Item>> dict)
+        {
+            var firstKey = dict.Keys.FirstOrDefault();
+            var firstValue = dict.Values.FirstOrDefault();
+
+            if (firstKey == null || firstValue == null)
+            {
+                return string.Empty;
+            }
+
+            if (firstKey.Contains(Const.Item.None))
+            {
+                return $"-> {string.Join(", ", firstValue)}";
+            }
+
+            var keyString = string.Join(", ", firstKey);
+            var valueString = string.Join(", ", firstValue);
+            return $"{keyString} -> {valueString}";
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Buildings.Workplace
         [SerializeField] private Const.CustomObjects workObjects;
         [SerializeField] private List<Entity> workers;
         [SerializeField] private int maxWorkers;
+        public Dictionary<List<Const.Item>, List<Const.Item>> producingItems;
 
         public Const.CustomObjects GetWorkObjects() => workObjects;
 

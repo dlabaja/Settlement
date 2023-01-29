@@ -522,14 +522,14 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 15
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 72
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
 --- !u!1 &3055989159695350926
@@ -567,8 +567,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -256, y: 642}
-  m_SizeDelta: {x: 97.076904, y: 23.831787}
+  m_AnchoredPosition: {x: -195.21, y: 642}
+  m_SizeDelta: {x: 107.23, y: 23.832}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5036298820048646825
 CanvasRenderer:
@@ -602,14 +602,14 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 72
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: '{Name}'
 --- !u!1 &4937239951456495921
@@ -682,14 +682,14 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 15
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 72
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 1
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
 --- !u!1 &5640907895735021460
@@ -1048,6 +1048,10 @@ PrefabInstance:
     - target: {fileID: 1252775027643457072, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.00009918213
+      objectReference: {fileID: 0}
+    - target: {fileID: 2194020689435120333, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7472178524318268506, guid: 71cb54da94bd00cd39ea01446900be91, type: 3}
       propertyPath: m_Value
