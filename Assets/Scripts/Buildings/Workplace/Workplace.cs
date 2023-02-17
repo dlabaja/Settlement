@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Buildings.Workplace
 {
     public class Workplace : Building
     {
         //objects the entity has to meet (eg tree for woodcutter job)
-        [SerializeField] private Const.CustomObjects workObjects;
+        [SerializeField] private Const.CustomObjects workObject;
         [SerializeField] private List<Entity> workers;
         [SerializeField] private int maxWorkers;
         public Dictionary<List<Const.Item>, List<Const.Item>> producingItems;
 
-        public Const.CustomObjects GetWorkObjects() => workObjects;
+        public Const.CustomObjects GetWorkObject() => workObject;
 
         public int GetMaxWorkers() => maxWorkers;
 
@@ -19,9 +20,15 @@ namespace Buildings.Workplace
 
         public bool AssignWorker(Entity worker)
         {
-            if (workers.Count >= maxWorkers) return false;
-            if (workers.Contains(worker)) return false;
-            worker.Workplace.GetComponent<Workplace>().FireWorker(worker);
+            if (workers.Count >= maxWorkers
+                || workers.Contains(worker)
+                || worker == null) return false;
+            try
+            {
+                worker.Workplace.GetComponent<Workplace>().FireWorker(worker);
+            }
+            catch {}
+
             workers.Add(worker);
             worker.Workplace = gameObject;
             return true;

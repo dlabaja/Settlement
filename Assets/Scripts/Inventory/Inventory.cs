@@ -13,12 +13,22 @@ namespace Inventory
         private Dictionary<int, ItemStruct> _inventory = new();
         //todo inspector debug
         [SerializeField] private List<ItemStruct> _startValues = new();
+        [SerializeField] private bool itemsAreConstant;
 
         //todo inspector debug
         private void Awake()
         {
-            for (int i = 0; i < slots; i++)
-                _inventory.Add(i, new ItemStruct(Item.None, 0));
+            if (itemsAreConstant)
+            {
+                slots = _startValues.Count;
+                for (int i = 0; i < slots; i++)
+                    _inventory.Add(i, _startValues[i]);
+            }
+            else
+            {
+                for (int i = 0; i < slots; i++)
+                    _inventory.Add(i, new ItemStruct(Item.None, 0));
+            }
 
             for (int i = 0; i < _startValues.Count; i++)
                 AddItems(_startValues[i].item, _startValues[i].count);
@@ -80,7 +90,7 @@ namespace Inventory
                 if (count == 0)
                     break;
             }
-            
+
             return defaultCount - count;
         }
 
@@ -89,6 +99,13 @@ namespace Inventory
             for (var i = 0; i < _inventory.Count; i++)
                 if (_inventory[i].count == 0)
                     _inventory[i] = new ItemStruct(Item.None, 0);
+        }
+
+        private void ReplaceWithStartValues()
+        {
+            for (var i = 0; i < _inventory.Count; i++)
+                if (_inventory[i].item == Item.None)
+                    _inventory[i] = new ItemStruct(_startValues[i].item, 0);
         }
 
         public int CountAllItems()
@@ -103,7 +120,10 @@ namespace Inventory
             return val;
         }
 
-        public bool IsFull() => slots * stackSize == CountAllItems();
+        public bool IsFull()
+        {
+            return slots * stackSize == CountAllItems();
+        }
 
         public bool IsEmpty() => CountAllItems() == 0;
 
@@ -120,9 +140,15 @@ namespace Inventory
 
             var removed = senderInv.RemoveItems(item, count);
             senderInv.AddItems(item, receiverInv.AddItems(item, removed));
-            
-            senderInv.ReplaceWithNone();
-            receiverInv.ReplaceWithNone();
+
+            if (!itemsAreConstant)
+            {
+                senderInv.ReplaceWithNone();
+                receiverInv.ReplaceWithNone();
+            }
+            else
+                receiverInv.ReplaceWithStartValues();
+
             return true;
         }
     }

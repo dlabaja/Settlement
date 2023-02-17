@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32bf846fdef79cee95f8c7b70391f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workObjects: 5
+  workObject: 6
   workers: []
   maxWorkers: 4
 --- !u!114 &9029656768288993032
@@ -67,6 +67,7 @@ MonoBehaviour:
   slots: 1
   stackSize: 100
   _startValues: []
+  itemsAreConstant: 0
   _values: []
 --- !u!33 &4094131659973612557
 MeshFilter:

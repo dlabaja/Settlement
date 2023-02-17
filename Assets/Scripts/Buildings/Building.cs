@@ -11,8 +11,9 @@ namespace Buildings
         {
             var entity = collider.gameObject.GetComponent<Entity>();
             if (entity.GetLookingFor() != gameObject) return;
+            if (gameObject.HasComponent<Workplace.Workplace>() && collider.GetComponent<Entity>().Workplace != gameObject) return;
             await GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
-            entity.ChangeLookingFor();
+            entity.Work();
         }
     }
 }

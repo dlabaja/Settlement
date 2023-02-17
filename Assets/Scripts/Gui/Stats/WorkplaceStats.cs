@@ -24,7 +24,8 @@ namespace Gui.Stats
 
             name.text = workplace.name;
             workers.sender = workplace.gameObject;
-            producing.text = ProducingTextGen(workplace.producingItems);
+            if (workplace.producingItems != null)
+                producing.text = ProducingTextGen(workplace.producingItems);
 
             StartCoroutine(UpdateData(workplace, workers, inventory));
         }

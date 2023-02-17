@@ -111,6 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e5e52842b84bbf8f7c3567d8f37a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workObjects: 2
+  workObject: 2
   workers: []
   maxWorkers: 2147483647

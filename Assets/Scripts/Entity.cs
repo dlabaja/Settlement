@@ -42,6 +42,16 @@ public class Entity : CustomObject
             yield return new WaitForSeconds(1);
         }
     }
+    
+    private IEnumerator ElementaryNeeds()
+    {
+        while (true)
+        {
+            if (water <= 0) SetDestination(FindNearestObject<Well>());
+            else if (sleep <= 0) SetDestination(house); //todo FindHouse()
+            yield return new WaitForSeconds(10);
+        }
+    }
 
     private void Awake()
     {
@@ -56,16 +66,21 @@ public class Entity : CustomObject
         RefillWater();
         RefillSleep();
 
-        ChangeLookingFor();
+        StartCoroutine(ElementaryNeeds());
         StartCoroutine(UnstuckMechanism());
     }
-
-    //updates tasks the entity has to do
-    public void ChangeLookingFor()
+    
+    //works until inventory is full, then finds workplace
+    public void Work()
     {
-        if (water <= 0) SetDestination(FindNearestObject<Well>());
-        else if (sleep <= 0) SetDestination(house); //todo FindHouse()
-        Work();
+        if (_inventory.IsFull() || Workplace.GetComponent<Workplace>().GetWorkObject() == Const.CustomObjects.None) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
+        {
+            SetDestination(Workplace);
+            return;
+        }
+
+        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObject());
+        SetDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
     //returns nearest object of type T and adds it to the lookingFor
@@ -90,20 +105,6 @@ public class Entity : CustomObject
 
         _navMesh.SetDestination(gm.transform.position);
         lookingFor = gm;
-    }
-
-    //works until inventory is full, then finds workplace
-    public void Work()
-    {
-        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObjects());
-
-        if (_inventory.IsFull()) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
-        {
-            SetDestination(Workplace);
-            return;
-        }
-
-        SetDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
     public void FindHouse()

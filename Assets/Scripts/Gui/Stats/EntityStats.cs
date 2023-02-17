@@ -1,6 +1,7 @@
 using Buildings.Workplace;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -42,7 +43,8 @@ namespace Gui.Stats
                 workplace.UpdateData(
                     FindObjectsOfType<Workplace>().OrderBy(x => x.name)
                         .Where(x => !x.IsFull() && x.gameObject != entity.Workplace)
-                        .Select(x => x.gameObject).ToList(), entity.Workplace.name);
+                        .Select(x => x.gameObject)
+                        .Append(entity.Workplace.gameObject).ToList(), "");
 
                 lookingFor.text = Regex.Replace(entity.GetLookingFor().ToString(), @"\((.*?)\)", "");
                 
