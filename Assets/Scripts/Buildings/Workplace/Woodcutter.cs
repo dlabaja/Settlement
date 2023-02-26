@@ -1,3 +1,4 @@
+using Gui.Stats;
 using Interfaces;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Buildings.Workplace
 {
-    public class Woodcutter : Workplace, ICollideable
+    public class Woodcutter : Workplace, ICollideable, IStats
     {
         private void Awake()
         {
@@ -20,6 +21,21 @@ namespace Buildings.Workplace
             await entity.Stop(2000);
             GetComponent<Inventory.Inventory>().TransferItems(Const.Item.Wood,
                 entity.GetComponent<Inventory.Inventory>().GetItemCount(Const.Item.Wood), gameObject, entity.gameObject);
+        }
+
+
+        public void GenerateStats()
+        {
+            var p = Stats.GenerateStats();
+            p.AddLabelWithText("susdaadadddddddddddddddd", "amogus");
+            p.AddLabelWithText("susdaadadddddddddddddddddddddddddddddddddd", "amogus");
+            p.AddLabelWithText("susdaadadddddddddddddddddddddddddddddddddd", "amogus");
+            p.AddLabel("ppppppppppppppppppppppppppppp");
+            p.AddLabel("ppppppppppppppppppppppppppppp");
+            p.AddLabel("ddddddddddddddd");
+            //p.AddLabel("s");
+            p.BuildStats();
+            
         }
     }
 }

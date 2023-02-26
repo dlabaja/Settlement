@@ -1,11 +1,7 @@
-using Buildings.Workplace;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using static UnityEngine.Time;
 
-namespace Gui
+namespace Gui.Stats.Elements
 {
     public class FocusDropdown : DropdownExt
     {

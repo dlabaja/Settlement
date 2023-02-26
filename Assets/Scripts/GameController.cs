@@ -4,9 +4,10 @@ public class GameController : MonoBehaviour
 {
     private void Start()
     {
-        CustomObject.Spawn<Entity>();
-        CustomObject.Spawn<Entity>();
-        CustomObject.Spawn<Entity>();
+        for (int i = 0; i < 3; i++)
+        {
+            Utils.LoadGameObject("Entity", Const.Parent.Entities);
+        }
         //TODO Time.timeScale = Const.GameSpeed;
     }
 

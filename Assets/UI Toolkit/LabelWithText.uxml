@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Container" style="height: 17px; width: 71px; border-left-color: rgb(229, 31, 31); border-right-color: rgb(229, 31, 31); border-top-color: rgb(229, 31, 31); border-bottom-color: rgb(229, 31, 31); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; flex-direction: row; align-items: auto; -unity-text-align: middle-left;">
+        <ui:Label text="Label" display-tooltip-when-elided="true" style="width: auto; height: auto; align-items: auto; white-space: normal; color: rgb(0, 0, 0);" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="Text" style="width: auto; align-items: auto; flex-direction: row; justify-content: flex-end; white-space: normal; color: rgb(255, 255, 255);" />
+    </ui:VisualElement>
+</ui:UXML>

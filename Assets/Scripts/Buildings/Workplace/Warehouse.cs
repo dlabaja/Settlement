@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Buildings.Workplace
 {
-    public class Warehouse : Workplace, ICollideable
+    public class Warehouse : Workplace, ICollideable, IStats
     {
         private List<Entity> currentlyWorking = new List<Entity>();
 
@@ -80,6 +80,11 @@ namespace Buildings.Workplace
             }
 
             return (null, Const.Item.None);
+        }
+
+        public void GenerateStats()
+        {
+            print("wo");
         }
     }
 }

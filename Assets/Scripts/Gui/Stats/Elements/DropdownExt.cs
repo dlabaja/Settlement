@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Gui
+namespace Gui.Stats.Elements
 {
     public class DropdownExt : MonoBehaviour
     {

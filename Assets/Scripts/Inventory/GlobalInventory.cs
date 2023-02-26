@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Inventory
 {
@@ -18,15 +19,16 @@ namespace Inventory
             foreach (var i in Enum.GetValues(typeof(Const.Item)).Cast<Const.Item>())
                 if (i != Const.Item.None)
                     _globalInventory.TryAdd(i, 0);
-            StartCoroutine(UpdateGlobalInventory());
+            var gI = GetComponent<UIDocument>().rootVisualElement;
+            StartCoroutine(UpdateGlobalInventory(gI));
         }
 
-        private static IEnumerator UpdateGlobalInventory()
+        private static IEnumerator UpdateGlobalInventory(VisualElement root)
         {
             while (true)
             {
                 UpdateGlobalInventoryValues();
-                Hud.SetGlobalInventoryText(Utils.DictToString(_globalInventory));
+                root.Q<Label>("Text").text = Utils.DictToString(_globalInventory);
                 yield return new WaitForSeconds(1);
             }
         }

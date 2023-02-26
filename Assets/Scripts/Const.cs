@@ -32,15 +32,9 @@ public static class Const
     {
         Entities,
         Buildings,
-        Canvas
+        Gui
     }
 
-    public enum Job
-    {
-        Woodcutter,
-        Stonecutter
-    }
-        
     public const int WaterDecreaseChance = 400;
     public const int SleepDecreaseChance = 600;
 

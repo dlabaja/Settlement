@@ -1,4 +1,5 @@
 using Gui.Stats;
+using Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -36,7 +37,8 @@ namespace KeystrokesController
 
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Stats.GenerateStats(hit.collider.gameObject);
+                hit.collider.gameObject.GetComponent<IStats>().GenerateStats(); //todo check try
+                //Stats.GenerateStats(hit.collider.gameObject);
             }
         }
     }

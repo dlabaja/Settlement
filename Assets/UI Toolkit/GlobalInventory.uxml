@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/GlobalInventory.uss?fileID=7433441132597879392&amp;guid=a3c78c0ddbba4dc148545f4aade18f59&amp;type=3#GlobalInventory" />
+    <ui:Label display-tooltip-when-elided="true" name="Text" style="-unity-text-align: middle-center; height: 30px; color: rgb(255, 255, 255); width: 30%; left: auto; position: relative; align-items: auto; flex-wrap: wrap; white-space: normal; flex-direction: row; justify-content: flex-start; background-color: rgba(0, 0, 0, 0.5); max-width: none; min-width: 100px; max-height: none; min-height: auto; font-size: 12px;" />
+</ui:UXML>

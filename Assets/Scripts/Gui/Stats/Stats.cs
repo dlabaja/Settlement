@@ -1,39 +1,78 @@
 using Buildings;
 using Buildings.Workplace;
 using Interfaces;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 namespace Gui.Stats
 {
-    public class Stats : Window
+    public class Stats : MonoBehaviour
     {
-        protected GameObject _sender;
+        private VisualElement root;
+        private VisualElement container;
+        private const int elementOffset = 10;
 
-        private void NewStats(GameObject gm)
+        public static Stats GenerateStats() => Utils.LoadGameObject("Stats/Stats", Const.Parent.Gui).GetComponent<Stats>();
+
+        private void Awake()
         {
-            var ui = gameObject.GetComponent<RectTransform>();
-            _sender = gm;
+            var parent = new GameObject("Stats");
+            parent.transform.parent = GameObject.Find("Gui").transform;
+            gameObject.transform.parent = parent.transform;
 
-            var mouse = Mouse.current.position.ReadValue();
-            ui.position = new Vector3(mouse.x, mouse.y, 0);
+            root = GetComponent<UIDocument>().rootVisualElement;
+            container = root.Q<VisualElement>("Container");
         }
 
-        public static void GenerateStats(GameObject gm)
+        public void BuildStats() //trvalo asi 3 hodiny, odkazoval jsem na template místo elementu 
         {
-            if (HasDuplicates(gm) || gm.HasComponent<IStatsBlacklist>()) return;
-            if (gm.HasComponent<Entity>())
-                Utils.LoadGameObject("Stats/Entity", Const.Parent.Canvas)
-                    .GetComponent<EntityStats>().NewStats(gm);
-            else if (gm.HasComponent<House>())
-                print("dum stats");
-            else if (gm.HasComponent<Workplace>())
-                Utils.LoadGameObject("Stats/Workplace", Const.Parent.Canvas)
-                    .GetComponent<WorkplaceStats>().NewStats(gm);
+            container.schedule.Execute(() =>
+            {
+                var dp = container.style.top.value.value;
+                var maxWidth = 0f;
+                foreach (var child in container.Children().Select(x => x.Children().FirstOrDefault()))
+                {
+                    child.style.top = dp;
+                    dp += child.layout.height + elementOffset;
+                    if (child.layout.width > maxWidth)
+                        maxWidth = child.layout.width;
+                }
+                root.style.width = maxWidth;
+            });
         }
 
-        private static bool HasDuplicates(GameObject gm) =>
-            FindObjectsOfType<Stats>().Count(x => x._sender == gm) != 0;
+        private VisualElement AddToContainer(StatsElements name)
+        {
+            var obj = Instantiate(Resources.Load($"Stats/{name}") as GameObject, gameObject.transform.parent).GetComponent<UIDocument>().rootVisualElement;
+            container.Add(obj);
+            return obj;
+        }
+
+        public Stats AddLabel(string text)
+        {
+            var root = AddToContainer(StatsElements.Label);
+            root.Q<Label>().text = text;
+            return this;
+        }
+
+        public Stats AddLabelWithText(string label, string text)
+        {
+            var root = AddToContainer(StatsElements.LabelWithText);
+            root = root.Q<VisualElement>("Container");
+            root.Q<Label>().text = label;
+            root.Q<Label>("Text").text = text;
+            return this;
+        }
+
+        public enum StatsElements
+        {
+            Label,
+            LabelWithText
+        }
     }
 }
