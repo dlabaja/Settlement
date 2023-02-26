@@ -26,16 +26,19 @@ namespace Buildings.Workplace
 
         public void GenerateStats()
         {
-            var p = Stats.GenerateStats();
-            p.AddLabelWithText("susdaadadddddddddddddddd", "amogus");
-            p.AddLabelWithText("susdaadadddddddddddddddddddddddddddddddddd", "amogus");
-            p.AddLabelWithText("susdaadadddddddddddddddddddddddddddddddddd", "amogus");
-            p.AddLabel("ppppppppppppppppppppppppppppp");
-            p.AddLabel("ppppppppppppppppppppppppppppp");
-            p.AddLabel("ddddddddddddddd");
-            //p.AddLabel("s");
-            p.BuildStats();
-            
+            Stats.GenerateStats()
+                .AddLabel("Woodcutter")
+                .AddLabel("-> Wood")
+                .AddLabelWithText("Workers", "6")
+                .AddLabelWithText("Workers", "6")
+                .AddLabel("Woodcutter")
+                .AddLabelWithText("Workers", "6")
+                .AddLabel("Woodcutter")
+                .AddLabel("-> Wood")
+                .AddLabelWithText("Workers", "6")
+                .AddLabelWithText("Workers", "6")
+                .AddLabelWithText("Workers", "6")
+                .BuildStats();
         }
     }
 }

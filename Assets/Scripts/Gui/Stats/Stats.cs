@@ -1,5 +1,6 @@
 using Buildings;
 using Buildings.Workplace;
+using Gui.Stats.Elements;
 using Interfaces;
 using System;
 using System.Collections;
@@ -13,9 +14,9 @@ namespace Gui.Stats
 {
     public class Stats : MonoBehaviour
     {
-        private VisualElement root;
         private VisualElement container;
-        private const int elementOffset = 10;
+        private const int elementOffset = 5;
+        private const int offset = 20;
 
         public static Stats GenerateStats() => Utils.LoadGameObject("Stats/Stats", Const.Parent.Gui).GetComponent<Stats>();
 
@@ -25,8 +26,10 @@ namespace Gui.Stats
             parent.transform.parent = GameObject.Find("Gui").transform;
             gameObject.transform.parent = parent.transform;
 
-            root = GetComponent<UIDocument>().rootVisualElement;
+            var root = GetComponent<UIDocument>().rootVisualElement;
             container = root.Q<VisualElement>("Container");
+            var close = root.Q<Button>("Close");
+            close.clicked += () => CloseButton.Close(parent);
         }
 
         public void BuildStats() //trvalo asi 3 hodiny, odkazoval jsem na template místo elementu 
@@ -37,12 +40,16 @@ namespace Gui.Stats
                 var maxWidth = 0f;
                 foreach (var child in container.Children().Select(x => x.Children().FirstOrDefault()))
                 {
-                    child.style.top = dp;
+                    child!.style.top = dp;
+                    print(dp);
                     dp += child.layout.height + elementOffset;
                     if (child.layout.width > maxWidth)
                         maxWidth = child.layout.width;
                 }
-                root.style.width = maxWidth;
+                
+                var root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Top");
+                root.style.width = maxWidth + 2 * offset;
+                root.style.height = dp + 2 * offset;
             });
         }
 
@@ -56,6 +63,7 @@ namespace Gui.Stats
         public Stats AddLabel(string text)
         {
             var root = AddToContainer(StatsElements.Label);
+            root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = text;
             return this;
         }

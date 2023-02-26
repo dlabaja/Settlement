@@ -9,7 +9,7 @@ namespace Gui.Stats.Elements
         private Label label;
         private void Awake()
         {
-            label = GetComponent<UIDocument>().rootVisualElement.Q<Label>();
+            label = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Container").Q<Label>();
             label.RegisterCallback<GeometryChangedEvent>(OnLabelResized);
         }
 
