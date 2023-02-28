@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement name="Container" style="height: 16px; width: 71px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; flex-direction: row; align-items: auto; -unity-text-align: middle-left; flex-shrink: 0; position: relative; top: 0; left: 1px;">
-        <ui:Label text="Label" display-tooltip-when-elided="true" style="width: auto; height: 16px; align-items: auto; white-space: normal; color: rgb(255, 255, 255); padding-right: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; justify-content: space-around;" />
-        <ui:Label text="Label" display-tooltip-when-elided="true" name="Text" style="width: auto; align-items: auto; flex-direction: row; justify-content: flex-end; white-space: normal; color: rgb(255, 255, 255); height: 16px;" />
+    <ui:VisualElement name="Container" style="height: 16px; width: 71px; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; flex-direction: row; align-items: auto; -unity-text-align: middle-left; flex-shrink: 0; position: relative; top: 0; left: 0;">
+        <ui:Label text="Label" display-tooltip-when-elided="true" style="width: auto; height: 16px; align-items: auto; white-space: normal; color: rgb(255, 255, 255); padding-right: 0; padding-left: 0; padding-top: 0; padding-bottom: 0; justify-content: space-around; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="Text" style="width: auto; align-items: auto; flex-direction: row; justify-content: flex-end; white-space: normal; color: rgb(255, 255, 255); height: 16px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
     </ui:VisualElement>
 </ui:UXML>

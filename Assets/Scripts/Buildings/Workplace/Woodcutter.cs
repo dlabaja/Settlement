@@ -31,13 +31,19 @@ namespace Buildings.Workplace
                 .AddLabel("-> Wood")
                 .AddLabelWithText("Workers", "6")
                 .AddLabelWithText("Workers", "6")
+                .AddSpace()
                 .AddLabel("Woodcutter")
-                .AddLabelWithText("Workers", "6")
-                .AddLabel("Woodcutter")
-                .AddLabel("-> Wood")
-                .AddLabelWithText("Workers", "6")
                 .AddLabelWithText("Workers", "6")
                 .AddDropdown()
+                .AddDropdown()
+                .AddLabel("Woodcutter")
+                .AddLabel("-> Wood")
+                .AddDropdown()
+                .AddLabelWithText("Workers", "6")
+                .AddSpace()
+                .AddSpace()
+                .AddDropdown()
+                .AddLabelWithText("Workers", "6")
                 .BuildStats();
         }
     }

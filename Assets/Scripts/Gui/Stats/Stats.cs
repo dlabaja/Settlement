@@ -67,10 +67,16 @@ namespace Gui.Stats
             root.Q<Label>().text = text;
             return this;
         }
+
+        public Stats AddSpace()
+        {
+            AddToContainer("Space");
+            return this;
+        }
         
         public Stats AddDropdown()
         {
-            var root = AddToContainer("Dropdown");
+            AddToContainer("Dropdown");
             return this;
         }
 
