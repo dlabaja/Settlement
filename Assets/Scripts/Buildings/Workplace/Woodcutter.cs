@@ -37,7 +37,7 @@ namespace Buildings.Workplace
                 .AddLabel("-> Wood")
                 .AddLabelWithText("Workers", "6")
                 .AddLabelWithText("Workers", "6")
-                .AddLabelWithText("Workers", "6")
+                .AddDropdown()
                 .BuildStats();
         }
     }

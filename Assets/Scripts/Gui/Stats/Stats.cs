@@ -53,7 +53,7 @@ namespace Gui.Stats
             });
         }
 
-        private VisualElement AddToContainer(StatsElements name)
+        private VisualElement AddToContainer(string name)
         {
             var obj = Instantiate(Resources.Load($"Stats/{name}") as GameObject, gameObject.transform.parent).GetComponent<UIDocument>().rootVisualElement;
             container.Add(obj);
@@ -62,25 +62,25 @@ namespace Gui.Stats
 
         public Stats AddLabel(string text)
         {
-            var root = AddToContainer(StatsElements.Label);
+            var root = AddToContainer("Label");
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = text;
+            return this;
+        }
+        
+        public Stats AddDropdown()
+        {
+            var root = AddToContainer("Dropdown");
             return this;
         }
 
         public Stats AddLabelWithText(string label, string text)
         {
-            var root = AddToContainer(StatsElements.LabelWithText);
+            var root = AddToContainer("LabelWithText");
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = label;
             root.Q<Label>("Text").text = text;
             return this;
-        }
-
-        public enum StatsElements
-        {
-            Label,
-            LabelWithText
         }
     }
 }
