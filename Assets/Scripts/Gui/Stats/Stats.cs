@@ -41,30 +41,29 @@ namespace Gui.Stats
                 foreach (var child in container.Children().Select(x => x.Children().FirstOrDefault()))
                 {
                     child!.style.top = dp;
-                    print(dp);
                     dp += child.layout.height + elementOffset;
                     if (child.layout.width > maxWidth)
                         maxWidth = child.layout.width;
                 }
-                
                 var root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Top");
-                root.style.width = maxWidth + 2 * offset;
+                root.style.width = maxWidth;
                 root.style.height = dp + 2 * offset;
             });
         }
 
-        private VisualElement AddToContainer(string name)
+        private UIDocument AddToContainer(string name)
         {
-            var obj = Instantiate(Resources.Load($"Stats/{name}") as GameObject, gameObject.transform.parent).GetComponent<UIDocument>().rootVisualElement;
-            container.Add(obj);
+            var obj = Instantiate(Resources.Load($"Stats/{name}") as GameObject, gameObject.transform.parent).GetComponent<UIDocument>();
+            container.Add(obj.rootVisualElement);
             return obj;
         }
 
-        public Stats AddLabel(string text)
+        public Stats AddLabel(string text, int fontSize = 14)
         {
-            var root = AddToContainer("Label");
+            var root = AddToContainer("Label").rootVisualElement;
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = text;
+            root.Q<Label>().style.fontSize = fontSize;
             return this;
         }
 
@@ -74,18 +73,25 @@ namespace Gui.Stats
             return this;
         }
         
-        public Stats AddDropdown()
+        public Stats AddDropdown(List<GameObject> items, string outerLable, string innerLabel)
         {
-            AddToContainer("Dropdown");
+            var dropdown = AddToContainer("Dropdown").GetComponent<AssignDropdownStats>();
+            dropdown.AddItems(items);
+            dropdown.SetOuterLabel(outerLable);
+            dropdown.SetInnerLabel(innerLabel);
+
             return this;
         }
 
-        public Stats AddLabelWithText(string label, string text)
+        public Stats AddLabelWithText(string label, string text, int fontSize = 14)
         {
-            var root = AddToContainer("LabelWithText");
+            var root = AddToContainer("LabelWithText").rootVisualElement;
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = label;
+            root.Q<Label>().style.fontSize = fontSize;
+            
             root.Q<Label>("Text").text = text;
+            root.Q<Label>("Text").style.fontSize = fontSize;
             return this;
         }
     }

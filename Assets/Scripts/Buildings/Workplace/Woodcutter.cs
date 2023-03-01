@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Buildings.Workplace
 {
@@ -27,22 +28,24 @@ namespace Buildings.Workplace
         public void GenerateStats()
         {
             Stats.GenerateStats()
+                .AddLabel("Woodcutter", 20)
+                .AddLabel("Producing Wood")
+                .AddSpace()
+                .AddLabelWithText("Workers", "6")
+                .AddLabelWithText("Efficiency", "100%")
+                .AddSpace()
+                .AddLabel("Woodcutter")
+                .AddLabelWithText("Workers", "6")
                 .AddLabel("Woodcutter")
                 .AddLabel("-> Wood")
                 .AddLabelWithText("Workers", "6")
-                .AddLabelWithText("Workers", "6")
-                .AddSpace()
-                .AddLabel("Woodcutter")
-                .AddLabelWithText("Workers", "6")
-                .AddDropdown()
-                .AddDropdown()
-                .AddLabel("Woodcutter")
-                .AddLabel("-> Wood")
-                .AddDropdown()
-                .AddLabelWithText("Workers", "6")
                 .AddSpace()
                 .AddSpace()
-                .AddDropdown()
+                .AddDropdown(
+                    new List<GameObject>{GameObject.Find("Well"), gameObject, GameObject.Find("Spawn")},
+                    "out",
+                    "in"
+                    )
                 .AddLabelWithText("Workers", "6")
                 .BuildStats();
         }
