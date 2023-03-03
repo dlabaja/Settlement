@@ -76,4 +76,11 @@ public static class Utils
             yield return new WaitForEndOfFrame();
         }
     }
+
+    public static Texture2D LoadTexture(string path)
+    {
+        Texture2D texture = new Texture2D(0,0);
+        texture.LoadImage(System.IO.File.ReadAllBytes(path));
+        return texture;
+    }
 }

@@ -84,7 +84,6 @@ namespace Buildings.Workplace
 
         public void GenerateStats()
         {
-            print("wo");
         }
     }
 }

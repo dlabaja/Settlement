@@ -1,0 +1,8 @@
+#Button:hover {
+    -unity-background-image-tint-color: gray;
+}
+
+#DropdownContainer:hover > #Arrow {
+    -unity-background-image-tint-color: gray;
+}
+

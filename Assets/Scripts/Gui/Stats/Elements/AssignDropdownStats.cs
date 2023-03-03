@@ -12,7 +12,6 @@ namespace Gui.Stats.Elements
     public class AssignDropdownStats : MonoBehaviour
     {
         private VisualElement container;
-        private VisualElement dropdownContainer;
         private Button dropdown;
         private Transform parent;
 
@@ -28,8 +27,8 @@ namespace Gui.Stats.Elements
             gameObject.transform.parent = parent;
 
             container = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Container");
-            dropdownContainer = container.Q<VisualElement>("DropdownContainer");
-            dropdown = dropdownContainer.Q<VisualElement>().Q<Button>("Dropdown");
+            dropdown = container.Q<Button>("Dropdown"); // tlačítka nejdou externě stylovat, ratio + barva se dá nastavit jenom u tlačítka a ne u DropdownContaineru, jinak nefunguje hover 
+            SetDropdownButtonImage("Assets/Sprites/assign.png");
 
             dropdown.clicked += () =>
             {
@@ -40,6 +39,12 @@ namespace Gui.Stats.Elements
                 isOpened = !isOpened;
             };
         }
+
+        public void SetDropdownButtonImage(string path) => container.Q<Button>("Button").style.backgroundImage = new StyleBackground(
+            Utils.LoadTexture(path));
+
+        public void SetDropdownItemButtonImage(VisualElement item, string path) => item.Q<Button>("Button").style.backgroundImage = new StyleBackground(
+            Utils.LoadTexture(path));
 
         public void SetupSender(GameObject senderObj)
         {
@@ -56,7 +61,7 @@ namespace Gui.Stats.Elements
                 ReloadDropdownItems();
             };
 
-            dropdownContainer.Q<VisualElement>("ButtonContainer").Q<Button>().clicked += () =>
+            container.Q<VisualElement>("ButtonContainer").Q<Button>().clicked += () =>
             {
                 var worker = FindObjectsOfType<Entity>()
                     .FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString());
@@ -68,12 +73,13 @@ namespace Gui.Stats.Elements
 
         private void OnItemsChanged()
         {
-            var arrow = dropdownContainer.Q<VisualElement>("Arrow");
+            var arrow = container.Q<VisualElement>("Arrow");
             if (items.Count == 0)
             {
                 arrow.visible = false;
                 return;
             }
+
             arrow.visible = true;
         }
 
@@ -100,6 +106,7 @@ namespace Gui.Stats.Elements
                     parent).GetComponent<UIDocument>().rootVisualElement;
                 itemRoot.Q<Label>().text = entity.GetName();
                 dropdownItems.Add(itemRoot);
+                SetDropdownItemButtonImage(itemRoot, "Assets/Sprites/unassign.png");
 
                 itemRoot.Q<Button>("DropdownItem").clicked += () =>
                 {
@@ -123,10 +130,9 @@ namespace Gui.Stats.Elements
             }
         }
 
-        public void SetOuterLabel(string text) => container.Q<VisualElement>("LabelContainer")
-            .Q<Label>().text = text;
+        public void SetOuterLabel(string text) => container.Q<Label>("LabelOut").text = text;
 
-        public void SetInnerLabel(string text) => dropdown.text = text;
+        public void SetInnerLabel(string text) => container.Q<Label>("LabelIn").text = text;
 
         public GameObject GetChosenItem() => chosenItem;
     }
