@@ -12,6 +12,9 @@ namespace Buildings.Workplace
         [SerializeField] private int maxWorkers;
         public Dictionary<List<Const.Item>, List<Const.Item>> producingItems;
 
+        public delegate void WorkersChanged();
+        public event WorkersChanged OnWorkersChanged;
+        
         public Const.CustomObjects GetWorkObject() => workObject;
 
         public int GetMaxWorkers() => maxWorkers;
@@ -31,6 +34,7 @@ namespace Buildings.Workplace
 
             workers.Add(worker);
             worker.Workplace = gameObject;
+            OnWorkersChanged?.Invoke();
             return true;
         }
 
@@ -38,6 +42,7 @@ namespace Buildings.Workplace
         {
             workers.Remove(worker);
             worker.GetComponent<Entity>().Workplace = GameObject.Find(Const.CustomObjects.Spawn.ToString());
+            OnWorkersChanged?.Invoke();
         }
 
         public bool IsFull() => workers.Count == maxWorkers;

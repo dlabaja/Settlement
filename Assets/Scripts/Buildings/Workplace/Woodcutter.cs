@@ -41,11 +41,7 @@ namespace Buildings.Workplace
                 .AddLabelWithText("Workers", "6")
                 .AddSpace()
                 .AddSpace()
-                .AddDropdown(
-                    new List<GameObject>{GameObject.Find("Well"), gameObject, GameObject.Find("Spawn")},
-                    "out",
-                    "in"
-                    )
+                .AddAssignDropdown(gameObject)
                 .AddLabelWithText("Workers", "6")
                 .BuildStats();
         }

@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -14,15 +15,16 @@ namespace Gui.Stats
 {
     public class Stats : MonoBehaviour
     {
-        private VisualElement container;
         private const int elementOffset = 5;
         private const int offset = 20;
+        
+        private VisualElement container;
 
         public static Stats GenerateStats() => Utils.LoadGameObject("Stats/Stats", Const.Parent.Gui).GetComponent<Stats>();
 
         private void Awake()
         {
-            var parent = new GameObject("Stats");
+            var parent = new GameObject($"Stats{FindObjectsOfType<Stats>().Length}");
             parent.transform.parent = GameObject.Find("Gui").transform;
             gameObject.transform.parent = parent.transform;
 
@@ -73,13 +75,10 @@ namespace Gui.Stats
             return this;
         }
         
-        public Stats AddDropdown(List<GameObject> items, string outerLable, string innerLabel)
+        public Stats AddAssignDropdown(GameObject sender)
         {
             var dropdown = AddToContainer("Dropdown").GetComponent<AssignDropdownStats>();
-            dropdown.AddItems(items);
-            dropdown.SetOuterLabel(outerLable);
-            dropdown.SetInnerLabel(innerLabel);
-
+            dropdown.SetupSender(sender);
             return this;
         }
 
