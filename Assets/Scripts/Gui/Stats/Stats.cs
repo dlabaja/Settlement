@@ -77,8 +77,14 @@ namespace Gui.Stats
         
         public Stats AddAssignDropdown(GameObject sender)
         {
-            var dropdown = AddToContainer("Dropdown").GetComponent<AssignDropdownStats>();
+            var dropdown = AddToContainer("DropdownAssign").GetComponent<AssignDropdownStats>();
             dropdown.SetupSender(sender);
+            return this;
+        }
+        
+        public Stats AddFocusDropdown(List<GameObject> items)
+        {
+            AddToContainer("DropdownFocus");
             return this;
         }
 

@@ -28,20 +28,8 @@ namespace Buildings.Workplace
         public void GenerateStats()
         {
             Stats.GenerateStats()
-                .AddLabel("Woodcutter", 20)
-                .AddLabel("Producing Wood")
-                .AddSpace()
-                .AddLabelWithText("Workers", "6")
-                .AddLabelWithText("Efficiency", "100%")
-                .AddSpace()
-                .AddLabel("Woodcutter")
-                .AddLabelWithText("Workers", "6")
-                .AddLabel("Woodcutter")
-                .AddLabel("-> Wood")
-                .AddLabelWithText("Workers", "6")
-                .AddSpace()
-                .AddSpace()
                 .AddAssignDropdown(gameObject)
+                //.AddFocusDropdown()
                 .AddLabelWithText("Workers", "6")
                 .BuildStats();
         }

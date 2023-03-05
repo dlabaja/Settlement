@@ -1,3 +1,11 @@
-#Button:hover {
+#ButtonContainer:hover > #Button {
     -unity-background-image-tint-color: gray;
+}
+
+#DropdownItem:hover{
+    background-color: #1A1A1A;
+}
+
+#DropdownItem{
+    background-color: #333;
 }
