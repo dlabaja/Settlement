@@ -14,16 +14,20 @@ namespace Inventory
     {
         private static Dictionary<Const.Item, int> _globalInventory = new();
 
-        private void Start()
+        private void Awake()
         {
             foreach (var i in Enum.GetValues(typeof(Const.Item)).Cast<Const.Item>())
                 if (i != Const.Item.None)
                     _globalInventory.TryAdd(i, 0);
-            var gI = GetComponent<UIDocument>().rootVisualElement;
-            StartCoroutine(UpdateGlobalInventory(gI));
+            try
+            {
+                var gI = GetComponent<UIDocument>().rootVisualElement;
+                StartCoroutine(UpdateGlobalInventory(gI));
+            }
+            catch {}
         }
 
-        private static IEnumerator UpdateGlobalInventory(VisualElement root)
+        private IEnumerator UpdateGlobalInventory(VisualElement root)
         {
             while (true)
             {
@@ -32,8 +36,8 @@ namespace Inventory
                 yield return new WaitForSeconds(1);
             }
         }
-        
-        private static void UpdateGlobalInventoryValues()
+
+        private void UpdateGlobalInventoryValues()
         {
             _globalInventory.Clear();
 

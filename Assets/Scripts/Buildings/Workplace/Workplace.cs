@@ -44,5 +44,7 @@ namespace Buildings.Workplace
             worker.GetComponent<Entity>().Workplace = GameObject.Find(Const.CustomObjects.Spawn.ToString());
             OnWorkersChanged?.Invoke();
         }
+        
+        public bool IsFull() => workers.Count == maxWorkers;
     }
 }

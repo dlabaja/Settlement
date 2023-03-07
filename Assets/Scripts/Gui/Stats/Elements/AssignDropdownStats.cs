@@ -11,44 +11,40 @@ namespace Gui.Stats.Elements
 {
     public class AssignDropdownStats : DropdownStats
     {
-        private void Start()
+        private void Awake()
         {
-            SetDropdownButtonImage("Assets/Sprites/assign.png");
-            //SetDropdownItemButtonImage("Assets/Sprites/unassign.png");
-        }
-
-        public void SetupSender(GameObject senderObj)
-        {
-            sender = senderObj;
-            var workplace = sender.GetComponent<Workplace>();
-            items = workplace.GetWorkers();
-            OnItemsChanged();
-
-            workplace.OnWorkersChanged += () =>
+            afterAwake = () =>
             {
-                items = workplace.GetWorkers();
-                SetInnerLabel($"Workers: {items.Count}/{workplace.GetMaxWorkers()}");
+                var workplace = sender.GetComponent<Workplace>();
+                items = workplace.GetWorkers().Select(x => x.gameObject).ToList();
                 OnItemsChanged();
-                ReloadDropdownItems();
+
+                workplace.OnWorkersChanged += () =>
+                {
+                    items = workplace.GetWorkers().Select(x => x.gameObject).ToList();
+                    SetInnerLabel($"Workers: {items.Count}/{workplace.GetMaxWorkers()}");
+                    OnItemsChanged();
+                    ReloadDropdownItems();
+                };
+
+                buttonClicked = delegate
+                {
+                    var worker = FindObjectsOfType<Entity>()
+                        .FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString());
+                    sender.GetComponent<Workplace>().AssignWorker(worker);
+                };
+
+
+                itemButtonClicked = delegate(GameObject gm)
+                {
+                    sender.GetComponent<Workplace>().FireWorker(gm.GetComponent<Entity>());
+                };
+
+                SetOuterLabel("Workers");
+                SetInnerLabel($"Workers: {items.Count}/{workplace.GetMaxWorkers()}");
+                SetDropdownButtonImage("Assets/Sprites/assign.png");
+                SetDropdownItemButtonImage("Assets/Sprites/unassign.png");
             };
-
-            container.Q<VisualElement>("ButtonContainer").Q<Button>().clicked += () =>
-            {
-                var worker = FindObjectsOfType<Entity>()
-                    .FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString());
-                workplace.AssignWorker(worker);
-            };
-            SetOuterLabel("Workers");
-            SetInnerLabel($"Workers: {items.Count}/{workplace.GetMaxWorkers()}");
-        }
-
-        private void OpenDropdown()
-        {
-            //
-
-            //s
-
-
         }
     }
 }

@@ -17,38 +17,60 @@ namespace Gui.Stats
     {
         private const int elementOffset = 5;
         private const int offset = 20;
-        
-        private VisualElement container;
+        private Vector2 pos = new Vector2();
 
-        public static Stats GenerateStats() => Utils.LoadGameObject("Stats/Stats", Const.Parent.Gui).GetComponent<Stats>();
+        private VisualElement container;
+        private GameObject sender;
+        private Transform parent;
+
+        public static Stats GenerateStats(GameObject sender)
+        {
+            var name = $"Stats {sender.GetHashCode()}";
+            if (GameObject.Find(name) == null)
+            {
+                var obj = Utils.LoadGameObject("Stats/Stats", Const.Parent.Gui).GetComponent<Stats>();
+                obj.sender = sender;
+                obj.pos = Mouse.current.position.ReadValue();
+                obj.transform.parent = new GameObject(name).transform;
+                obj.parent = obj.transform.parent;
+                obj.parent.parent = GameObject.Find("Gui").transform;
+                return obj;
+            }
+
+            return null;
+        }
 
         private void Awake()
         {
-            var parent = new GameObject($"Stats{FindObjectsOfType<Stats>().Length}");
-            parent.transform.parent = GameObject.Find("Gui").transform;
-            gameObject.transform.parent = parent.transform;
-
             var root = GetComponent<UIDocument>().rootVisualElement;
             container = root.Q<VisualElement>("Container");
+            print(container); //todo naštelovat container
+            container.style.top = pos.y;
+            container.style.left = pos.x;
+            print(container);
             var close = root.Q<Button>("Close");
-            close.clicked += () => CloseButton.Close(parent);
+            close.clicked += () => CloseButton.Close(parent.gameObject);
         }
 
-        public void BuildStats() //trvalo asi 3 hodiny, odkazoval jsem na template místo elementu 
+        public void BuildStats()
         {
             container.schedule.Execute(() =>
             {
-                var dp = container.style.top.value.value;
+                var dp = 0f;
                 var maxWidth = 0f;
                 foreach (var child in container.Children().Select(x => x.Children().FirstOrDefault()))
                 {
+                    // Set the position of each child element relative to the container
+                    child!.style.left = 0f;
                     child!.style.top = dp;
+
                     dp += child.layout.height + elementOffset;
                     if (child.layout.width > maxWidth)
                         maxWidth = child.layout.width;
                 }
+                
                 var root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Top");
-                root.style.width = maxWidth;
+                root.style.width = maxWidth + 2 * offset;
                 root.style.height = dp + 2 * offset;
             });
         }
@@ -57,6 +79,7 @@ namespace Gui.Stats
         {
             var obj = Instantiate(Resources.Load($"Stats/{name}") as GameObject, gameObject.transform.parent).GetComponent<UIDocument>();
             container.Add(obj.rootVisualElement);
+            obj.transform.parent = transform.parent;
             return obj;
         }
 
@@ -74,17 +97,19 @@ namespace Gui.Stats
             AddToContainer("Space");
             return this;
         }
-        
-        public Stats AddAssignDropdown(GameObject sender)
+
+        public Stats AddAssignDropdown()
         {
             var dropdown = AddToContainer("DropdownAssign").GetComponent<AssignDropdownStats>();
-            dropdown.SetupSender(sender);
+            dropdown.OnAwake(sender);
             return this;
         }
-        
-        public Stats AddFocusDropdown(List<GameObject> items)
+
+        public Stats AddFocusDropdown(List<GameObject> items, string outerLabel)
         {
-            AddToContainer("DropdownFocus");
+            var dropdown = AddToContainer("DropdownFocus").GetComponent<FocusDropdownStats>();
+            dropdown.SetupDropdown(items, outerLabel);
+            dropdown.OnAwake(sender);
             return this;
         }
 
@@ -94,7 +119,7 @@ namespace Gui.Stats
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = label;
             root.Q<Label>().style.fontSize = fontSize;
-            
+
             root.Q<Label>("Text").text = text;
             root.Q<Label>("Text").style.fontSize = fontSize;
             return this;

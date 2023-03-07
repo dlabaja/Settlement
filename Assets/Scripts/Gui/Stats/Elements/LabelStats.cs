@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,9 +8,11 @@ namespace Gui.Stats.Elements
     public class LabelStats : MonoBehaviour
     {
         private Label label;
+        private VisualElement container;
         private void Awake()
         {
-            label = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Container").Q<Label>();
+            container = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Container");
+            label = container.Q<Label>();
             label.RegisterCallback<GeometryChangedEvent>(OnLabelResized);
         }
 
@@ -23,7 +26,7 @@ namespace Gui.Stats.Elements
             var textSize = label.MeasureTextSize(
                 label.text, 0, VisualElement.MeasureMode.Undefined,
                 label.layout.height, VisualElement.MeasureMode.Exactly).x;
-            label.style.width = new StyleLength(textSize + 5);
+            container.style.width = new StyleLength(textSize + 5);
         }
     }
 }

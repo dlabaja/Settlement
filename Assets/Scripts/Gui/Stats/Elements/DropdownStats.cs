@@ -2,6 +2,8 @@ using Buildings.Workplace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,26 +11,29 @@ namespace Gui.Stats.Elements
 {
     public class DropdownStats : MonoBehaviour
     {
-        protected VisualElement container;
-        protected Button dropdown;
-        protected Transform parent;
+        private VisualElement container;
+        private Button dropdown;
+        private Transform parent;
 
-        protected List<Entity> items = new List<Entity>();
+        protected List<GameObject> items = new List<GameObject>();
         protected GameObject chosenItem;
-        protected bool isOpened;
+        private bool isOpened;
         protected GameObject sender;
 
-        protected Action itemRootAction;
         protected Action buttonClicked;
-        
-        private void Awake()
+        protected Action<GameObject> itemButtonClicked;
+        protected Action<GameObject> onChoose;
+        protected Action afterAwake;
+        private StyleBackground itemImage;
+
+        public void OnAwake(GameObject sender)
         {
-            parent = new GameObject("Dropdown").transform;
-            parent.parent = GameObject.Find($"Stats{FindObjectsOfType<Stats>().Length}").transform;
-            gameObject.transform.parent = parent;
+            this.sender = sender;
+            parent = GameObject.Find($"Stats {sender.GetHashCode()}").transform;
+            transform.parent = parent;
 
             container = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Container");
-            dropdown = container.Q<Button>("Dropdown"); // tlačítka nejdou externě stylovat, ratio + barva se dá nastavit jenom u tlačítka a ne u DropdownContaineru, jinak nefunguje hover 
+            dropdown = container.Q<Button>("Dropdown"); // tlačítka nejdou externě stylovat, ratio + barva se dá nastavit jenom u tlačítka a ne u DropdownContaineru, jinak nefunguje hover edit wtf ??? 
 
             dropdown.clicked += () =>
             {
@@ -38,22 +43,14 @@ namespace Gui.Stats.Elements
                     CloseDropdown();
                 isOpened = !isOpened;
             };
+            container.Q<Button>("Button").clicked += () => buttonClicked();
+            afterAwake();
         }
 
-        public void SetDropdownButtonImage(string path) => container.Q<Button>("Button").style.backgroundImage = new StyleBackground(
+        protected void SetDropdownButtonImage(string path) => container.Q<Button>("Button").style.backgroundImage = new StyleBackground(
             Utils.LoadTexture(path));
 
-        public void SetDropdownItemButtonImage(string path)
-        {
-            foreach (GameObject item in parent.transform)
-            {
-                if (item.name.Contains("DropdownItem"))
-                {
-                    item.GetComponent<UIDocument>().rootVisualElement.Q<Button>("Button").style.backgroundImage = new StyleBackground(
-                        Utils.LoadTexture(path));
-                }
-            }
-        }
+        protected void SetDropdownItemButtonImage(string path) => itemImage = new StyleBackground(Utils.LoadTexture(path));
 
         protected void OnItemsChanged()
         {
@@ -74,35 +71,38 @@ namespace Gui.Stats.Elements
             OpenDropdown();
         }
 
-        public void SetOuterLabel(string text) => container.Q<Label>("LabelOut").text = text;
+        protected void SetOuterLabel(string text) => container.Q<Label>("LabelOut").text = text;
 
-        public void SetInnerLabel(string text) => container.Q<Label>("LabelIn").text = text;
+        protected void SetInnerLabel(string text) => container.Q<Label>("LabelIn").text = text;
 
         public GameObject GetChosenItem() => chosenItem;
 
         private void OpenDropdown()
         {
             var dropdownItems = new List<VisualElement>();
-            foreach (var entity in items)
+            foreach (var gm in items)
             {
-                var itemRoot = Instantiate(Resources.Load("Stats/DropdownItem") as GameObject,
-                    parent).GetComponent<UIDocument>().rootVisualElement;
-                itemRoot.Q<Label>().text = entity.GetName();
-                try
-                {
-                    itemRootAction();
-                }
-                catch{}
+                var item = Instantiate(Resources.Load("Stats/DropdownItem") as GameObject,
+                    parent);
+                item.name = $"DropdownItem {gameObject.GetHashCode()}";
+                
+                var itemRoot = item.GetComponent<UIDocument>().rootVisualElement;
+                itemRoot.Q<Label>().text = gm.name;
 
-                dropdownItems.Add(itemRoot);
-                itemRoot.Q<Button>("DropdownItem").clicked += () =>
+                var itemDropdown = itemRoot.Q<Button>("DropdownItem");
+                itemDropdown.clicked += () =>
                 {
-                    chosenItem = entity.gameObject;
+                    chosenItem = gm;
                     CloseDropdown();
                     isOpened = !isOpened;
+                    onChoose?.Invoke(gm);
                     //todo otevřít statistiky entity? (ne u focusu)
                 };
-                itemRoot.Q<Button>("Button").clicked += () => sender.GetComponent<Workplace>().FireWorker(entity);
+                dropdownItems.Add(itemRoot);
+
+                var itemButton = itemRoot.Q<Button>("Button");
+                itemButton.style.backgroundImage = itemImage;
+                itemButton.clicked += () => itemButtonClicked?.Invoke(gm);
             }
 
             var pos = dropdown.LocalToWorld(dropdown.contentRect);
@@ -116,9 +116,10 @@ namespace Gui.Stats.Elements
 
         private void CloseDropdown()
         {
-            foreach (var dropdownItem in gameObject.transform.parent.GetComponentsInChildren<Transform>()
-                         .Where(x => x.name.Contains("DropdownItem")))
+            foreach (var dropdownItem in transform.parent.GetComponentsInChildren<Transform>()
+                         .Where(x => x.name == $"DropdownItem {gameObject.GetHashCode()}"))
                 Destroy(dropdownItem.gameObject);
         }
     }
+
 }

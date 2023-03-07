@@ -1,5 +1,7 @@
 using Buildings;
 using Buildings.Workplace;
+using Gui.Stats;
+using Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Entity : CustomObject
+public class Entity : CustomObject, IStats
 {
     [SerializeField] private new string name;
     [SerializeField] private Const.Gender gender;
@@ -42,7 +44,7 @@ public class Entity : CustomObject
             yield return new WaitForSeconds(1);
         }
     }
-    
+
     private IEnumerator ElementaryNeeds()
     {
         while (true)
@@ -69,7 +71,7 @@ public class Entity : CustomObject
         StartCoroutine(ElementaryNeeds());
         StartCoroutine(UnstuckMechanism());
     }
-    
+
     //works until inventory is full, then finds workplace
     public void Work()
     {
@@ -145,5 +147,25 @@ public class Entity : CustomObject
         _navMesh.isStopped = true;
         await Task.Delay(millis / Const.GameSpeed);
         _navMesh.isStopped = false;
+    }
+
+    public void GenerateStats()
+    {
+        Stats.GenerateStats(gameObject)
+            .AddLabel(name)
+            .AddLabel(gender.ToString())
+            .AddLabelWithText("Looking for:", lookingFor.name)
+            .AddFocusDropdown(
+                FindObjectsOfType<Workplace>().OrderBy(x => x.name)
+                    .Where(x => !x.IsFull() && x.gameObject != Workplace)
+                    .Select(x => x.gameObject)
+                    .Append(Workplace).ToList(),
+                "Workplace"
+            ) //todo coroutine na workplace?, coroutine na sleep/water, !!action onChosen nebo tak nějak!!
+            .AddLabel(Utils.DictToString(_inventory.GetInventory()))
+            .AddSpace()
+            .AddLabelWithText("Sleep", sleep.ToString())
+            .AddLabelWithText("Water", water.ToString())
+            .BuildStats();
     }
 }
