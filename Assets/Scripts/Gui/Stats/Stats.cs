@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -19,13 +20,17 @@ namespace Gui.Stats
         private const int offset = 20;
         private Vector2 pos = new Vector2();
 
+        private VisualElement root;
         private VisualElement container;
         private GameObject sender;
         private Transform parent;
 
+        private static int sortingOrder = 0;
+        
         public static Stats GenerateStats(GameObject sender)
         {
             var name = $"Stats {sender.GetHashCode()}";
+            sortingOrder++;
             if (GameObject.Find(name) == null)
             {
                 var obj = Utils.LoadGameObject("Stats/Stats", Const.Parent.Gui).GetComponent<Stats>();
@@ -42,14 +47,28 @@ namespace Gui.Stats
 
         private void Awake()
         {
-            var root = GetComponent<UIDocument>().rootVisualElement;
+            GetComponent<UIDocument>().sortingOrder = sortingOrder;
+            root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Top");
             container = root.Q<VisualElement>("Container");
-            print(container); //todo naštelovat container
-            container.style.top = pos.y;
-            container.style.left = pos.x;
-            print(container);
             var close = root.Q<Button>("Close");
             close.clicked += () => CloseButton.Close(parent.gameObject);
+            
+            var button = root.Q<Button>("Button");
+            // button.AddManipulator(new Dragger());
+            button.clicked += () =>
+            {
+                sortingOrder++;
+                GetComponent<UIDocument>().sortingOrder = sortingOrder;
+            };
+            //todo drag, viz chatgpt
+            // button.RegisterCallback<Dra>(evt =>
+            // {
+            //     print("s");
+            //     var mousePos = Mouse.current.position.ReadValue();
+            //     root.style.top = Screen.height - mousePos.y - root.style.height.value.value - 20;;
+            //     root.style.left = mousePos.x - 0.5f*root.style.width.value.value;
+            //     evt.StopPropagation();
+            // });
         }
 
         public void BuildStats()
@@ -69,10 +88,13 @@ namespace Gui.Stats
                         maxWidth = child.layout.width;
                 }
                 
-                var root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Top");
+                var mousePos = Mouse.current.position.ReadValue();
                 root.style.width = maxWidth + 2 * offset;
                 root.style.height = dp + 2 * offset;
+                root.style.top = Screen.height - mousePos.y - root.style.height.value.value - 20;;
+                root.style.left = mousePos.x - 0.5f*root.style.width.value.value;
             });
+            
         }
 
         private UIDocument AddToContainer(string name)
