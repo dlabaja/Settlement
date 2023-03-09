@@ -11,12 +11,16 @@ namespace KeystrokesController
     public class MouseController : KeystrokesController
     {
         private InputAction _mouseClick;
+        public static bool isPressed; 
 
         private void Start()
         {
             _mouseClick = _keystrokes.Mouse.Click;
-            _keystrokes.Mouse.Click.performed += OnMouseClicked;
+            _mouseClick.performed += OnMouseClicked;
+            _keystrokes.Mouse.Hold.started += _ => isPressed = true;
+            _keystrokes.Mouse.Hold.canceled += _ => isPressed = false;
             _mouseClick.Enable();
+            _keystrokes.Mouse.Hold.Enable(); //kdo to vymýšlel, trávil jsem nad tím hodinu
         }
 
         private void OnMouseClicked(InputAction.CallbackContext obj)
@@ -38,7 +42,6 @@ namespace KeystrokesController
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 hit.collider.gameObject.GetComponent<IStats>().GenerateStats(); //todo check try
-                //Stats.GenerateStats(hit.collider.gameObject);
             }
         }
     }

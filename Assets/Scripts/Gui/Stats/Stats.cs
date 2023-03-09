@@ -2,6 +2,7 @@ using Buildings;
 using Buildings.Workplace;
 using Gui.Stats.Elements;
 using Interfaces;
+using KeystrokesController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,11 +23,13 @@ namespace Gui.Stats
 
         private VisualElement root;
         private VisualElement container;
+        private Button button;
         private GameObject sender;
         private Transform parent;
 
-        private static int sortingOrder = 0;
-        
+        private static int sortingOrder;
+        private bool isDragging;
+
         public static Stats GenerateStats(GameObject sender)
         {
             var name = $"Stats {sender.GetHashCode()}";
@@ -52,23 +55,22 @@ namespace Gui.Stats
             container = root.Q<VisualElement>("Container");
             var close = root.Q<Button>("Close");
             close.clicked += () => CloseButton.Close(parent.gameObject);
-            
-            var button = root.Q<Button>("Button");
-            // button.AddManipulator(new Dragger());
+
+            button = root.Q<Button>("Button");
+            button.RegisterCallback<PointerMoveEvent>(delegate
+            {
+                var mousePos = Mouse.current.position.ReadValue();
+                if (MouseController.isPressed)
+                {
+                    root.style.top = Math.Clamp(Screen.height - mousePos.y - 10, 0, Screen.height - root.layout.height);
+                    root.style.left = Math.Clamp(mousePos.x - 0.5f * root.layout.width, 0, Screen.width - root.layout.width);
+                }
+            });
             button.clicked += () =>
             {
                 sortingOrder++;
                 GetComponent<UIDocument>().sortingOrder = sortingOrder;
             };
-            //todo drag, viz chatgpt
-            // button.RegisterCallback<Dra>(evt =>
-            // {
-            //     print("s");
-            //     var mousePos = Mouse.current.position.ReadValue();
-            //     root.style.top = Screen.height - mousePos.y - root.style.height.value.value - 20;;
-            //     root.style.left = mousePos.x - 0.5f*root.style.width.value.value;
-            //     evt.StopPropagation();
-            // });
         }
 
         public void BuildStats()
@@ -87,14 +89,14 @@ namespace Gui.Stats
                     if (child.layout.width > maxWidth)
                         maxWidth = child.layout.width;
                 }
-                
+
                 var mousePos = Mouse.current.position.ReadValue();
                 root.style.width = maxWidth + 2 * offset;
                 root.style.height = dp + 2 * offset;
-                root.style.top = Screen.height - mousePos.y - root.style.height.value.value - 20;;
-                root.style.left = mousePos.x - 0.5f*root.style.width.value.value;
+                root.style.top = Screen.height - mousePos.y - root.style.height.value.value - 20;
+                root.style.left = mousePos.x - 0.5f * root.style.width.value.value;
             });
-            
+
         }
 
         private UIDocument AddToContainer(string name)
