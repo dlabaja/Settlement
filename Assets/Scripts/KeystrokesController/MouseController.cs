@@ -1,5 +1,6 @@
 using Gui.Stats;
 using Interfaces;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,14 +12,14 @@ namespace KeystrokesController
     public class MouseController : KeystrokesController
     {
         private InputAction _mouseClick;
-        public static bool isPressed; 
+        public static bool RMBPressed;
 
         private void Start()
         {
             _mouseClick = _keystrokes.Mouse.Click;
             _mouseClick.performed += OnMouseClicked;
-            _keystrokes.Mouse.Hold.started += _ => isPressed = true;
-            _keystrokes.Mouse.Hold.canceled += _ => isPressed = false;
+            _keystrokes.Mouse.Hold.started += _ => RMBPressed = true;
+            _keystrokes.Mouse.Hold.canceled += _ => RMBPressed = false;
             _mouseClick.Enable();
             _keystrokes.Mouse.Hold.Enable(); //kdo to vymýšlel, trávil jsem nad tím hodinu
         }

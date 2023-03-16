@@ -31,6 +31,12 @@ namespace Buildings.Workplace
                 .AddAssignDropdown()
                 .AddFocusDropdown(new List<GameObject>{GameObject.Find("Spawn"), FindObjectOfType<Workplace>().gameObject, FindObjectOfType<Entity>().gameObject}, "sus")
                 .AddLabelWithText("Workers", "6")
+                .AddAssignDropdown()
+                .AddAssignDropdown()
+                .AddSpace()
+                .AddLabelWithText("Workers", "6")
+                .AddLabel("Workers")
+                .AddSpace()
                 .BuildStats();
         }
     }

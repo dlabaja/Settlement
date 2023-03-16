@@ -41,7 +41,6 @@ namespace Gui.Stats.Elements
                     OpenDropdown();
                 else
                     CloseDropdown();
-                isOpened = !isOpened;
             };
             container.Q<Button>("Button").clicked += () => buttonClicked();
             afterAwake();
@@ -84,6 +83,8 @@ namespace Gui.Stats.Elements
             {
                 var item = Instantiate(Resources.Load("Stats/DropdownItem") as GameObject,
                     parent);
+                Stats.sortingOrder++;
+                item.GetComponent<UIDocument>().sortingOrder = Stats.sortingOrder;
                 item.name = $"DropdownItem {gameObject.GetHashCode()}";
                 
                 var itemRoot = item.GetComponent<UIDocument>().rootVisualElement;
@@ -112,13 +113,15 @@ namespace Gui.Stats.Elements
                 item.style.top = pos.y;
                 item.style.left = pos.x - 1;
             }
+            isOpened = !isOpened;
         }
 
-        private void CloseDropdown()
+        public void CloseDropdown()
         {
             foreach (var dropdownItem in transform.parent.GetComponentsInChildren<Transform>()
                          .Where(x => x.name == $"DropdownItem {gameObject.GetHashCode()}"))
                 Destroy(dropdownItem.gameObject);
+            isOpened = !isOpened;
         }
     }
 
