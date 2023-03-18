@@ -40,10 +40,8 @@ namespace KeystrokesController
 
             if (raycastResults.Count > 0) return;
 
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                hit.collider.gameObject.GetComponent<IStats>().GenerateStats(); //todo check try
-            }
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject.TryGetComponent<IStats>(out var stats))
+                stats.GenerateStats();
         }
     }
 }

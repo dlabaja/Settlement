@@ -12,7 +12,7 @@ namespace Inventory
         [SerializeField] private int stackSize = 100;
         private Dictionary<int, ItemStruct> _inventory = new();
         //todo inspector debug
-        [SerializeField] private List<ItemStruct> _startValues = new();
+        [SerializeField] public List<ItemStruct> _startValues = new();
         [SerializeField] private bool itemsAreConstant;
 
         //todo inspector debug

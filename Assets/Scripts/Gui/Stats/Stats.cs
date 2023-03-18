@@ -1,14 +1,10 @@
-using Buildings;
-using Buildings.Workplace;
 using Gui.Stats.Elements;
-using Interfaces;
 using KeystrokesController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
@@ -49,7 +45,7 @@ namespace Gui.Stats
             sortingOrder++;
             gameObject.GetComponent<UIDocument>().sortingOrder = sortingOrder;
             StartCoroutine(DragWindow());
-            
+
             foreach (Transform item in parent.transform)
                 if (item.TryGetComponent(typeof(DropdownStats), out var comp))
                     ((DropdownStats)comp).CloseDropdown();
@@ -60,9 +56,9 @@ namespace Gui.Stats
             GetComponent<UIDocument>().sortingOrder = sortingOrder;
             root = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("Top");
             root.RegisterCallback<PointerDownEvent>(OnPointerDown);
-            
+
             container = root.Q<VisualElement>("Container");
-            
+
             var close = root.Q<Button>("Close");
             close.clicked += () => CloseButton.Close(parent.gameObject);
         }
@@ -88,7 +84,7 @@ namespace Gui.Stats
                 {
                     if (child == null)
                         continue;
-                    
+
                     child!.style.left = 0f;
                     child!.style.top = dp;
 
@@ -100,8 +96,8 @@ namespace Gui.Stats
                 var mousePos = Mouse.current.position.ReadValue();
                 root.style.width = maxWidth + 2 * offset;
                 root.style.height = dp + 2 * offset;
-                root.style.top = Screen.height - mousePos.y - root.style.height.value.value - 20;
-                root.style.left = mousePos.x - 0.5f * root.style.width.value.value;
+                root.style.top = Math.Clamp(Screen.height - mousePos.y - root.style.height.value.value - 20, 0, Screen.height);
+                root.style.left = Math.Clamp(mousePos.x - 0.5f * root.style.width.value.value, 0, Screen.width);
             });
 
         }
@@ -119,6 +115,20 @@ namespace Gui.Stats
             var root = AddToContainer("Label").rootVisualElement;
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = text;
+            root.Q<Label>().style.fontSize = fontSize;
+            return this;
+        }
+        
+        public Stats AddLabel(Func<string> getText, int fontSize = 14)
+        {
+            var root = AddToContainer("Label").rootVisualElement;
+            root = root.Q<VisualElement>("Container");
+            var textLabel = root.Q<Label>();
+            textLabel.style.fontSize = fontSize;
+            root.schedule.Execute(() =>
+            {
+                textLabel.text = getText();
+            }).Every(1000);
             root.Q<Label>().style.fontSize = fontSize;
             return this;
         }
@@ -143,16 +153,38 @@ namespace Gui.Stats
             dropdown.OnAwake(sender);
             return this;
         }
-
-        public Stats AddLabelWithText(string label, string text, int fontSize = 14)
+        
+        public Stats AddLabelWithText(string label, Func<string> getText, int fontSize = 14)
         {
-            var root = AddToContainer("LabelWithText").rootVisualElement;
+            var item = AddToContainer("LabelWithText");
+            var root = item.rootVisualElement;
             root = root.Q<VisualElement>("Container");
             root.Q<Label>().text = label;
             root.Q<Label>().style.fontSize = fontSize;
 
-            root.Q<Label>("Text").text = text;
-            root.Q<Label>("Text").style.fontSize = fontSize;
+            var textLabel = root.Q<Label>("Text");
+            textLabel.style.fontSize = fontSize;
+            root.schedule.Execute(() =>
+            {
+                textLabel.text = getText();
+            }).Every(1000);
+            return this;
+        }
+        
+        public Stats AddLabelWithTextVertical(string label, Func<string> getText, int fontSize = 14)
+        {
+            var item = AddToContainer("LabelWithTextVertical");
+            var root = item.rootVisualElement;
+            root = root.Q<VisualElement>("Container");
+            root.Q<Label>().text = label;
+            root.Q<Label>().style.fontSize = fontSize;
+
+            var textLabel = root.Q<Label>("Text");
+            textLabel.style.fontSize = fontSize;
+            root.schedule.Execute(() =>
+            {
+                textLabel.text = getText();
+            }).Every(1000);
             return this;
         }
     }

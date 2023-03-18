@@ -31,7 +31,7 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
                     ""id"": ""9ad6004b-4d2d-44c0-abe4-f94db8f7898a"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -204,6 +204,34 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Keybinds"",
+            ""id"": ""884df629-4697-49ed-9864-694a0aae2cd0"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseStats"",
+                    ""type"": ""Value"",
+                    ""id"": ""7785541c-1104-4c20-93fd-fb2b990c0b1c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c66b6a33-0fd8-4c8e-a812-627bda9831f2"",
+                    ""path"": ""<Keyboard>/delete"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseStats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -217,6 +245,9 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_Click = m_Mouse.FindAction("Click", throwIfNotFound: true);
         m_Mouse_Hold = m_Mouse.FindAction("Hold", throwIfNotFound: true);
+        // Keybinds
+        m_Keybinds = asset.FindActionMap("Keybinds", throwIfNotFound: true);
+        m_Keybinds_CloseStats = m_Keybinds.FindAction("CloseStats", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -362,6 +393,39 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
         }
     }
     public MouseActions @Mouse => new MouseActions(this);
+
+    // Keybinds
+    private readonly InputActionMap m_Keybinds;
+    private IKeybindsActions m_KeybindsActionsCallbackInterface;
+    private readonly InputAction m_Keybinds_CloseStats;
+    public struct KeybindsActions
+    {
+        private @Keystrokes m_Wrapper;
+        public KeybindsActions(@Keystrokes wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseStats => m_Wrapper.m_Keybinds_CloseStats;
+        public InputActionMap Get() { return m_Wrapper.m_Keybinds; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(KeybindsActions set) { return set.Get(); }
+        public void SetCallbacks(IKeybindsActions instance)
+        {
+            if (m_Wrapper.m_KeybindsActionsCallbackInterface != null)
+            {
+                @CloseStats.started -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnCloseStats;
+                @CloseStats.performed -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnCloseStats;
+                @CloseStats.canceled -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnCloseStats;
+            }
+            m_Wrapper.m_KeybindsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @CloseStats.started += instance.OnCloseStats;
+                @CloseStats.performed += instance.OnCloseStats;
+                @CloseStats.canceled += instance.OnCloseStats;
+            }
+        }
+    }
+    public KeybindsActions @Keybinds => new KeybindsActions(this);
     public interface ICameraActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -372,5 +436,9 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
     {
         void OnClick(InputAction.CallbackContext context);
         void OnHold(InputAction.CallbackContext context);
+    }
+    public interface IKeybindsActions
+    {
+        void OnCloseStats(InputAction.CallbackContext context);
     }
 }

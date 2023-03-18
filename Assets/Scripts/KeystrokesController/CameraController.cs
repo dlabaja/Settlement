@@ -1,4 +1,5 @@
 // ReSharper disable once RedundantUsingDirective
+
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,6 +13,7 @@ namespace KeystrokesController
         [SerializeField] private float zoomSpeed;
         private InputAction _cameraDrag;
         private InputAction _cameraMovement;
+        private bool _rightClickPressed;
 
         public void Start()
         {
@@ -20,11 +22,22 @@ namespace KeystrokesController
 
             _cameraDrag = _keystrokes.Camera.Drag;
             _cameraDrag.Enable();
+
+            _cameraDrag.performed += _ => _rightClickPressed = true;
+            _cameraDrag.canceled += _ => _rightClickPressed = false;
         }
 
-        public float GetCameraDragSpeed() => cameraDragSpeed;
-        public float GetCameraSpeed() => cameraSpeed;
-        public float GetZoomSpeed() => zoomSpeed;
+        private void FixedUpdate()
+        {
+            CameraMovement();
+        }
+
+        private void LateUpdate()
+        {
+            CameraZoom();
+            if (_rightClickPressed)
+                CameraDrag();
+        }
 
         public void CameraZoom()
         {

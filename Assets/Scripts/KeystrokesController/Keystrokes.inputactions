@@ -9,7 +9,7 @@
                     "name": "Movement",
                     "type": "Value",
                     "id": "9ad6004b-4d2d-44c0-abe4-f94db8f7898a",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -178,6 +178,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "Hold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Keybinds",
+            "id": "884df629-4697-49ed-9864-694a0aae2cd0",
+            "actions": [
+                {
+                    "name": "CloseStats",
+                    "type": "Value",
+                    "id": "7785541c-1104-4c20-93fd-fb2b990c0b1c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c66b6a33-0fd8-4c8e-a812-627bda9831f2",
+                    "path": "<Keyboard>/delete",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseStats",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

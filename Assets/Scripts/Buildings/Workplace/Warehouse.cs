@@ -1,3 +1,4 @@
+using Gui.Stats;
 using Interfaces;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace Buildings.Workplace
 
         private void Awake()
         {
-            producingItems = null;
             InvokeRepeating(nameof(OnNewWork), 0f, 5f);
         }
 
@@ -70,20 +70,23 @@ namespace Buildings.Workplace
             {
                 var gmInv = item.GetComponent<Inventory.Inventory>().GetInventory();
                 foreach (var kv in gmInv)
-                {
                     if (inv.Values.Select(x => x.item).ToList().Contains(kv.Value.item)
                         && kv.Value.count > 0)
-                    {
                         return (item.gameObject, kv.Value.item);
-                    }
-                }
             }
 
             return (null, Const.Item.None);
         }
-
+        
         public void GenerateStats()
         {
+            Stats.GenerateStats(gameObject)
+                .AddLabel(name, 20)
+                .AddAssignDropdown()
+                .AddLabelWithTextVertical("Items to store:", () => Utils.ListToString(GetComponent<Inventory.Inventory>()._startValues))
+                .AddSpace()
+                .AddLabel(() => Utils.DictToString(GetComponent<Inventory.Inventory>().GetInventory()))
+                .BuildStats();
         }
     }
 }

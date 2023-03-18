@@ -21,6 +21,7 @@ namespace Gui.Stats.Elements
                 {
                     SetInnerLabel(chosenItem.name);
                     this.items = items.Where(x => x != chosenItem).ToList();
+                    sender.GetComponent<Entity>().Workplace = GetChosenItem();
                 };
                 this.items = items.Skip(1).ToList();
                 //todo update itemů

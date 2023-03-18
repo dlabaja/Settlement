@@ -1,16 +1,19 @@
+using Gui.Stats;
+using Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Buildings.Workplace
 {
-    public class Workplace : Building
+    public class Workplace : Building, IStats
     {
         //objects the entity has to meet (eg tree for woodcutter job)
         [SerializeField] private Const.CustomObjects workObject;
         [SerializeField] private List<Entity> workers;
         [SerializeField] private int maxWorkers;
-        public Dictionary<List<Const.Item>, List<Const.Item>> producingItems;
+        protected (List<Const.Item>, List<Const.Item>) producingItems;
 
         public delegate void WorkersChanged();
         public event WorkersChanged OnWorkersChanged;
@@ -46,5 +49,15 @@ namespace Buildings.Workplace
         }
         
         public bool IsFull() => workers.Count == maxWorkers;
+        public void GenerateStats()
+        {
+            Stats.GenerateStats(gameObject)
+                .AddLabel(name, 20)
+                .AddAssignDropdown()
+                .AddLabelWithTextVertical("Producing:", () => Utils.FormatProducing(producingItems))
+                .AddSpace()
+                .AddLabel(() => Utils.DictToString(GetComponent<Inventory.Inventory>().GetInventory()))
+                .BuildStats();
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Buildings;
 using Buildings.Workplace;
 using Gui.Stats;
+using Gui.Stats.Elements;
 using Interfaces;
 using System;
 using System.Collections;
@@ -152,20 +153,20 @@ public class Entity : CustomObject, IStats
     public void GenerateStats()
     {
         Stats.GenerateStats(gameObject)
-            .AddLabel(name)
-            .AddLabel(gender.ToString())
-            .AddLabelWithText("Looking for:", lookingFor.name)
+            .AddLabel(name, 20)
+            .AddLabel(gender.ToString(), 17)
             .AddFocusDropdown(
                 FindObjectsOfType<Workplace>().OrderBy(x => x.name)
                     .Where(x => !x.IsFull() && x.gameObject != Workplace)
                     .Select(x => x.gameObject)
-                    .Append(Workplace).ToList(),
+                    .Prepend(Workplace).ToList(),
                 "Workplace"
-            ) //todo coroutine na workplace?, coroutine na sleep/water, !!action onChosen nebo tak nějak!!
-            .AddLabel(Utils.DictToString(_inventory.GetInventory()))
+            )
+            .AddLabelWithTextVertical("Looking for:", () => lookingFor.name)
+            .AddLabelWithText("Sleep", () => sleep.ToString()) //coroutine?
+            .AddLabelWithText("Water", () => water.ToString())
             .AddSpace()
-            .AddLabelWithText("Sleep", sleep.ToString())
-            .AddLabelWithText("Water", water.ToString())
+            .AddLabel(() => Utils.DictToString(_inventory.GetInventory()))
             .BuildStats();
     }
 }
