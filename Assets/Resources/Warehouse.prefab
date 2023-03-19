@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: 4
-  stackSize: 20
+  stackSize: 100
   _startValues:
   - item: 1
     count: 0

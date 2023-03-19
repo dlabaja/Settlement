@@ -12,6 +12,8 @@ public static class Const
         House,
         Tree,
         Stone,
+        Gatherer,
+        BerryBush,
         None
     }
 
@@ -25,7 +27,8 @@ public static class Const
     {
         None,
         Wood,
-        Stone
+        Stone,
+        Berries
     }
 
     public enum Parent

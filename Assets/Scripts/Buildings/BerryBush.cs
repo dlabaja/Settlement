@@ -1,18 +1,17 @@
 using Interfaces;
 using System.Threading.Tasks;
 
-namespace Buildings
+namespace Buildings.Workplace
 {
-    public class Stone : Building, ICollideable, IIgnoreGlobalInventory
+    public class BerryBush : Building, ICollideable
     {
         public async Task OnCollision(Entity entity)
         {
             await entity.Stop(2000);
             while (!entity.GetComponent<Inventory.Inventory>().IsFull())
             {
-                //todo během práce leavne job
                 await entity.Stop(2000);
-                entity.GetComponent<Inventory.Inventory>().AddItems(Const.Item.Stone, 1);
+                entity.GetComponent<Inventory.Inventory>().AddItems(Const.Item.Berries, 1);
             }
         }
     }

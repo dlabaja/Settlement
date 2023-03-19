@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Buildings.Workplace
 {
-    public class Woodcutter : Workplace, ICollideable, IStats
+    public class Woodcutter : Workplace, ICollideable
     {
         private void Awake()
         {
