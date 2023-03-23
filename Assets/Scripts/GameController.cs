@@ -1,3 +1,6 @@
+using Buildings;
+using Buildings.Workplace;
+using Gui;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -9,6 +12,10 @@ public class GameController : MonoBehaviour
             Utils.LoadGameObject("Entity", Const.Parent.Entities);
         }
         //TODO Time.timeScale = Const.GameSpeed;
+        MenuBuild.AddButton(typeof(Well),"");
+        MenuBuild.AddButton(typeof(Woodcutter),"");
+        MenuBuild.AddButton(typeof(Stonecutter),"");
+        MenuBuild.AddButton(typeof(Gatherer),"");
     }
 
     private void FixedUpdate()

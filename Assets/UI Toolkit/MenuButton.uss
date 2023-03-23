@@ -1,0 +1,12 @@
+Button{
+    background-color: rgba(0,0,0,0.2);
+}
+
+Button:hover{
+    background-color: rgba(0,0,0,0.4);
+}
+
+Button:active{
+    background-color: rgba(0,0,0,0.2);
+}
+

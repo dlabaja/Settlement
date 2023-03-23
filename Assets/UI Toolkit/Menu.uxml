@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="MenuButton" src="project://database/Assets/UI%20Toolkit/MenuButton.uxml?fileID=9197481963319205126&amp;guid=8b94ac2178e70444eb855494c3ff2382&amp;type=3#MenuButton" />
+    <ui:VisualElement picking-mode="Ignore" name="Container" style="margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-direction: row; align-items: flex-end; justify-content: center; position: relative; left: auto; right: auto; bottom: auto; top: auto; height: 100%;">
+        <ui:VisualElement name="Menu" style="background-color: rgba(0, 0, 0, 0.8); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; flex-basis: auto; flex-shrink: 1; flex-direction: row; height: 80px; width: auto; -unity-slice-left: 0; -unity-slice-top: 0; -unity-slice-right: 0; -unity-slice-bottom: 0;">
+            <ui:Instance template="MenuButton" name="Build" />
+            <ui:Instance template="MenuButton" name="Paint" />
+            <ui:Instance template="MenuButton" name="Territories" />
+            <ui:Instance template="MenuButton" name="CloseWindows" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

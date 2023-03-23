@@ -1,0 +1,54 @@
+.unity-scroller--horizontal {
+    position: absolute;
+    width: 500px;
+    top: 80px;
+}
+
+#unity-low-button{
+    margin-left: -4px;
+}
+
+#unity-high-button{
+    margin-right: -4px;
+}
+
+.unity-repeat-button {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    -unity-background-image-tint-color: white;
+    bottom: 11px;
+}
+
+#Menu {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#unity-slider {
+    bottom: 5px;
+    margin-right: 16px;
+    margin-left: 16px;
+}
+
+#unity-tracker {
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+}
+
+#unity-content-viewport {
+    margin-right: 8px;
+    margin-left: 8px;
+}
+
+#unity-dragger {
+    background-color: rgb(255, 255, 255);
+    height: 5px;
+}
+
+#unity-dragger:enabled {
+    border-width: 0;
+}
+
+#unity-dragger:hover {
+    transition: all 0.1s ease-in;
+    background-color: rgba(255, 255, 255, 0.8);
+}

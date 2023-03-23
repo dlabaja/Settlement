@@ -40,6 +40,13 @@ namespace Gui.Stats
             return null;
         }
 
+        public static void CloseAllStats()
+        {
+            foreach (Transform item in GameObject.Find("Gui").transform)
+                if (item.name.Contains("Stats"))
+                    Destroy(item.gameObject);
+        }
+
         private void OnPointerDown(PointerDownEvent evt)
         {
             sortingOrder++;

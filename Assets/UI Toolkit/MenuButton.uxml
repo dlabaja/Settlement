@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/MenuButton.uss?fileID=7433441132597879392&amp;guid=6c5e6b7b0dddc7627b99f7827a487f69&amp;type=3#MenuButton" />
+    <ui:Button display-tooltip-when-elided="true" style="margin-left: 8px; margin-right: 8px; margin-top: 8px; margin-bottom: 8px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; width: 64px; height: 64px; color: rgb(255, 255, 255); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; transition-duration: 0.1s;" />
+</ui:UXML>

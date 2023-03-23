@@ -1,5 +1,6 @@
 using Gui.Stats;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace KeystrokesController
 {
@@ -7,13 +8,7 @@ namespace KeystrokesController
     {
         private void Start()
         {
-            _keystrokes.Keybinds.CloseStats.performed += delegate
-            {
-                foreach (Transform item in GameObject.Find("Gui").transform)
-                    if (item.name.Contains("Stats"))
-                        Destroy(item.gameObject);
-            };
-
+            _keystrokes.Keybinds.CloseStats.performed += _ => Stats.CloseAllStats();
             _keystrokes.Keybinds.CloseStats.Enable();
         }
     }
