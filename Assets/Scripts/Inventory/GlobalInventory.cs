@@ -12,7 +12,7 @@ namespace Inventory
 {
     public class GlobalInventory : MonoBehaviour
     {
-        private static Dictionary<Const.Item, int> _globalInventory = new();
+        private static readonly Dictionary<Const.Item, int> _globalInventory = new();
 
         private void Awake()
         {
@@ -27,7 +27,7 @@ namespace Inventory
             catch {}
         }
 
-        private IEnumerator UpdateGlobalInventory(VisualElement root)
+        private static IEnumerator UpdateGlobalInventory(VisualElement root)
         {
             while (true)
             {
@@ -37,7 +37,7 @@ namespace Inventory
             }
         }
 
-        private void UpdateGlobalInventoryValues()
+        private static void UpdateGlobalInventoryValues()
         {
             _globalInventory.Clear();
 

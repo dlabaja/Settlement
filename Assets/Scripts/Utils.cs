@@ -37,7 +37,7 @@ public static class Utils
         return Rnd.Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
     }
 
-    public static string DictToString<TK, TV>(Dictionary<TK, TV> dict, string keyValSeparator = " : ", string itemSeparator = "; ")
+    public static string DictToString<TK, TV>(Dictionary<TK, TV> dict, string keyValSeparator = ": ", string itemSeparator = "; ")
         => dict.Aggregate("", (current, item) => current + $"{item.Key}{keyValSeparator}{item.Value}{itemSeparator}");
 
     public static string ListToString<T>(List<T> ls) => string.Join(", ", ls);

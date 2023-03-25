@@ -83,10 +83,10 @@ namespace Buildings.Workplace
             Stats.GenerateStats(gameObject)
                 .AddLabel(name, 20)
                 .AddAssignDropdown()
-                .AddLabelWithTextVertical("Items to store:", () => Utils.ListToString(GetComponent<Inventory.Inventory>()._startValues))
+                .AddLabelWithText("Items to store:", () => Utils.ListToString(GetComponent<Inventory.Inventory>()._startValues))
                 .AddSpace()
                 .AddLabel(() => Utils.DictToString(GetComponent<Inventory.Inventory>().GetInventory()))
-                .BuildStats();
+                .BuildWindow();
         }
     }
 }

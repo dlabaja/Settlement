@@ -54,10 +54,10 @@ namespace Buildings.Workplace
             Stats.GenerateStats(gameObject)
                 .AddLabel(name, 20)
                 .AddAssignDropdown()
-                .AddLabelWithTextVertical("Producing:", () => Utils.FormatProducing(producingItems))
+                .AddLabelWithText("Producing:", () => Utils.FormatProducing(producingItems))
                 .AddSpace()
                 .AddLabel(() => Utils.DictToString(GetComponent<Inventory.Inventory>().GetInventory()))
-                .BuildStats();
+                .BuildWindow();
         }
     }
 }
