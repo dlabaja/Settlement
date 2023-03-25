@@ -162,11 +162,11 @@ public class Entity : CustomObject, IStats
                     .Prepend(Workplace).ToList(),
                 "Workplace"
             )
-            .AddLabelWithTextVertical("Looking for:", () => lookingFor.name)
-            .AddLabelWithText("Sleep", () => sleep.ToString()) //coroutine?
-            .AddLabelWithText("Water", () => water.ToString())
+            .AddLabelWithText("Looking for:", () => lookingFor.name)
+            .AddLabel(() => $"Sleep: {sleep.ToString()}") 
+            .AddLabel(() => $"Water: {water.ToString()}")
             .AddSpace()
             .AddLabel(() => Utils.DictToString(_inventory.GetInventory()))
-            .BuildStats();
+            .BuildWindow();
     }
 }

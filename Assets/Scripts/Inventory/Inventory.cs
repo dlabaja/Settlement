@@ -165,6 +165,6 @@ namespace Inventory
         public Item item;
         public int count;
 
-        public override string ToString() => $"({item}, {count})";
+        public override string ToString() => $"{item}: {count}";
     }
 }

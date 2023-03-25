@@ -28,7 +28,14 @@ public static class Const
         None,
         Wood,
         Stone,
-        Berries
+        Berries,
+        Tools,
+        Planks,
+        PolishedStone,
+        Wheat,
+        Flour,
+        Bread,
+        Water
     }
 
     public enum Parent
