@@ -1,8 +1,12 @@
 using Gui.Stats;
 using Inventory;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
@@ -11,6 +15,7 @@ namespace Gui
     public class MenuBuild : MonoBehaviour
     {
         private static VisualElement root;
+        public static bool isBuilding;
 
         private void Awake()
         {
@@ -29,29 +34,68 @@ namespace Gui
             if (!string.IsNullOrEmpty(img))
                 button.style.backgroundImage = new StyleBackground(Utils.LoadTexture(img));
 
-            //tooltip on hover
+            button.schedule.Execute(() => RenderHover(button, t, price));
+            button.Q<Button>().clicked += () =>
+            {
+                var gm = Utils.LoadGameObject(t.Name, Const.Parent.Buildings);
+                BuildMode(button, gm);
+            };
+        }
+
+        private static void BuildMode(VisualElement button, GameObject gm)
+        {
+            gm.GetComponent<Collider>().enabled = false;
+            if (gm.TryGetComponent<NavMeshObstacle>(out var obstacle)) obstacle.enabled = false;
+            isBuilding = true;
             button.schedule.Execute(() =>
             {
-                var gm = Window.GenerateWindow(new GameObject())
-                    .AddLabel(t.Name)
-                    .AddLabelWithText("Materials:", Utils.ListToString(price.materials))
-                    .AddLabel(() => $"Golds: {price.golds}"); 
-                gm.BuildWindow();
-                gm.GetComponent<UIDocument>().sortingOrder = (float)Math.Pow(2, 128);
+                var terrainMask = 1 << LayerMask.NameToLayer("Terrain");
+                var defaultMask = 1 << LayerMask.NameToLayer("Default");
+                Ray ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+                if (Physics.Raycast(ray, out RaycastHit hit, 1000f, terrainMask))
+                {
+                    //todo větší vzdálenost od budov
+                    if (Physics.Raycast(ray, out RaycastHit h, 1000f, defaultMask))
+                        gm.GetComponent<Renderer>().material.color = Color.red;
+                    else
+                        gm.GetComponent<Renderer>().material.color = Color.white;
 
-                var top = gm.GetComponent<UIDocument>().rootVisualElement.Q("Top");
+                    var terrain = Terrain.activeTerrain.terrainData;
+                    var terrainNormal = terrain.GetInterpolatedNormal(hit.point.x / terrain.size.x, hit.point.z / terrain.size.z);
+                    gm.transform.position = new Vector3(hit.point.x, terrain.GetInterpolatedHeight(hit.point.x / terrain.size.x, hit.point.z / terrain.size.z) + 1, hit.point.z);
+                    gm.transform.rotation = Quaternion.FromToRotation(Vector3.up, terrainNormal);
+                }
+
+                if (Mouse.current.leftButton.isPressed)
+                {
+                    gm.GetComponent<Collider>().enabled = true;
+                    if (gm.TryGetComponent<NavMeshObstacle>(out var obstacle)) obstacle.enabled = true;
+                    isBuilding = false;
+                }
+            }).Until(() => isBuilding == false);
+        }
+
+        private static void RenderHover(CallbackEventHandler button, MemberInfo t, BuildingPrice price)
+        {
+            var gm = Window.GenerateWindow(new GameObject())
+                .AddLabel(t.Name)
+                .AddLabelWithText("Materials:", Utils.ListToString(price.materials))
+                .AddLabel(() => $"Golds: {price.golds}");
+            gm.BuildWindow();
+            gm.GetComponent<UIDocument>().sortingOrder = (float)Math.Pow(2, 128);
+
+            var top = gm.GetComponent<UIDocument>().rootVisualElement.Q("Top");
+            top.visible = false;
+            button.RegisterCallback<PointerMoveEvent>(_ =>
+            {
+                top.visible = true;
+                var mousePos = Mouse.current.position.ReadValue();
+                top.style.top = Screen.height - mousePos.y - top.style.height.value.value - 20;
+                top.style.left = mousePos.x - (0.5f * top.style.width.value.value);
+            });
+            button.RegisterCallback(delegate(PointerLeaveEvent _)
+            {
                 top.visible = false;
-                button.RegisterCallback<PointerMoveEvent>(_ =>
-                {
-                    top.visible = true;
-                    var mousePos = Mouse.current.position.ReadValue();
-                    top.style.top = Screen.height - mousePos.y - top.style.height.value.value - 20;
-                    top.style.left = mousePos.x - (0.5f * top.style.width.value.value);
-                });
-                button.RegisterCallback(delegate(PointerLeaveEvent _)
-                {
-                    top.visible = false;
-                });
             });
         }
     }

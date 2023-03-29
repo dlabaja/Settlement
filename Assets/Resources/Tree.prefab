@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5334037119324981776}
   - component: {fileID: -4683669308469848369}
   - component: {fileID: -808966925217029657}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3540278339180619866}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: -7880495813687746426}
   - component: {fileID: 6781748643809374863}
   - component: {fileID: -9144210110325670232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,10 +191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: 1
+  stackSize: 100
   _startValues:
   - item: 1
     count: 3
-  _keys: 
+  itemsAreConstant: 0
   _values: []
 --- !u!136 &-9144210110325670232
 CapsuleCollider:
@@ -222,7 +223,7 @@ GameObject:
   - component: {fileID: -5198910632598330852}
   - component: {fileID: -7601226680800833775}
   - component: {fileID: 8606509693613944742}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

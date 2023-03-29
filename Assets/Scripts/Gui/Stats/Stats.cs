@@ -46,7 +46,7 @@ namespace Gui.Stats
         
         private IEnumerator DragWindow()
         {
-            while (MouseController.RMBPressed)
+            while (MouseController.LMBPressed)
             {
                 var mousePos = Mouse.current.delta.ReadValue();
                 top.style.top = Math.Clamp(top.style.top.value.value - mousePos.y, 0, Screen.height - top.layout.height);

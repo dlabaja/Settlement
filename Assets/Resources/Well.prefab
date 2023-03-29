@@ -296,7 +296,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6233016570515883951}
   - component: {fileID: 5248699965718550468}
-  - component: {fileID: 5154284885925443966}
   - component: {fileID: 8765284938487089419}
   - component: {fileID: 5494276897176284499}
   - component: {fileID: 5114232079384430510}
@@ -314,7 +313,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5739403749325658212}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.550373, y: 1.1164773, z: 16.49154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -335,14 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6986f763c55e4b269618495a5b0bb9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!33 &5154284885925443966
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5739403749325658212}
-  m_Mesh: {fileID: 0}
 --- !u!23 &8765284938487089419
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -395,10 +386,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.5
-  m_Height: 2
+  m_Radius: 1.0496445
+  m_Height: 3.6242507
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: -0.14999998, y: 0.8239783, z: 0.39999998}
 --- !u!208 &5114232079384430510
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -406,7 +397,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5739403749325658212}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
   m_Extents: {x: 1, y: 1, z: 1}

@@ -12,14 +12,15 @@ namespace KeystrokesController
     public class MouseController : KeystrokesController
     {
         private InputAction _mouseClick;
-        public static bool RMBPressed;
+        public static bool LMBPressed;
 
         private void Start()
         {
             _mouseClick = _keystrokes.Mouse.Click;
             _mouseClick.performed += OnMouseClicked;
-            _keystrokes.Mouse.Hold.started += _ => RMBPressed = true;
-            _keystrokes.Mouse.Hold.canceled += _ => RMBPressed = false;
+            _keystrokes.Mouse.Hold.started += _ => LMBPressed = true;
+            _keystrokes.Mouse.Hold.canceled += _ => LMBPressed = false;
+            
             _mouseClick.Enable();
             _keystrokes.Mouse.Hold.Enable(); //kdo to vymýšlel, trávil jsem nad tím hodinu
         }
@@ -38,7 +39,7 @@ namespace KeystrokesController
             var raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerEventData, raycastResults);
 
-            if (raycastResults.Count > 0) return;
+            //if (raycastResults.Count > 0) return;
 
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject.TryGetComponent<IStats>(out var stats))
                 stats.GenerateStats();
