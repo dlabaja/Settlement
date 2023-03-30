@@ -27,10 +27,10 @@ namespace KeystrokesController
 
         private void OnMouseClicked(InputAction.CallbackContext obj)
         {
-            ShootRay();
+            RenderStats();
         }
 
-        private void ShootRay()
+        private void RenderStats()
         {
             var pointer = Mouse.current.position.ReadValue();
             Ray ray = Camera.main!.ScreenPointToRay(pointer);
@@ -39,9 +39,7 @@ namespace KeystrokesController
             var raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerEventData, raycastResults);
 
-            //if (raycastResults.Count > 0) return;
-
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject.TryGetComponent<IStats>(out var stats))
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject.TryGetComponent<IStats>(out var stats) && Stats.statsEnabled)
                 stats.GenerateStats();
         }
     }

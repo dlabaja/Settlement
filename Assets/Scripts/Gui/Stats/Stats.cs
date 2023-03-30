@@ -11,6 +11,7 @@ namespace Gui.Stats
 {
     public class Stats : Window
     {
+        public static bool statsEnabled = true;
         public static Stats GenerateStats(GameObject sender)
         {
             if (IsDuplicate(sender)) return null;

@@ -1,4 +1,5 @@
 using Interfaces;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Buildings
@@ -12,6 +13,7 @@ namespace Buildings
             var entity = collider.gameObject.GetComponent<Entity>();
             if (entity.GetLookingFor() != gameObject) return;
             if (gameObject.HasComponent<Workplace.Workplace>() && collider.GetComponent<Entity>().Workplace != gameObject) return;
+            await Task.Delay(1000);
             await GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
             entity.Work();
         }

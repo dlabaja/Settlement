@@ -217,6 +217,15 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""ae5d4831-09a1-414d-85c1-2058102be51b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -228,6 +237,17 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CloseStats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""082e779d-f8c6-4512-bf97-eb751a75f41d"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -248,6 +268,7 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
         // Keybinds
         m_Keybinds = asset.FindActionMap("Keybinds", throwIfNotFound: true);
         m_Keybinds_CloseStats = m_Keybinds.FindAction("CloseStats", throwIfNotFound: true);
+        m_Keybinds_Esc = m_Keybinds.FindAction("Esc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -398,11 +419,13 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Keybinds;
     private IKeybindsActions m_KeybindsActionsCallbackInterface;
     private readonly InputAction m_Keybinds_CloseStats;
+    private readonly InputAction m_Keybinds_Esc;
     public struct KeybindsActions
     {
         private @Keystrokes m_Wrapper;
         public KeybindsActions(@Keystrokes wrapper) { m_Wrapper = wrapper; }
         public InputAction @CloseStats => m_Wrapper.m_Keybinds_CloseStats;
+        public InputAction @Esc => m_Wrapper.m_Keybinds_Esc;
         public InputActionMap Get() { return m_Wrapper.m_Keybinds; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -415,6 +438,9 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
                 @CloseStats.started -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnCloseStats;
                 @CloseStats.performed -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnCloseStats;
                 @CloseStats.canceled -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnCloseStats;
+                @Esc.started -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnEsc;
+                @Esc.performed -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnEsc;
+                @Esc.canceled -= m_Wrapper.m_KeybindsActionsCallbackInterface.OnEsc;
             }
             m_Wrapper.m_KeybindsActionsCallbackInterface = instance;
             if (instance != null)
@@ -422,6 +448,9 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
                 @CloseStats.started += instance.OnCloseStats;
                 @CloseStats.performed += instance.OnCloseStats;
                 @CloseStats.canceled += instance.OnCloseStats;
+                @Esc.started += instance.OnEsc;
+                @Esc.performed += instance.OnEsc;
+                @Esc.canceled += instance.OnEsc;
             }
         }
     }
@@ -440,5 +469,6 @@ public partial class @Keystrokes : IInputActionCollection2, IDisposable
     public interface IKeybindsActions
     {
         void OnCloseStats(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
 }
