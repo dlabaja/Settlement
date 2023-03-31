@@ -13,7 +13,7 @@ namespace KeystrokesController
         [SerializeField] private float zoomSpeed;
         private InputAction _cameraDrag;
         private InputAction _cameraMovement;
-        private bool _rightClickPressed;
+        private bool _middleClickPressed;
 
         public void Start()
         {
@@ -23,8 +23,8 @@ namespace KeystrokesController
             _cameraDrag = _keystrokes.Camera.Drag;
             _cameraDrag.Enable();
 
-            _cameraDrag.performed += _ => _rightClickPressed = true;
-            _cameraDrag.canceled += _ => _rightClickPressed = false;
+            _cameraDrag.performed += _ => _middleClickPressed = true;
+            _cameraDrag.canceled += _ => _middleClickPressed = false;
         }
 
         private void FixedUpdate()
@@ -35,7 +35,7 @@ namespace KeystrokesController
         private void LateUpdate()
         {
             CameraZoom();
-            if (_rightClickPressed)
+            if (_middleClickPressed)
                 CameraDrag();
         }
 

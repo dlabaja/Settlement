@@ -1,13 +1,9 @@
 using Gui.Stats;
 using Inventory;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
@@ -16,7 +12,6 @@ namespace Gui
     public class MenuBuild : MonoBehaviour
     {
         private static VisualElement root;
-        public static bool isBuilding;
 
         private void Awake()
         {
@@ -30,56 +25,23 @@ namespace Gui
 
         public static void AddButton(Type t, BuildingPrice price, string img)
         {
-            var button = ((VisualTreeAsset)Resources.Load("UI Toolkit/MenuButton")).Instantiate().contentContainer;
-            root.Q<ScrollView>().Add(button);
+            var button = Instantiate(Resources.Load("UI/MenuBuildButton") as GameObject);
+            var buttonRoot = button.GetComponent<UIDocument>().rootVisualElement.Q<Button>();
+            root.Q<ScrollView>().Add(buttonRoot);
             if (!string.IsNullOrEmpty(img))
-                button.style.backgroundImage = new StyleBackground(Utils.LoadTexture(img));
+                buttonRoot.style.backgroundImage = new StyleBackground(Utils.LoadTexture(img));
 
-            button.schedule.Execute(() => RenderHover(button, t, price));
-            button.Q<Button>().clicked += () =>
+            buttonRoot.schedule.Execute(() => RenderHover(buttonRoot, t, price));
+            buttonRoot.Q<Button>().clicked += () =>
             {
+                var b = button.GetComponent<MenuBuildButton>();
                 var gm = Utils.LoadGameObject(t.Name, Const.Parent.Buildings);
-                isBuilding = true;
                 Stats.Stats.statsEnabled = false;
-                button.schedule.Execute(() => BuildMode(gm)).Until(() => isBuilding == false);
+                b.isBuilding = true;
+                buttonRoot.schedule.Execute(() => b.BuildMode(gm)).Until(() => b.isBuilding == false);
             };
         }
-
-        private static void BuildMode(GameObject gm)
-        {
-            var collider = gm.GetComponent<Collider>();
-            var renderer = gm.GetComponent<Renderer>();
-            Ray ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, 1 << LayerMask.NameToLayer("Terrain")))
-            {
-                if (Physics.OverlapSphere(collider.bounds.center, collider.bounds.extents.magnitude - 1)
-                    .Any(x => x.gameObject.layer == LayerMask.NameToLayer("Default") && x.gameObject != gm))
-                    renderer.material.color = Color.red;
-                else
-                    renderer.material.color = Color.white;
-
-                var terrain = Terrain.activeTerrain.terrainData;
-                var terrainNormal = terrain.GetInterpolatedNormal(hit.point.x / terrain.size.x, hit.point.z / terrain.size.z);
-                gm.transform.position = new Vector3(hit.point.x, terrain.GetInterpolatedHeight(hit.point.x / terrain.size.x, hit.point.z / terrain.size.z) + 1, hit.point.z);
-                gm.transform.rotation = Quaternion.FromToRotation(Vector3.up, terrainNormal);
-            }
-
-            if (Mouse.current.leftButton.isPressed && renderer.material.color == Color.white)
-                EndBuildMode();
-            else if (Mouse.current.rightButton.isPressed || Keyboard.current.escapeKey.isPressed)
-            {
-                EndBuildMode();
-                Destroy(gm);
-            }
-
-        }
-
-        private static void EndBuildMode()
-        {
-            isBuilding = false;
-            Stats.Stats.statsEnabled = true;
-        }
-
+        
         private static void RenderHover(CallbackEventHandler button, MemberInfo t, BuildingPrice price)
         {
             var gm = Window.GenerateWindow(new GameObject())

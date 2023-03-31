@@ -109,6 +109,8 @@ public class Entity : CustomObject, IStats
         _navMesh.SetDestination(gm.transform.position);
         lookingFor = gm;
     }
+    
+
 
     public void FindHouse()
     {

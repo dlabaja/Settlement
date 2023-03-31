@@ -10,9 +10,9 @@ namespace Buildings.Workplace
     public class Workplace : Building, IStats
     {
         //objects the entity has to meet (eg tree for woodcutter job)
-        [SerializeField] private Const.CustomObjects workObject;
-        [SerializeField] private List<Entity> workers;
-        [SerializeField] private int maxWorkers;
+        [SerializeField] protected Const.CustomObjects workObject;
+        [SerializeField] protected List<Entity> workers;
+        [SerializeField] protected int maxWorkers;
         protected (List<Const.Item>, List<Const.Item>) producingItems;
 
         public delegate void WorkersChanged();

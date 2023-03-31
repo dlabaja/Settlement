@@ -1,19 +1,21 @@
 using Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Buildings.Workplace
 {
     public class Builder : Workplace, ICollideable
     {
-        private void Awake()
-        {
-            
-        }
-
         public async Task OnCollision(Entity entity)
         {
             //todo soon
+        }
+
+        public void CutAllTrees(List<GameObject> trees)
+        {
+            
         }
     }
 }

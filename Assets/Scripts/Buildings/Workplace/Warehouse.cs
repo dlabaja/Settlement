@@ -17,12 +17,12 @@ namespace Buildings.Workplace
             InvokeRepeating(nameof(OnNewWork), 0f, 5f);
         }
 
-        public async Task OnCollision(Entity entity)
+        public Task OnCollision(Entity entity)
         {
-            if (!currentlyWorking.Contains(entity)) return;
+            if (!currentlyWorking.Contains(entity)) return Task.CompletedTask;
 
             var entInv = entity.GetComponent<Inventory.Inventory>();
-            if (entInv.IsEmpty()) return;
+            if (entInv.IsEmpty()) return Task.CompletedTask;
 
             gameObject.GetComponent<Inventory.Inventory>().TransferItems(
                 entInv.GetInventory().Values.FirstOrDefault().item,
@@ -30,6 +30,7 @@ namespace Buildings.Workplace
                 gameObject,
                 entity.gameObject);
             currentlyWorking.Remove(entity);
+            return Task.CompletedTask;
         }
 
         async private Task TakeCareOfWork(Entity entity, GameObject target, Const.Item itemToGet)
@@ -68,6 +69,7 @@ namespace Buildings.Workplace
             var inv = GetComponent<Inventory.Inventory>().GetInventory();
             foreach (var item in FindObjectsOfType<Workplace>().Where(x => !x.gameObject.HasComponent<Warehouse>()))
             {
+                //todo try/catch
                 var gmInv = item.GetComponent<Inventory.Inventory>().GetInventory();
                 foreach (var kv in gmInv)
                     if (inv.Values.Select(x => x.item).ToList().Contains(kv.Value.item)
@@ -78,7 +80,7 @@ namespace Buildings.Workplace
             return (null, Const.Item.None);
         }
         
-        public void GenerateStats()
+        public new void GenerateStats()
         {
             Stats.GenerateStats(gameObject)
                 .AddLabel(name, 20)
