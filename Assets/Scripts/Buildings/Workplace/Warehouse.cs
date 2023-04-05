@@ -36,7 +36,7 @@ namespace Buildings.Workplace
         async private Task TakeCareOfWork(Entity entity, GameObject target, Const.Item itemToGet)
         {
             currentlyWorking.Add(entity);
-            entity.SetDestination(target);
+            entity.AddDestination(target);
 
             while (!entity.GetComponent<Collider>().bounds.Intersects(target.GetComponent<Collider>().bounds))
                 await Task.Delay(50);
@@ -46,7 +46,7 @@ namespace Buildings.Workplace
                 entity.gameObject,
                 target);
 
-            entity.SetDestination(entity.Workplace);
+            entity.AddDestination(entity.Workplace);
         }
 
         private void OnNewWork()

@@ -101,4 +101,6 @@ public static class Utils
 
         return str.ToString();
     }
+
+    public static bool IsInObject(Collider coll1, Collider coll2) => coll1.bounds.Intersects(coll2.bounds);
 }

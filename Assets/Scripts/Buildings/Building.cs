@@ -1,4 +1,5 @@
 using Interfaces;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -15,7 +16,12 @@ namespace Buildings
             if (gameObject.HasComponent<Workplace.Workplace>() && collider.GetComponent<Entity>().Workplace != gameObject) return;
             await Task.Delay(1000);
             await GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
-            entity.Work();
+            entity.SetDestinationToNextObject();
+            if (entity.GetComponent<Inventory.Inventory>().IsFull())
+            {
+                // entity.EmptyInventory( //todo vysypat tam kde je na to inventář nebo nedělat nic
+                //     );
+            }
         }
     }
 }

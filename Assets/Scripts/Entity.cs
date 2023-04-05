@@ -19,7 +19,8 @@ public class Entity : CustomObject, IStats
     [SerializeField] private int sleep;
     [SerializeField] private GameObject workplace;
     [SerializeField] private GameObject house;
-    [SerializeField] private GameObject lookingFor;
+    public List<GameObject> lookingForBattery;
+    public GameObject lookingFor;
     private Inventory.Inventory _inventory;
     private NavMeshAgent _navMesh;
 
@@ -28,21 +29,8 @@ public class Entity : CustomObject, IStats
         get { return workplace ? workplace : FindObjectOfType<Spawn>().gameObject; }
         set
         {
-            try { EmptyInventory(workplace); }
-            catch {}
-
             workplace = value;
             Work();
-        }
-    }
-
-    private IEnumerator UnstuckMechanism()
-    {
-        while (true)
-        {
-            if (!lookingFor.activeSelf || lookingFor == null)
-                Work();
-            yield return new WaitForSeconds(1);
         }
     }
 
@@ -50,9 +38,23 @@ public class Entity : CustomObject, IStats
     {
         while (true)
         {
-            if (water <= 0) SetDestination(FindNearestObject<Well>());
-            else if (sleep <= 0) SetDestination(house); //todo FindHouse()
+            if (water <= 0) AddDestination(FindNearestObject<Well>());
+            else if (sleep <= 0) AddDestination(house); //todo FindHouse()
             yield return new WaitForSeconds(10);
+        }
+    }
+
+    private IEnumerator CheckLookingFor()
+    {
+        while (true)
+        {
+            lookingForBattery = lookingForBattery
+                .GroupBy(x => x)
+                .Where(g => g.Count() == 1 && g.Key.activeSelf)
+                .Select(g => g.Key).ToList();
+            if (lookingFor is null || !lookingFor.activeSelf)
+                Work();
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -70,7 +72,27 @@ public class Entity : CustomObject, IStats
         RefillSleep();
 
         StartCoroutine(ElementaryNeeds());
-        StartCoroutine(UnstuckMechanism());
+        StartCoroutine(CheckLookingFor());
+    }
+
+    public void AddDestination(GameObject gm)
+    {
+        if (gm == null) return;
+        lookingForBattery.Add(gm);
+        if (lookingForBattery.Count == 1)
+        {
+            SetDestinationToNextObject();
+        }
+    }
+
+    public void SetDestinationToNextObject()
+    {
+        lookingFor = lookingForBattery.FirstOrDefault();
+        if (lookingFor != default)
+        {
+            lookingForBattery.RemoveAt(0);
+            _navMesh.SetDestination(lookingFor!.transform.position);
+        }
     }
 
     //works until inventory is full, then finds workplace
@@ -78,12 +100,12 @@ public class Entity : CustomObject, IStats
     {
         if (_inventory.IsFull() || Workplace.GetComponent<Workplace>().GetWorkObject() == Const.CustomObjects.None) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
         {
-            SetDestination(Workplace);
+            AddDestination(Workplace);
             return;
         }
 
         var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObject());
-        SetDestination(workObjects.FirstOrDefault(x => x != lookingFor));
+        AddDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
     //returns nearest object of type T and adds it to the lookingFor
@@ -100,18 +122,6 @@ public class Entity : CustomObject, IStats
         .Cast<CustomObject>()
         .Select(x => x.gameObject);
 
-    //sets destination and adds it to the lookingFor, if null it finds workspace/spawn
-    public void SetDestination(GameObject gm)
-    {
-        if (gm == null)
-            gm = Workplace;
-
-        _navMesh.SetDestination(gm.transform.position);
-        lookingFor = gm;
-    }
-    
-
-
     public void FindHouse()
     {
         var houses = FindObjectsOfType<House>().Where(x => x.GetComponent<House>().HasFreeRoom());
@@ -121,9 +131,9 @@ public class Entity : CustomObject, IStats
         }
     }
 
-    private void EmptyInventory(GameObject gm)
+    public void EmptyInventory(GameObject gm)
     {
-        SetDestination(gm);
+        AddDestination(gm);
         _inventory.TransferItems(_inventory.GetInventory()[0].item, _inventory.GetInventory()[0].count, gm);
     }
 
@@ -165,7 +175,7 @@ public class Entity : CustomObject, IStats
                 "Workplace"
             )
             .AddLabelWithText("Looking for:", () => lookingFor.name)
-            .AddLabel(() => $"Sleep: {sleep.ToString()}") 
+            .AddLabel(() => $"Sleep: {sleep.ToString()}")
             .AddLabel(() => $"Water: {water.ToString()}")
             .AddSpace()
             .AddLabel(() => Utils.DictToString(_inventory.GetInventory()))

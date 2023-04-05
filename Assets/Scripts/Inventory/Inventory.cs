@@ -1,3 +1,4 @@
+using Buildings.Workplace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,6 +121,14 @@ namespace Inventory
             return val;
         }
 
+        public bool HasItem(Item i)
+        {
+            foreach (var item in _inventory.Values)
+            {
+                if (item.item == i &&) return true; //todo není plný slot
+            }
+        }
+
         public bool IsFull()
         {
             return slots * stackSize == CountAllItems();
@@ -150,6 +159,14 @@ namespace Inventory
                 receiverInv.ReplaceWithStartValues();
 
             return true;
+        }
+
+        public bool FindBuildingToEmptyInventory(Inventory entityInventory)
+        {
+            var tempInventory = entityInventory;
+            var item = entityInventory._inventory[0].item;
+            var suitableBuildings = FindObjectsOfType<Workplace>()
+                .Where(x => x.GetComponent<Inventory>().GetInventory().ContainsKey(entityInventory.GetInventory()[0]))
         }
     }
 
