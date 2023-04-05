@@ -19,7 +19,7 @@ namespace Buildings.Workplace
 
         public Task OnCollision(Entity entity)
         {
-            if (!currentlyWorking.Contains(entity)) return Task.CompletedTask;
+            if (!currentlyWorking.Contains(entity)) return Task.CompletedTask; //todo překopat kód + aby to tam mohly nosit entity nebo transporter
 
             var entInv = entity.GetComponent<Inventory.Inventory>();
             if (entInv.IsEmpty()) return Task.CompletedTask;

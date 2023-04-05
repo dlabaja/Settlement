@@ -18,10 +18,7 @@ namespace Buildings
             await GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
             entity.SetDestinationToNextObject();
             if (entity.GetComponent<Inventory.Inventory>().IsFull())
-            {
-                // entity.EmptyInventory( //todo vysypat tam kde je na to inventář nebo nedělat nic
-                //     );
-            }
+                entity.EmptyInventory();
         }
     }
 }

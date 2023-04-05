@@ -73,8 +73,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots: 1
   stackSize: 20
-  _startValues: []
-  itemsAreConstant: 0
+  _startValues:
+  - item: 3
+    count: 0
+  itemsAreConstant: 1
   _values: []
 --- !u!23 &2181164950543358909
 MeshRenderer:

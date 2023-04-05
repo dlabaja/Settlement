@@ -29,6 +29,7 @@ public class Entity : CustomObject, IStats
         get { return workplace ? workplace : FindObjectOfType<Spawn>().gameObject; }
         set
         {
+            EmptyInventory();
             workplace = value;
             Work();
         }
@@ -40,7 +41,7 @@ public class Entity : CustomObject, IStats
         {
             if (water <= 0) AddDestination(FindNearestObject<Well>());
             else if (sleep <= 0) AddDestination(house); //todo FindHouse()
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(5);
         }
     }
 
@@ -52,9 +53,10 @@ public class Entity : CustomObject, IStats
                 .GroupBy(x => x)
                 .Where(g => g.Count() == 1 && g.Key.activeSelf)
                 .Select(g => g.Key).ToList();
-            if (lookingFor is null || !lookingFor.activeSelf)
+            if (lookingFor is null || !lookingFor.activeSelf || (lookingFor == Workplace && !lookingForBattery.Any()))
                 Work();
-            yield return new WaitForFixedUpdate();
+
+            yield return new WaitForSeconds(1);
         }
     }
 
@@ -98,13 +100,13 @@ public class Entity : CustomObject, IStats
     //works until inventory is full, then finds workplace
     public void Work()
     {
-        if (_inventory.IsFull() || Workplace.GetComponent<Workplace>().GetWorkObject() == Const.CustomObjects.None) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
+        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObject());
+        if (_inventory.IsFull() || Workplace.GetComponent<Workplace>().GetWorkObject() == Const.CustomObjects.None || !workObjects.Any()) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
         {
             AddDestination(Workplace);
             return;
         }
-
-        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObject());
+        
         AddDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
@@ -116,11 +118,11 @@ public class Entity : CustomObject, IStats
     }
 
     //parses CustomObject enum to list of CustomObjects and returns its second or first item  
-    private IEnumerable<GameObject> FindNearestObject(Const.CustomObjects type) => FindObjectsOfType(
+    private List<GameObject> FindNearestObject(Const.CustomObjects type) => FindObjectsOfType(
             Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
         .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
         .Cast<CustomObject>()
-        .Select(x => x.gameObject);
+        .Select(x => x.gameObject).ToList();
 
     public void FindHouse()
     {
@@ -131,10 +133,12 @@ public class Entity : CustomObject, IStats
         }
     }
 
-    public void EmptyInventory(GameObject gm)
+    public void EmptyInventory()
     {
-        AddDestination(gm);
-        _inventory.TransferItems(_inventory.GetInventory()[0].item, _inventory.GetInventory()[0].count, gm);
+        var buildings = _inventory.FindBuildingToEmptyInventory(_inventory);
+        if (buildings == null) return;
+        foreach (var item in buildings!)
+            AddDestination(item);
     }
 
     public GameObject GetLookingFor() => lookingFor;
@@ -174,7 +178,18 @@ public class Entity : CustomObject, IStats
                     .Prepend(Workplace).ToList(),
                 "Workplace"
             )
-            .AddLabelWithText("Looking for:", () => lookingFor.name)
+            .AddLabelWithText("Looking for:",
+                () =>
+                {
+                    try
+                    {
+                        return lookingFor.name;
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                })
             .AddLabel(() => $"Sleep: {sleep.ToString()}")
             .AddLabel(() => $"Water: {water.ToString()}")
             .AddSpace()

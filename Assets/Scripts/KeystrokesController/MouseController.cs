@@ -38,6 +38,9 @@ namespace KeystrokesController
             pointerEventData.position = pointer;
             var raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+            
+            if (raycastResults.Count > 0) //ui is overlapping mouse click
+                return;
 
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject.TryGetComponent<IStats>(out var stats) && Stats.statsEnabled)
                 stats.GenerateStats();

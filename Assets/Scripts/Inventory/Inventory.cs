@@ -124,9 +124,10 @@ namespace Inventory
         public bool HasItem(Item i)
         {
             foreach (var item in _inventory.Values)
-            {
-                if (item.item == i &&) return true; //todo není plný slot
-            }
+                if (item.item == i && item.count < stackSize)
+                    return true;
+
+            return false;
         }
 
         public bool IsFull()
@@ -161,12 +162,30 @@ namespace Inventory
             return true;
         }
 
-        public bool FindBuildingToEmptyInventory(Inventory entityInventory)
+        public List<GameObject> FindBuildingToEmptyInventory(Inventory entityInventory)
         {
-            var tempInventory = entityInventory;
+            if (entityInventory.IsEmpty()) return null;
+            
+            var list = new List<GameObject>();
+            var tempCount = entityInventory._inventory[0].count;
             var item = entityInventory._inventory[0].item;
             var suitableBuildings = FindObjectsOfType<Workplace>()
-                .Where(x => x.GetComponent<Inventory>().GetInventory().ContainsKey(entityInventory.GetInventory()[0]))
+                .Where(x => x.GetComponent<Inventory>().HasItem(item));
+            foreach (var i in suitableBuildings)
+            {
+                var inv = i.GetComponent<Inventory>();
+                foreach (var j in inv._values)
+                {
+                    if (j.item == item)
+                    {
+                        tempCount -= inv.stackSize - j.count;
+                        list.Add(i.gameObject);
+                    }
+
+                    if (tempCount <= 0) return list.Distinct().ToList();
+                }
+            }
+            return null;
         }
     }
 
