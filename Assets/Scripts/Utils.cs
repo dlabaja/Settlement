@@ -42,6 +42,16 @@ public static class Utils
 
     public static string ListToString<T>(List<T> ls) => string.Join(", ", ls);
 
+    public static void LoadGameObjects(string path, Const.Parent parentName, int count)
+    {
+        var prefab = Resources.Load(path, typeof(GameObject));
+        var parent = GameObject.Find(parentName.ToString()).transform;
+        for (int i = 0; i < count; i++)
+        {
+            Object.Instantiate(prefab, parent);
+        }
+    }
+    
     public static GameObject LoadGameObject(string path, Const.Parent parentName)
     {
         return Object.Instantiate(Resources.Load(path, typeof(GameObject)),

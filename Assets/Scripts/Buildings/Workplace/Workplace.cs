@@ -1,10 +1,7 @@
 using Gui.Stats;
 using Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Buildings.Workplace
 {

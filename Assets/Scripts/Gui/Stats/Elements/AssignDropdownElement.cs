@@ -1,11 +1,6 @@
 using Buildings.Workplace;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Gui.Stats.Elements
 {
@@ -16,13 +11,13 @@ namespace Gui.Stats.Elements
             afterAwake = () =>
             {
                 var workplace = sender.GetComponent<Workplace>();
-                items = workplace.GetWorkers().Select(x => x.gameObject).ToList();
+                listItems = workplace.GetWorkers().Select(x => x.gameObject).ToList();
                 OnItemsChanged();
 
                 workplace.OnWorkersChanged += () =>
                 {
-                    items = workplace.GetWorkers().Select(x => x.gameObject).ToList();
-                    SetInnerLabel($"Workers: {items.Count}/{workplace.GetMaxWorkers()}");
+                    listItems = workplace.GetWorkers().Select(x => x.gameObject).ToList();
+                    SetInnerLabel($"Workers: {listItems.Count}/{workplace.GetMaxWorkers()}");
                     OnItemsChanged();
                     ReloadDropdownItems();
                 };
@@ -41,7 +36,7 @@ namespace Gui.Stats.Elements
                 };
 
                 SetOuterLabel("Workers");
-                SetInnerLabel($"Workers: {items.Count}/{workplace.GetMaxWorkers()}");
+                SetInnerLabel($"Workers: {listItems.Count}/{workplace.GetMaxWorkers()}");
                 SetDropdownButtonImage("Assets/Resources/Sprites/assign.png");
                 SetDropdownItemButtonImage("Assets/Resources/Sprites/unassign.png");
             };

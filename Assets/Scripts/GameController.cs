@@ -10,10 +10,9 @@ public class GameController : MonoBehaviour
 {
     private void Start()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            Utils.LoadGameObject("Entity", Parent.Entities);
-        }
+        
+        Utils.LoadGameObjects("Entity", Parent.Entities, 7);
+        
         //TODO Time.timeScale = Const.GameSpeed;
         MenuBuild.AddButton(typeof(Well), new BuildingPrice(new List<ItemStruct>{new ItemStruct(Item.Stone, 5)}, 10),"");
         MenuBuild.AddButton(typeof(Builder), new BuildingPrice(new List<ItemStruct>{new ItemStruct(Item.Wood, 5)}, 0),"");

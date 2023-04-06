@@ -1,11 +1,9 @@
 using Gui.Stats;
 using Interfaces;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace KeystrokesController
 {

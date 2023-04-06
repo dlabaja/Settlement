@@ -1,6 +1,5 @@
 using Gui.Stats;
 using Interfaces;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,23 +24,6 @@ namespace Buildings.Workplace
                 entity.gameObject);
         }
 
-        // async private Task TakeCareOfWork(Entity entity, GameObject target, Const.Item itemToGet)
-        // {
-        //     currentlyWorking.Add(entity);
-        //     print(target);
-        //     entity.AddDestination(target);
-        //
-        //     while (!entity.GetComponent<Collider>().bounds.Intersects(target.GetComponent<Collider>().bounds))
-        //         await Task.Delay(50);
-        //
-        //     entity.GetComponent<Inventory.Inventory>().TransferItems(itemToGet,
-        //         target.GetComponent<Inventory.Inventory>().GetItemCount(itemToGet),
-        //         entity.gameObject,
-        //         target);
-        //
-        //     entity.AddDestination(entity.Workplace);
-        // }
-
         private void FindItemsToStore()
         {
             var index = 0;
@@ -50,20 +32,9 @@ namespace Buildings.Workplace
                 if (item == Const.Item.None) continue;
                 var objToTransfer = GetObjectsToTransfer(item);
                 foreach (var i in objToTransfer)
-                {
                     workers.ToArray()[index % workers.Count].AddDestination(i);
-                }
-
                 index++;
             }
-
-            // foreach (var entity in gameObject.GetComponent<Workplace>().GetWorkers())
-            // {
-            //     if (currentlyWorking.Contains(entity))
-            //         continue;
-            //     TakeCareOfWork(entity, objToTransfer.Item1, objToTransfer.Item2);
-            //     break;
-            // }
         }
 
         private List<GameObject> GetObjectsToTransfer(Const.Item item)

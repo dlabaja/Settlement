@@ -1,6 +1,5 @@
 using Interfaces;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Buildings
 {
@@ -12,7 +11,10 @@ namespace Buildings
             var inventory = GetComponent<Inventory.Inventory>();
             inventory.TransferItems(Const.Item.Wood, 3, entity.gameObject);
             if (inventory.IsEmpty())
+            {
                 gameObject.SetActive(false);
+                inventory.AddItems(Const.Item.Wood, 3);
+            }
         }
     }
 }

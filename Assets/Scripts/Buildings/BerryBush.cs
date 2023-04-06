@@ -1,7 +1,7 @@
 using Interfaces;
 using System.Threading.Tasks;
 
-namespace Buildings.Workplace
+namespace Buildings
 {
     public class BerryBush : Building, ICollideable
     {

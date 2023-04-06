@@ -15,21 +15,24 @@ namespace Buildings
         {
             var entity = collider.gameObject.GetComponent<Entity>();
             var inventory = GetComponent<Inventory.Inventory>();
+            if (entity.GetLookingFor() != gameObject) return;
             if (gameObject.HasComponent<Workplace.Workplace>() && entity.Workplace != gameObject && entity.GetLookingFor() != gameObject) return;
-            await Task.Delay(1000);
             await GetComponent<ICollideable>().OnCollision(entity);
             entity.SetDestinationToNextObject();
-            if (entity.GetComponent<Inventory.Inventory>().IsFull())
+            if (inventory.IsFull())
                 entity.AddDestination(entity.Workplace);
             if (!TryGetComponent<Warehouse>(out _) && entity.Workplace.HasComponent<Warehouse>())
             {
-                inventory.TransferItems(inventory._startValues.FirstOrDefault().item,
-                    Math.Clamp(inventory.GetItemCount(inventory._startValues.FirstOrDefault().item), 0, 5),
+                var item = inventory._startValues.FirstOrDefault().item;
+                inventory.TransferItems(item,
+                    Math.Clamp(inventory.GetItemCount(item), 0, 5),
                     entity.gameObject,
                     gameObject);
-                entity.SetDestinationToNextObject(); //Work
-                print("t");
+                entity.SetDestinationToNextObject();
+                return;
             }
+
+            await Task.Delay(1000);
         }
     }
 }

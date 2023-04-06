@@ -1,6 +1,4 @@
 using Gui.Stats;
-using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace KeystrokesController
 {

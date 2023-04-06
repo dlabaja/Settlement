@@ -14,16 +14,16 @@ namespace Gui.Stats.Elements
         {
             afterAwake = delegate
             {
-                this.items = items;
+                listItems = items;
                 buttonClicked = () => FocusItem(items.FirstOrDefault());
                 itemButtonClicked = FocusItem;
-                onChoose = o =>
+                onChoose = _ =>
                 {
                     SetInnerLabel(chosenItem.name);
-                    this.items = items.Where(x => x != chosenItem).ToList();
+                    listItems = items.Where(x => x != chosenItem).ToList();
                     sender.GetComponent<Entity>().Workplace = GetChosenItem();
                 };
-                this.items = items.Skip(1).ToList();
+                listItems = items.Skip(1).ToList();
                 //todo update itemů
 
                 SetOuterLabel(outerLabel);

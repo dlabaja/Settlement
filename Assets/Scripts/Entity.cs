@@ -1,7 +1,6 @@
 using Buildings;
 using Buildings.Workplace;
 using Gui.Stats;
-using Gui.Stats.Elements;
 using Interfaces;
 using System;
 using System.Collections;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = System.Random;
 
 public class Entity : CustomObject, IStats
 {
@@ -31,7 +31,7 @@ public class Entity : CustomObject, IStats
         {
             EmptyInventory();
             workplace = value;
-            Work();
+            SetDestinationToNextObject();
         }
     }
 
@@ -54,8 +54,8 @@ public class Entity : CustomObject, IStats
                 .Where(g => g.Count() == 1 && g.Key.activeSelf)
                 .Select(g => g.Key).ToList();
             //print($"{name}: {lookingFor}x{Utils.ListToString(lookingForBattery)}");
-            if (lookingFor is null || !lookingFor.activeSelf || (lookingFor == Workplace && !lookingForBattery.Any()))
-                Work();
+            if (!lookingFor.activeSelf || (lookingFor == Workplace && !lookingForBattery.Any()))
+                SetDestinationToNextObject();
 
             yield return new WaitForSeconds(1);
         }
@@ -90,12 +90,14 @@ public class Entity : CustomObject, IStats
 
     public void SetDestinationToNextObject()
     {
-        lookingFor = lookingForBattery.FirstOrDefault() ?? Workplace; //změna
+        lookingFor = lookingForBattery.FirstOrDefault();
         if (lookingForBattery.Any())
         {
             lookingForBattery.RemoveAt(0);
             _navMesh.SetDestination(lookingFor!.transform.position);
+            return;
         }
+        Work();
     }
 
     //works until inventory is full, then finds workplace
@@ -122,11 +124,15 @@ public class Entity : CustomObject, IStats
     private List<GameObject> FindNearestObject(Const.CustomObjects type)
     {
         if (type == Const.CustomObjects.None) return new List<GameObject>();
-        return FindObjectsOfType(
+        var obj = FindObjectsOfType(
                 Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
             .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
             .Cast<CustomObject>()
             .Select(x => x.gameObject).ToList();
+        
+        if (type == Const.CustomObjects.Tree)
+            return obj.Take(6).OrderBy(_ => new Random().Next()).ToList();
+        return obj;
     }
 
     public void FindHouse()

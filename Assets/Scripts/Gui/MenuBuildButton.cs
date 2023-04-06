@@ -30,17 +30,17 @@ namespace Gui
             }
 
             if (Mouse.current.leftButton.isPressed && renderer.material.color == Color.white)
-                EndBuildMode(gm);
+                EndBuildMode();
             else if (Mouse.current.rightButton.isPressed || Keyboard.current.escapeKey.isPressed)
             {
-                EndBuildMode(gm);
+                EndBuildMode();
                 Destroy(gm);
             }
             else if (Keyboard.current.rKey.isPressed)
                 rotationY += 0.5f;
         }
         
-        private void EndBuildMode(GameObject gm)
+        private void EndBuildMode()
         {
             isBuilding = false;
             Stats.Stats.statsEnabled = true;

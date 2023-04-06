@@ -1,5 +1,4 @@
 using Interfaces;
-using System;
 using System.Threading.Tasks;
 
 namespace Buildings.Workplace
@@ -8,7 +7,7 @@ namespace Buildings.Workplace
     {
         public Task OnCollision(Entity entity) => Task.CompletedTask;
 
-        public void GenerateStats()
+        public new void GenerateStats()
         {
         }
     }

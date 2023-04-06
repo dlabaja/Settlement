@@ -15,7 +15,7 @@ namespace Inventory
         [SerializeField] public List<ItemStruct> _startValues = new();
         [SerializeField] private bool itemsAreConstant;
         
-        private void OnEnable()
+        private void Awake()
         {
             if (itemsAreConstant)
             {
