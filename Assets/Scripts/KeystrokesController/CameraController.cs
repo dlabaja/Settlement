@@ -1,5 +1,6 @@
 // ReSharper disable once RedundantUsingDirective
 
+using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,6 +31,8 @@ namespace KeystrokesController
         private void FixedUpdate()
         {
             CameraMovement();
+            var cameraPos = transform.position;
+            transform.position = new Vector3(Math.Clamp(cameraPos.x, 0, 500), cameraPos.y, Math.Clamp(cameraPos.z, 0, 500));
         }
 
         private void LateUpdate()

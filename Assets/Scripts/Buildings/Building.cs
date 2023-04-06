@@ -1,4 +1,6 @@
+using Buildings.Workplace;
 using Interfaces;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -12,13 +14,22 @@ namespace Buildings
         async private void OnTriggerEnter(Collider collider)
         {
             var entity = collider.gameObject.GetComponent<Entity>();
-            if (entity.GetLookingFor() != gameObject) return;
-            if (gameObject.HasComponent<Workplace.Workplace>() && collider.GetComponent<Entity>().Workplace != gameObject) return;
+            var inventory = GetComponent<Inventory.Inventory>();
+            if (gameObject.HasComponent<Workplace.Workplace>() && entity.Workplace != gameObject && entity.GetLookingFor() != gameObject) return;
             await Task.Delay(1000);
-            await GetComponent<ICollideable>().OnCollision(collider.gameObject.GetComponent<Entity>());
+            await GetComponent<ICollideable>().OnCollision(entity);
             entity.SetDestinationToNextObject();
             if (entity.GetComponent<Inventory.Inventory>().IsFull())
-                entity.EmptyInventory();
+                entity.AddDestination(entity.Workplace);
+            if (!TryGetComponent<Warehouse>(out _) && entity.Workplace.HasComponent<Warehouse>())
+            {
+                inventory.TransferItems(inventory._startValues.FirstOrDefault().item,
+                    Math.Clamp(inventory.GetItemCount(inventory._startValues.FirstOrDefault().item), 0, 5),
+                    entity.gameObject,
+                    gameObject);
+                entity.SetDestinationToNextObject(); //Work
+                print("t");
+            }
         }
     }
 }

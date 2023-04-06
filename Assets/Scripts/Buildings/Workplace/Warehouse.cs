@@ -10,74 +10,73 @@ namespace Buildings.Workplace
 {
     public class Warehouse : Workplace, ICollideable, IStats
     {
-        private List<Entity> currentlyWorking = new List<Entity>();
-
         private void Awake()
         {
-            InvokeRepeating(nameof(OnNewWork), 0f, 5f);
+            InvokeRepeating(nameof(FindItemsToStore), 0f, 5f);
         }
 
-        public Task OnCollision(Entity entity)
+        public async Task OnCollision(Entity entity) //todo warehouse + inventář oncollision transferItems
         {
-            if (!currentlyWorking.Contains(entity)) return Task.CompletedTask; //todo překopat kód + aby to tam mohly nosit entity nebo transporter
-
             var entInv = entity.GetComponent<Inventory.Inventory>();
-            if (entInv.IsEmpty()) return Task.CompletedTask;
-
             gameObject.GetComponent<Inventory.Inventory>().TransferItems(
                 entInv.GetInventory().Values.FirstOrDefault().item,
                 entInv.GetInventory().Values.FirstOrDefault().count,
                 gameObject,
                 entity.gameObject);
-            currentlyWorking.Remove(entity);
-            return Task.CompletedTask;
         }
 
-        async private Task TakeCareOfWork(Entity entity, GameObject target, Const.Item itemToGet)
+        // async private Task TakeCareOfWork(Entity entity, GameObject target, Const.Item itemToGet)
+        // {
+        //     currentlyWorking.Add(entity);
+        //     print(target);
+        //     entity.AddDestination(target);
+        //
+        //     while (!entity.GetComponent<Collider>().bounds.Intersects(target.GetComponent<Collider>().bounds))
+        //         await Task.Delay(50);
+        //
+        //     entity.GetComponent<Inventory.Inventory>().TransferItems(itemToGet,
+        //         target.GetComponent<Inventory.Inventory>().GetItemCount(itemToGet),
+        //         entity.gameObject,
+        //         target);
+        //
+        //     entity.AddDestination(entity.Workplace);
+        // }
+
+        private void FindItemsToStore()
         {
-            currentlyWorking.Add(entity);
-            entity.AddDestination(target);
-
-            while (!entity.GetComponent<Collider>().bounds.Intersects(target.GetComponent<Collider>().bounds))
-                await Task.Delay(50);
-
-            entity.GetComponent<Inventory.Inventory>().TransferItems(itemToGet,
-                target.GetComponent<Inventory.Inventory>().GetItemCount(itemToGet),
-                entity.gameObject,
-                target);
-
-            entity.AddDestination(entity.Workplace);
-        }
-
-        private void OnNewWork()
-        {
-            var objToTransfer = GetObjectToTransfer();
-            if (objToTransfer == (null, Const.Item.None))
-                return;
-
-            foreach (var entity in gameObject.GetComponent<Workplace>().GetWorkers())
+            var index = 0;
+            foreach (var item in GetComponent<Inventory.Inventory>()._startValues.Select(x => x.item))
             {
-                if (currentlyWorking.Contains(entity))
+                if (item == Const.Item.None) continue;
+                var objToTransfer = GetObjectsToTransfer(item);
+                foreach (var i in objToTransfer)
+                {
+                    workers.ToArray()[index % workers.Count].AddDestination(i);
+                }
+
+                index++;
+            }
+
+            // foreach (var entity in gameObject.GetComponent<Workplace>().GetWorkers())
+            // {
+            //     if (currentlyWorking.Contains(entity))
+            //         continue;
+            //     TakeCareOfWork(entity, objToTransfer.Item1, objToTransfer.Item2);
+            //     break;
+            // }
+        }
+
+        private List<GameObject> GetObjectsToTransfer(Const.Item item)
+        {
+            var list = new List<GameObject>();
+            foreach (var i in FindObjectsOfType<Workplace>().Where(x => !x.gameObject.TryGetComponent<Warehouse>(out _)))
+            {
+                if (!i.TryGetComponent<Inventory.Inventory>(out var gmInv))
                     continue;
-                TakeCareOfWork(entity, objToTransfer.Item1, objToTransfer.Item2);
-                break;
+                if (gmInv.HasItem(item))
+                    list.Add(i.gameObject);
             }
-        }
-
-        private (GameObject, Const.Item) GetObjectToTransfer()
-        {
-            var inv = GetComponent<Inventory.Inventory>().GetInventory();
-            foreach (var item in FindObjectsOfType<Workplace>().Where(x => !x.gameObject.HasComponent<Warehouse>()))
-            {
-                //todo try/catch
-                var gmInv = item.GetComponent<Inventory.Inventory>().GetInventory();
-                foreach (var kv in gmInv)
-                    if (inv.Values.Select(x => x.item).ToList().Contains(kv.Value.item)
-                        && kv.Value.count > 0)
-                        return (item.gameObject, kv.Value.item);
-            }
-
-            return (null, Const.Item.None);
+            return list;
         }
         
         public new void GenerateStats()

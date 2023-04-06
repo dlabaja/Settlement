@@ -56,6 +56,7 @@ MonoBehaviour:
   sleep: 100
   workplace: {fileID: 0}
   house: {fileID: 0}
+  lookingForBattery: []
   lookingFor: {fileID: 0}
 --- !u!114 &5231295192152510811
 MonoBehaviour:
@@ -72,7 +73,7 @@ MonoBehaviour:
   slots: 1
   stackSize: 5
   _startValues: []
-  _values: []
+  itemsAreConstant: 0
 --- !u!33 &2909677475992747848
 MeshFilter:
   m_ObjectHideFlags: 0

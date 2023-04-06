@@ -19,14 +19,14 @@ public class Entity : CustomObject, IStats
     [SerializeField] private int sleep;
     [SerializeField] private GameObject workplace;
     [SerializeField] private GameObject house;
-    public List<GameObject> lookingForBattery;
-    public GameObject lookingFor;
+    private List<GameObject> lookingForBattery = new List<GameObject>();
+    private GameObject lookingFor;
     private Inventory.Inventory _inventory;
     private NavMeshAgent _navMesh;
 
     public GameObject Workplace
     {
-        get { return workplace ? workplace : FindObjectOfType<Spawn>().gameObject; }
+        get { return workplace; }
         set
         {
             EmptyInventory();
@@ -53,6 +53,7 @@ public class Entity : CustomObject, IStats
                 .GroupBy(x => x)
                 .Where(g => g.Count() == 1 && g.Key.activeSelf)
                 .Select(g => g.Key).ToList();
+            //print($"{name}: {lookingFor}x{Utils.ListToString(lookingForBattery)}");
             if (lookingFor is null || !lookingFor.activeSelf || (lookingFor == Workplace && !lookingForBattery.Any()))
                 Work();
 
@@ -89,8 +90,8 @@ public class Entity : CustomObject, IStats
 
     public void SetDestinationToNextObject()
     {
-        lookingFor = lookingForBattery.FirstOrDefault();
-        if (lookingFor != default)
+        lookingFor = lookingForBattery.FirstOrDefault() ?? Workplace; //změna
+        if (lookingForBattery.Any())
         {
             lookingForBattery.RemoveAt(0);
             _navMesh.SetDestination(lookingFor!.transform.position);
@@ -106,7 +107,7 @@ public class Entity : CustomObject, IStats
             AddDestination(Workplace);
             return;
         }
-        
+
         AddDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
@@ -118,11 +119,15 @@ public class Entity : CustomObject, IStats
     }
 
     //parses CustomObject enum to list of CustomObjects and returns its second or first item  
-    private List<GameObject> FindNearestObject(Const.CustomObjects type) => FindObjectsOfType(
-            Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
-        .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
-        .Cast<CustomObject>()
-        .Select(x => x.gameObject).ToList();
+    private List<GameObject> FindNearestObject(Const.CustomObjects type)
+    {
+        if (type == Const.CustomObjects.None) return new List<GameObject>();
+        return FindObjectsOfType(
+                Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
+            .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
+            .Cast<CustomObject>()
+            .Select(x => x.gameObject).ToList();
+    }
 
     public void FindHouse()
     {

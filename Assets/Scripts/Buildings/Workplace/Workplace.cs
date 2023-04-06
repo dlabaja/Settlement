@@ -1,5 +1,6 @@
 using Gui.Stats;
 using Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -24,11 +25,11 @@ namespace Buildings.Workplace
 
         public List<Entity> GetWorkers() => workers;
 
-        public bool AssignWorker(Entity worker)
+        public void AssignWorker(Entity worker)
         {
             if (workers.Count >= maxWorkers
                 || workers.Contains(worker)
-                || worker == null) return false;
+                || worker == null) return;
             try
             {
                 worker.Workplace.GetComponent<Workplace>().FireWorker(worker);
@@ -38,7 +39,6 @@ namespace Buildings.Workplace
             workers.Add(worker);
             worker.Workplace = gameObject;
             OnWorkersChanged?.Invoke();
-            return true;
         }
 
         public void FireWorker(Entity worker)
@@ -49,6 +49,13 @@ namespace Buildings.Workplace
         }
         
         public bool IsFull() => workers.Count == maxWorkers;
+
+        private void OnDestroy()
+        {
+            foreach (var entity in workers)
+                entity.Workplace = GameObject.Find("Spawn");
+        }
+
         public void GenerateStats()
         {
             Stats.GenerateStats(gameObject)

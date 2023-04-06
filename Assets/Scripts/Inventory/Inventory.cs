@@ -12,12 +12,10 @@ namespace Inventory
         [SerializeField] private int slots = 1;
         [SerializeField] private int stackSize = 100;
         private Dictionary<int, ItemStruct> _inventory = new();
-        //todo inspector debug
         [SerializeField] public List<ItemStruct> _startValues = new();
         [SerializeField] private bool itemsAreConstant;
-
-        //todo inspector debug
-        private void Awake()
+        
+        private void OnEnable()
         {
             if (itemsAreConstant)
             {
@@ -33,15 +31,6 @@ namespace Inventory
 
             for (int i = 0; i < _startValues.Count; i++)
                 AddItems(_startValues[i].item, _startValues[i].count);
-        }
-
-        //TODO only temporary for debug, add to stats
-        [SerializeField] private List<ItemStruct> _values;
-
-        //todo temporary
-        private void FixedUpdate()
-        {
-            _values = _inventory.Values.ToList();
         }
 
         public Dictionary<int, ItemStruct> GetInventory() => _inventory;
@@ -124,7 +113,7 @@ namespace Inventory
         public bool HasItem(Item i)
         {
             foreach (var item in _inventory.Values)
-                if (item.item == i && item.count < stackSize)
+                if (item.item == i && item.count < stackSize && item.count > 0)
                     return true;
 
             return false;
@@ -165,7 +154,7 @@ namespace Inventory
         public List<GameObject> FindBuildingToEmptyInventory(Inventory entityInventory)
         {
             if (entityInventory.IsEmpty()) return null;
-            
+
             var list = new List<GameObject>();
             var tempCount = entityInventory._inventory[0].count;
             var item = entityInventory._inventory[0].item;
@@ -174,7 +163,7 @@ namespace Inventory
             foreach (var i in suitableBuildings)
             {
                 var inv = i.GetComponent<Inventory>();
-                foreach (var j in inv._values)
+                foreach (var j in inv._inventory.Values)
                 {
                     if (j.item == item)
                     {
