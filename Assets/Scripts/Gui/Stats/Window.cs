@@ -157,6 +157,17 @@ namespace Gui.Stats
             AddToContainer("Button").GetComponent<UIDocument>().rootVisualElement.Q<Button>().text = text;
             return this;
         }
+        
+        public Window AddWarehouseInventory()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var inv = AddToContainer("WarehouseInventory").GetComponent<WarehouseInventory>();
+                inv.OnStart(sender);
+                inv.SetIndex(i);
+            }
+            return this;
+        }
 
         public Window AddAssignDropdown()
         {

@@ -74,12 +74,15 @@ MonoBehaviour:
   slots: 4
   stackSize: 100
   _startValues:
-  - item: 1
+  - item: 0
     count: 0
-  - item: 1
+  - item: 0
+    count: 0
+  - item: 0
+    count: 0
+  - item: 0
     count: 0
   itemsAreConstant: 1
-  _values: []
 --- !u!23 &2181164950543358909
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -27,12 +27,14 @@ namespace Buildings.Workplace
         private void FindItemsToStore()
         {
             var index = 0;
-            foreach (var item in GetComponent<Inventory.Inventory>()._startValues.Select(x => x.item))
+            foreach (var item in GetComponent<Inventory.Inventory>().GetInventory().Select(x => x.Value.item))
             {
+                if (workers.Count == 0) return;
                 if (item == Const.Item.None) continue;
                 var objToTransfer = GetObjectsToTransfer(item);
-                foreach (var i in objToTransfer)
-                    workers.ToArray()[index % workers.Count].AddDestination(i);
+                print($"{item}x{Utils.ListToString(objToTransfer)}");
+                if (objToTransfer.FirstOrDefault() == null) continue;
+                workers[index % workers.Count].AddDestination(objToTransfer.FirstOrDefault());
                 index++;
             }
         }
@@ -56,6 +58,7 @@ namespace Buildings.Workplace
                 .AddLabel(name, 20)
                 .AddAssignDropdown()
                 .AddLabelWithText("Items to store:", () => Utils.ListToString(GetComponent<Inventory.Inventory>()._startValues))
+                .AddWarehouseInventory()
                 .AddSpace()
                 .AddLabel(() => Utils.DictToString(GetComponent<Inventory.Inventory>().GetInventory()))
                 .BuildWindow();

@@ -1,0 +1,7 @@
+#ButtonSelectable {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+#ButtonSelectable:hover {
+    -unity-background-image-tint-color: rgba(256, 256, 256, 0.4);
+}

@@ -12,7 +12,7 @@ namespace Gui.Stats.Elements
         private Button dropdown;
         private Transform parent;
 
-        protected List<GameObject> listItems = new List<GameObject>();
+        protected List<GameObject> listObjects = new List<GameObject>();
         protected GameObject chosenItem;
         private bool isOpened;
         protected GameObject sender;
@@ -50,7 +50,7 @@ namespace Gui.Stats.Elements
         protected void OnItemsChanged()
         {
             var arrow = container.Q<VisualElement>("Arrow");
-            if (listItems.Count == 0)
+            if (listObjects.Count == 0)
             {
                 arrow.visible = false;
                 return;
@@ -75,7 +75,7 @@ namespace Gui.Stats.Elements
         private void OpenDropdown()
         {
             var dropdownItems = new List<VisualElement>();
-            foreach (var gm in listItems)
+            foreach (var gm in listObjects)
             {
                 var item = Instantiate(Resources.Load("UI/DropdownItem") as GameObject,
                     parent);

@@ -14,7 +14,7 @@ namespace Inventory
         private Dictionary<int, ItemStruct> _inventory = new();
         [SerializeField] public List<ItemStruct> _startValues = new();
         [SerializeField] private bool itemsAreConstant;
-        
+
         private void Awake()
         {
             if (itemsAreConstant)
@@ -32,6 +32,8 @@ namespace Inventory
             for (int i = 0; i < _startValues.Count; i++)
                 AddItems(_startValues[i].item, _startValues[i].count);
         }
+
+        public void ResetSlot(int index, Item newItem) => _inventory[index] = new ItemStruct(newItem, 0);
 
         public Dictionary<int, ItemStruct> GetInventory() => _inventory;
 
@@ -113,9 +115,8 @@ namespace Inventory
         public bool HasItem(Item i)
         {
             foreach (var item in _inventory.Values)
-                if (item.item == i && item.count < stackSize && item.count > 0)
+                if (item.item == i && item.count > 0)
                     return true;
-
             return false;
         }
 
@@ -123,7 +124,7 @@ namespace Inventory
 
         public bool IsEmpty() => CountAllItems() == 0;
 
-        public bool TransferItems(Item item, int count, GameObject receiver = null, GameObject sender = null)
+        public void TransferItems(Item item, int count, GameObject receiver = null, GameObject sender = null)
         {
             if (sender == null) sender = gameObject;
             if (receiver == null) receiver = gameObject;
@@ -132,7 +133,8 @@ namespace Inventory
             var receiverInv = receiver.GetComponent<Inventory>();
 
             //přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
-            if (receiverInv.IsFull()) return false;
+            if (receiverInv.IsFull()) return;
+            if ((!_inventory.ContainsValue(new ItemStruct(item, 0)) && GetItemCount(item) == 0) && receiver.HasComponent<Warehouse>()) return;
 
             var removed = senderInv.RemoveItems(item, count);
             senderInv.AddItems(item, receiverInv.AddItems(item, removed));
@@ -145,7 +147,10 @@ namespace Inventory
             else
                 receiverInv.ReplaceWithStartValues();
 
-            return true;
+            if (!senderInv.TryGetComponent<Entity>(out var entity))
+                receiver.TryGetComponent(out entity);
+            if (entity == null) return;
+            if (entity.GetComponent<Inventory>().IsEmpty()) entity.GetComponent<Inventory>().ReplaceWithNone();
         }
 
         public List<GameObject> FindBuildingToEmptyInventory(Inventory entityInventory)
@@ -171,6 +176,7 @@ namespace Inventory
                     if (tempCount <= 0) return list.Distinct().ToList();
                 }
             }
+
             return null;
         }
     }

@@ -153,6 +153,8 @@ public class Entity : CustomObject, IStats
     }
 
     public GameObject GetLookingFor() => lookingFor;
+    
+    public List<GameObject> GetLookingForBattery() => lookingForBattery;
 
     public int GetWater() => water;
 

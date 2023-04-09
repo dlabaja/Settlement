@@ -11,13 +11,13 @@ namespace Gui.Stats.Elements
             afterAwake = () =>
             {
                 var workplace = sender.GetComponent<Workplace>();
-                listItems = workplace.GetWorkers().Select(x => x.gameObject).ToList();
+                listObjects = workplace.GetWorkers().Select(x => x.gameObject).ToList();
                 OnItemsChanged();
 
                 workplace.OnWorkersChanged += () =>
                 {
-                    listItems = workplace.GetWorkers().Select(x => x.gameObject).ToList();
-                    SetInnerLabel($"Workers: {listItems.Count}/{workplace.GetMaxWorkers()}");
+                    listObjects = workplace.GetWorkers().Select(x => x.gameObject).ToList();
+                    SetInnerLabel($"Workers: {listObjects.Count}/{workplace.GetMaxWorkers()}");
                     OnItemsChanged();
                     ReloadDropdownItems();
                 };
@@ -36,7 +36,7 @@ namespace Gui.Stats.Elements
                 };
 
                 SetOuterLabel("Workers");
-                SetInnerLabel($"Workers: {listItems.Count}/{workplace.GetMaxWorkers()}");
+                SetInnerLabel($"Workers: {listObjects.Count}/{workplace.GetMaxWorkers()}");
                 SetDropdownButtonImage("Assets/Resources/Sprites/assign.png");
                 SetDropdownItemButtonImage("Assets/Resources/Sprites/unassign.png");
             };
