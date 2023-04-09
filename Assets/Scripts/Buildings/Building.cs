@@ -19,7 +19,7 @@ namespace Buildings
             if (gameObject.HasComponent<Workplace.Workplace>() && entity.Workplace != gameObject && entity.GetLookingFor() != gameObject) return;
             await GetComponent<ICollideable>().OnCollision(entity);
             entity.SetDestinationToNextObject();
-            if (inventory.IsFull())
+            if (entity.GetComponent<Inventory.Inventory>().IsFull())
                 entity.AddDestination(entity.Workplace);
             if (!TryGetComponent<Warehouse>(out _) && entity.Workplace.HasComponent<Warehouse>())
             {

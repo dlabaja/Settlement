@@ -63,10 +63,10 @@ namespace Gui.Stats
                 {
                     if (child == null)
                         continue;
-
+            
                     child!.style.left = 0f;
                     child!.style.top = dp;
-
+            
                     dp += child.layout.height + elementOffset;
                     if (child.layout.width > maxWidth)
                         maxWidth = child.layout.width;
@@ -78,7 +78,6 @@ namespace Gui.Stats
                 top.style.top = Math.Clamp(Screen.height - mousePos.y - top.style.height.value.value - 20, 0, Screen.height);
                 top.style.left = Math.Clamp(mousePos.x - 0.5f * top.style.width.value.value, 0, Screen.width);
             });
-
         }
 
         private UIDocument AddToContainer(string name)
@@ -150,6 +149,12 @@ namespace Gui.Stats
         public Window AddSpace()
         {
             AddToContainer("Space");
+            return this;
+        }
+
+        public Window AddButton(string text)
+        {
+            AddToContainer("Button").GetComponent<UIDocument>().rootVisualElement.Q<Button>().text = text;
             return this;
         }
 

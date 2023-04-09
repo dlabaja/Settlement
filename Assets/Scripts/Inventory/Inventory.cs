@@ -119,10 +119,7 @@ namespace Inventory
             return false;
         }
 
-        public bool IsFull()
-        {
-            return slots * stackSize == CountAllItems();
-        }
+        public bool IsFull() => slots * stackSize == CountAllItems();
 
         public bool IsEmpty() => CountAllItems() == 0;
 

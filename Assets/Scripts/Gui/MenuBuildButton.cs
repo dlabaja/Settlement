@@ -17,11 +17,12 @@ namespace Gui
             if (Physics.Raycast(ray, out RaycastHit hit, 1000f, 1 << LayerMask.NameToLayer("Terrain")))
             {
                 if (Physics.OverlapSphere(collider.bounds.center, collider.bounds.extents.magnitude - 1)
-                    .Any(x => x.gameObject.layer == LayerMask.NameToLayer("Default") && x.gameObject != gm))
+                        .Any(x => x.gameObject.layer == LayerMask.NameToLayer("Default") && x.gameObject != gm)
+                    || Vector3.Angle(hit.normal, transform.up) > 30)
                     renderer.material.color = Color.red;
                 else
                     renderer.material.color = Color.white;
-
+                
                 var terrain = Terrain.activeTerrain.terrainData;
                 var terrainNormal = terrain.GetInterpolatedNormal(hit.point.x / terrain.size.x, hit.point.z / terrain.size.z);
                 gm.transform.position = new Vector3(hit.point.x, terrain.GetInterpolatedHeight(hit.point.x / terrain.size.x, hit.point.z / terrain.size.z) + collider.bounds.extents.y, hit.point.z);

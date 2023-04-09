@@ -56,8 +56,6 @@ MonoBehaviour:
   sleep: 100
   workplace: {fileID: 0}
   house: {fileID: 0}
-  lookingForBattery: []
-  lookingFor: {fileID: 0}
 --- !u!114 &5231295192152510811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +130,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6794000756038210647}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -162,7 +160,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 6794000756038210647}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.15
   m_Speed: 8
   m_Acceleration: 100
   avoidancePriority: 50
@@ -173,5 +171,5 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
