@@ -24,7 +24,7 @@ namespace Buildings.Workplace
 
         public void AssignWorker(Entity worker)
         {
-            if (workers.Count >= maxWorkers
+            if (workers.Count + 1 > maxWorkers
                 || workers.Contains(worker)
                 || worker == null) return;
             try

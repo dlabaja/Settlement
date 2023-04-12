@@ -11,7 +11,9 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         
-        Utils.LoadGameObjects("Entity", Parent.Entities, 7);
+        Utils.LoadGameObjects("Entity", Parent.Entities, 11);
+        Time.timeScale = 3;
+        GameSpeed = 3;
 
         //TODO Time.timeScale = Const.GameSpeed;
         MenuBuild.AddButton(typeof(Well), new BuildingPrice(new List<ItemStruct>{new ItemStruct(Item.Stone, 5)}, 10),"");

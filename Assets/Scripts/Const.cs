@@ -22,6 +22,8 @@ public static class Const
         Male,
         Female
     }
+    
+    public enum WarehouseMode { ALLOW, REJECT, STOCKMAX, UNSTOCK}
 
     public enum Item
     {

@@ -92,14 +92,7 @@ namespace Inventory
                 if (_inventory[i].count == 0)
                     _inventory[i] = new ItemStruct(Item.None, 0);
         }
-
-        private void ReplaceWithStartValues()
-        {
-            for (var i = 0; i < _inventory.Count; i++)
-                if (_inventory[i].item == Item.None)
-                    _inventory[i] = new ItemStruct(_startValues[i].item, 0);
-        }
-
+        
         public int CountAllItems()
         {
             var val = 0;
@@ -120,10 +113,19 @@ namespace Inventory
             return false;
         }
 
+        public bool HasRoomForItem(Item i)
+        {
+            foreach (var item in _inventory.Values)
+                if (item.item == i)
+                    return true;
+            return false;
+        }
+
         public bool IsFull() => slots * stackSize == CountAllItems();
 
         public bool IsEmpty() => CountAllItems() == 0;
 
+        //pokud má objekt konstantní itemy, volat to na něm
         public void TransferItems(Item item, int count, GameObject receiver = null, GameObject sender = null)
         {
             if (sender == null) sender = gameObject;
@@ -144,13 +146,11 @@ namespace Inventory
                 senderInv.ReplaceWithNone();
                 receiverInv.ReplaceWithNone();
             }
-            else
-                receiverInv.ReplaceWithStartValues();
 
-            if (!senderInv.TryGetComponent<Entity>(out var entity))
+            if (!sender.TryGetComponent<Entity>(out var entity))
                 receiver.TryGetComponent(out entity);
-            if (entity == null) return;
-            if (entity.GetComponent<Inventory>().IsEmpty()) entity.GetComponent<Inventory>().ReplaceWithNone();
+            if (entity != null) 
+                if (entity.GetComponent<Inventory>().IsEmpty()) entity.GetComponent<Inventory>().ReplaceWithNone();
         }
 
         public List<GameObject> FindBuildingToEmptyInventory(Inventory entityInventory)
@@ -161,13 +161,13 @@ namespace Inventory
             var tempCount = entityInventory._inventory[0].count;
             var item = entityInventory._inventory[0].item;
             var suitableBuildings = FindObjectsOfType<Workplace>()
-                .Where(x => x.GetComponent<Inventory>().HasItem(item));
+                .Where(x => !x.TryGetComponent<Spawn>(out _) && x.GetComponent<Inventory>().HasRoomForItem(item) && !x.TryGetComponent<Warehouse>(out _));
             foreach (var i in suitableBuildings)
             {
                 var inv = i.GetComponent<Inventory>();
                 foreach (var j in inv._inventory.Values)
                 {
-                    if (j.item == item)
+                    if (j.item == item && j.count < stackSize)
                     {
                         tempCount -= inv.stackSize - j.count;
                         list.Add(i.gameObject);
@@ -176,7 +176,6 @@ namespace Inventory
                     if (tempCount <= 0) return list.Distinct().ToList();
                 }
             }
-
             return null;
         }
     }

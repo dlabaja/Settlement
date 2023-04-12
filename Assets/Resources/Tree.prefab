@@ -177,9 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots: 1
   stackSize: 100
-  _startValues:
-  - item: 1
-    count: 3
+  _startValues: []
   itemsAreConstant: 0
 --- !u!136 &-9144210110325670232
 CapsuleCollider:

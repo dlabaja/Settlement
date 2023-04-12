@@ -163,8 +163,7 @@ namespace Gui.Stats
             for (int i = 0; i < 4; i++)
             {
                 var inv = AddToContainer("WarehouseInventory").GetComponent<WarehouseInventory>();
-                inv.OnStart(sender);
-                inv.SetIndex(i);
+                inv.OnStart(sender, i);
             }
             return this;
         }

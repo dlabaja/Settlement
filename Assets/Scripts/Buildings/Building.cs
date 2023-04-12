@@ -20,7 +20,7 @@ namespace Buildings
             await GetComponent<ICollideable>().OnCollision(entity);
             entity.SetDestinationToNextObject();
             if (entity.GetComponent<Inventory.Inventory>().IsFull())
-                entity.AddDestination(entity.Workplace);
+                entity.EmptyInventory();
             if (!TryGetComponent<Warehouse>(out _) && entity.Workplace.HasComponent<Warehouse>())
             {
                 var item = inventory._startValues.FirstOrDefault().item;

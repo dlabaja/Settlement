@@ -65,12 +65,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: 1
-  stackSize: 20
+  stackSize: 60
   _startValues:
   - item: 1
     count: 0
   itemsAreConstant: 1
-  _values: []
 --- !u!33 &4094131659973612557
 MeshFilter:
   m_ObjectHideFlags: 0

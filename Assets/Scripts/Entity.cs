@@ -29,8 +29,8 @@ public class Entity : CustomObject, IStats
         get { return workplace; }
         set
         {
-            EmptyInventory();
             workplace = value;
+            EmptyInventory();
             SetDestinationToNextObject();
         }
     }
@@ -53,7 +53,6 @@ public class Entity : CustomObject, IStats
                 .GroupBy(x => x)
                 .Where(g => g.Count() == 1 && g.Key.activeSelf)
                 .Select(g => g.Key).ToList();
-            //print($"{name}: {lookingFor}x{Utils.ListToString(lookingForBattery)}");
             if (!lookingFor.activeSelf || (lookingFor == Workplace && !lookingForBattery.Any()))
                 SetDestinationToNextObject();
 
@@ -97,6 +96,7 @@ public class Entity : CustomObject, IStats
             _navMesh.SetDestination(lookingFor!.transform.position);
             return;
         }
+
         Work();
     }
 
@@ -129,7 +129,7 @@ public class Entity : CustomObject, IStats
             .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
             .Cast<CustomObject>()
             .Select(x => x.gameObject).ToList();
-        
+
         if (type == Const.CustomObjects.Tree)
             return obj.Take(6).OrderBy(_ => new Random().Next()).ToList();
         return obj;
@@ -147,13 +147,31 @@ public class Entity : CustomObject, IStats
     public void EmptyInventory()
     {
         var buildings = _inventory.FindBuildingToEmptyInventory(_inventory);
-        if (buildings == null) return;
+        if (buildings == null)
+        {
+            StartCoroutine(EmptyInventoryCoroutine());
+            return;
+        }
         foreach (var item in buildings!)
             AddDestination(item);
     }
 
+    private IEnumerator EmptyInventoryCoroutine()
+    {
+        while (true)
+        {
+            var buildings = _inventory.FindBuildingToEmptyInventory(_inventory);
+            if (buildings == null) yield return new WaitForSeconds(1);
+            else
+            {
+                AddDestination(buildings.First());
+                break;
+            }
+        }
+    }
+
     public GameObject GetLookingFor() => lookingFor;
-    
+
     public List<GameObject> GetLookingForBattery() => lookingForBattery;
 
     public int GetWater() => water;

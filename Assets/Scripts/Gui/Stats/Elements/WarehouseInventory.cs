@@ -2,6 +2,7 @@ using Buildings.Workplace;
 using Inventory;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,8 +13,12 @@ namespace Gui.Stats.Elements
         private int index;
         private VisualElement root;
 
-        public void OnStart(GameObject sender)
+        private Const.WarehouseMode _mode = Const.WarehouseMode.ALLOW;
+
+        public void OnStart(GameObject sender, int index)
         {
+            this.index = index;
+            chosenItem = ItemToGameObject(sender.GetComponent<Inventory.Inventory>().GetInventory()[index].item);
             root = GetComponent<UIDocument>().rootVisualElement;
             var inv = sender.GetComponent<Inventory.Inventory>();
 
@@ -36,17 +41,32 @@ namespace Gui.Stats.Elements
                 chosenItem = ItemToGameObject(Const.Item.None);
             };
 
-            SelectButton(root.Q<Button>("ButtonAllow"));
-            foreach (var item in new[]{"ButtonAllow", "ButtonReject", "ButtonStockMax", "ButtonUnstock"})
+            var buttons = new[]{"ButtonAllow", "ButtonReject", "ButtonStockMax", "ButtonUnstock"};
+            var button = root.Query<Button>().Where(x => x.name.ToUpper().Contains(sender.GetComponent<Warehouse>().itemMode[index].ToString())).ToList().FirstOrDefault() ?? root.Query<Button>(buttons[0]);
+            SelectButton(button);
+            for (int i = 0; i < buttons.Length; i++)
             {
-                var b = root.Q<Button>(item);
-                b.clicked += () => SelectButton(b);
+                var b = root.Q<Button>(buttons[i]);
+                int iLoc = i;
+                b.clicked += () =>
+                {
+                    SelectButton(b);
+                    sender.GetComponent<Warehouse>().SetItemMod(index, (Const.WarehouseMode)iLoc);
+                };
             }
 
-
+            var choices = new[]{"ButtonAllow", "ButtonReject", "ButtonStockMax", "ButtonUnstock"};
+            for (int i = 0; i < choices.Length; i++)
+            {
+                var b = root.Q<Button>(choices[i]);
+                b.clicked += () =>
+                {
+                    SelectButton(b);
+                };
+            }
+            
             OnAwake(sender);
             InvokeRepeating(nameof(ReloadLabel), 0, 1);
-
         }
 
         private void SelectButton(Button button)
@@ -76,6 +96,5 @@ namespace Gui.Stats.Elements
         //kvůli dropdownu, který přijímá a vrací pouze gameobject a já jsem moc línej to přepisovat
         private GameObject ItemToGameObject(Const.Item item) => GameObject.Find("Items").transform.Find(item.ToString()).gameObject;
         private Const.Item GameObjectToItem(GameObject gm) => Enum.Parse<Const.Item>(gm.name);
-        public void SetIndex(int index) => this.index = index;
     }
 }

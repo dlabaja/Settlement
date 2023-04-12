@@ -36,6 +36,7 @@ namespace Gui
             {
                 var b = button.GetComponent<MenuBuildButton>();
                 var gm = Utils.LoadGameObject(t.Name, Const.Parent.Buildings);
+                gm.name = t.Name;
                 Stats.Stats.statsEnabled = false;
                 b.isBuilding = true;
                 buttonRoot.schedule.Execute(() => b.BuildMode(gm)).Until(() => b.isBuilding == false);
