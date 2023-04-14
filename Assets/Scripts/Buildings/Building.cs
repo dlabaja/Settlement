@@ -1,4 +1,5 @@
 using Buildings.Workplace;
+using Gui.Stats;
 using Interfaces;
 using System;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Buildings
             entity.SetDestinationToNextObject();
             if (entity.GetComponent<Inventory.Inventory>().IsFull())
                 entity.EmptyInventory();
-            if (!TryGetComponent<Warehouse>(out _) && entity.Workplace.HasComponent<Warehouse>())
+            if (!TryGetComponent<Warehouse>(out _) && TryGetComponent<Workplace.Workplace>(out _) && entity.Workplace.HasComponent<Warehouse>()) //při kolizi transportera a workplacu
             {
                 var item = inventory._startValues.FirstOrDefault().item;
                 inventory.TransferItems(item,

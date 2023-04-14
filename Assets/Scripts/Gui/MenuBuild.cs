@@ -1,7 +1,9 @@
+using Buildings;
 using Gui.Stats;
 using Inventory;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,13 +38,16 @@ namespace Gui
             {
                 var b = button.GetComponent<MenuBuildButton>();
                 var gm = Utils.LoadGameObject(t.Name, Const.Parent.Buildings);
+
                 gm.name = t.Name;
                 Stats.Stats.statsEnabled = false;
+                ChangeBehaviorsState(gm, false);
+
                 b.isBuilding = true;
                 buttonRoot.schedule.Execute(() => b.BuildMode(gm)).Until(() => b.isBuilding == false);
             };
         }
-        
+
         private static void RenderHover(CallbackEventHandler button, MemberInfo t, BuildingPrice price)
         {
             var gm = Window.GenerateWindow(new GameObject())
@@ -65,6 +70,24 @@ namespace Gui
             {
                 top.visible = false;
             });
+        }
+
+        public static void ChangeBehaviorsState(GameObject gm, bool state)
+        {
+            foreach (var item in gm.GetComponents<MonoBehaviour>())
+                item.enabled = state;
+            foreach (var item in gm.GetComponents<Behaviour>())
+                item.enabled = state;
+        }
+        
+        public void SetToUnbuilt(bool state)
+        {
+            if (state)
+            {
+                gameObject.AddComponent<Unbuilt>();
+                return;
+            }
+            Destroy(GetComponent<Unbuilt>());
         }
     }
 

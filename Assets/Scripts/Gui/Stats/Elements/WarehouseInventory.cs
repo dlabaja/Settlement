@@ -24,10 +24,10 @@ namespace Gui.Stats.Elements
 
             afterAwake = () =>
             {
-                listObjects = new List<GameObject>{
-                    ItemToGameObject(Const.Item.None), ItemToGameObject(Const.Item.Wood), ItemToGameObject(Const.Item.PolishedStone),
-                    ItemToGameObject(Const.Item.Stone), ItemToGameObject(Const.Item.Tools), ItemToGameObject(Const.Item.Planks)
-                };
+                foreach (var item in sender.GetComponent<Warehouse>().storeableItems)
+                {
+                    listObjects.Add(ItemToGameObject(item));
+                }
             };
             onChoose = item =>
             {
@@ -93,7 +93,7 @@ namespace Gui.Stats.Elements
             SetInnerLabel($"{chosenItem.name} ({sender.GetComponent<Inventory.Inventory>().GetInventory()[index].count})");
         }
 
-        //kvůli dropdownu, který přijímá a vrací pouze gameobject a já jsem moc línej to přepisovat
+        //kvůli dropdownu, který přijímá a vrací pouze gameobject a já jsem moc línej to přepisovat, potřebuje objekty ve scéně
         private GameObject ItemToGameObject(Const.Item item) => GameObject.Find("Items").transform.Find(item.ToString()).gameObject;
         private Const.Item GameObjectToItem(GameObject gm) => Enum.Parse<Const.Item>(gm.name);
     }

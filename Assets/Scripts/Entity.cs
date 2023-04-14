@@ -2,6 +2,7 @@ using Buildings;
 using Buildings.Workplace;
 using Gui.Stats;
 using Interfaces;
+using Inventory;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ public class Entity : CustomObject, IStats
     private GameObject lookingFor;
     private Inventory.Inventory _inventory;
     private NavMeshAgent _navMesh;
+    public List<ItemStruct> neededItems = new List<ItemStruct>();
 
     public GameObject Workplace
     {

@@ -1,5 +1,6 @@
 using Gui.Stats;
 using Interfaces;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +12,17 @@ namespace Buildings.Workplace
         [SerializeField] protected Const.CustomObjects workObject;
         [SerializeField] protected List<Entity> workers;
         [SerializeField] protected int maxWorkers;
+        protected List<Entity> availableWorkers = new List<Entity>();
         protected (List<Const.Item>, List<Const.Item>) producingItems;
 
         public delegate void WorkersChanged();
         public event WorkersChanged OnWorkersChanged;
-        
+
+        private void Awake()
+        {
+            OnWorkersChanged += () => availableWorkers = workers;
+        }
+
         public Const.CustomObjects GetWorkObject() => workObject;
 
         public int GetMaxWorkers() => maxWorkers;

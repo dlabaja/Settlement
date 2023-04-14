@@ -11,13 +11,17 @@ namespace Buildings.Workplace
 {
     public class Warehouse : Workplace, ICollideable, IStats
     {
-        private List<Entity> availableWorkers = new List<Entity>();
+        
         public readonly Dictionary<int, Const.WarehouseMode> itemMode = new Dictionary<int, Const.WarehouseMode>();
+        public List<Const.Item> storeableItems = new List<Const.Item>();
 
         //todo tlačítko #3 (zákaz braní itemů)   
         private void Awake()
         {
-            OnWorkersChanged += () => availableWorkers = workers;
+            storeableItems = new List<Const.Item>{
+                Const.Item.None, Const.Item.Wood, Const.Item.PolishedStone,
+                Const.Item.Stone, Const.Item.Tools, Const.Item.Planks
+            };
             for (int i = 0; i < 4; i++)
                 itemMode.Add(i, Const.WarehouseMode.ALLOW);
             InvokeRepeating(nameof(FindItemsToStore), 0f, 2f);
@@ -104,7 +108,6 @@ namespace Buildings.Workplace
                 .AddLabel(name, 20)
                 .AddAssignDropdown()
                 .AddWarehouseInventory()
-                .AddLabel(() => Utils.DictToString(GetComponent<Inventory.Inventory>().GetInventory()))
                 .BuildWindow();
         }
     }
