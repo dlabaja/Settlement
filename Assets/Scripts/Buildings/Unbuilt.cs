@@ -37,7 +37,7 @@ namespace Buildings
         public List<ItemStruct> GetNeededItems()
         {
             var ls = new List<ItemStruct>();
-            
+            return null;
         }
     }
 }

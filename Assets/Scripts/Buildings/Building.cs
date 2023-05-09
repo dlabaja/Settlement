@@ -1,6 +1,7 @@
 using Buildings.Workplace;
 using Gui.Stats;
 using Interfaces;
+using Inventory;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,6 +23,28 @@ namespace Buildings
             entity.SetDestinationToNextObject();
             if (entity.GetComponent<Inventory.Inventory>().IsFull())
                 entity.EmptyInventory();
+            if (inventory.GetInventory().Values.Intersect(entity.neededItems).Any())
+            {
+                //todo requestování itemů, stavba budov
+                var item = inventory.GetInventory().Values.Intersect(entity.neededItems).First();
+                if (item.count >= inventory.GetItemCount(item.item))
+                {
+                    inventory.TransferItems(item.item,
+                        item.count,
+                        entity.gameObject,
+                        gameObject);
+                    entity.neededItems.RemoveAt(0);
+                }
+                else if (inventory.HasItem(item.item))
+                {
+                    inventory.TransferItems(item.item,
+                        item.count,
+                        entity.gameObject,
+                        gameObject);
+                    entity.neededItems[0] = new ItemStruct(item.item, item.count - inventory.GetItemCount(item.item));
+                }
+            }
+
             if (!TryGetComponent<Warehouse>(out _) && TryGetComponent<Workplace.Workplace>(out _) && entity.Workplace.HasComponent<Warehouse>()) //při kolizi transportera a workplacu
             {
                 var item = inventory._startValues.FirstOrDefault().item;
