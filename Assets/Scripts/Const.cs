@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 public static class Const
 {
-    public enum CustomObjects
+    public enum Buildings
     {
-        Entity,
+        None,
         Well,
         Spawn,
         Woodcutter,
@@ -14,7 +14,9 @@ public static class Const
         Stone,
         Gatherer,
         BerryBush,
-        None
+        Stonemason,
+        Forester,
+        Sawmill
     }
 
     public enum Gender
@@ -49,6 +51,12 @@ public static class Const
 
     public const int WaterDecreaseChance = 400;
     public const int SleepDecreaseChance = 600;
+    
+    public const int WoodDrop = 3;
+    public const int StoneDrop = 1;
+    public const int BuildingStackSize = 20;
+    public const int BuildingMaxSlots = 1;
+    public const int EntityStackSize = 5;
 
     public static readonly List<string> MaleNames = new()
         {"Adam", "Ailwin", "Alan", "Alard", "Aldred", "Alexander", "Alured", "Amaury", "Amalric", "Anselm", "Arnald", "Asa", "Aubrey", "Baldric", "Baldwin", "Bartholomew", "Bennet", "Bertram", "Blacwin", "Colin", "Constantine", "David", "Edwin", "Elias", "Helyas", "Engeram", "Ernald", "Eustace", "Fabian", "Fordwin", "Forwin", "Fulk", "Gamel", "Geoffrey", "Gerard", "Gervase", "Gilbert", "Giles", "Gladwin", "Godwin", "Guy", "Hamo", "Hamond", "Harding", "Henry", "Herlewin", "Hervey", "Hugh", "James", "Jocelin", "John", "Jordan", "Lawrence", "Leofwin", "Luke", "Martin", "Masci", "Matthew", "Maurice", "Michael", "Nigel", "Odo", "Oliva", "Osbert", "Norman", "Nicholas", "Peter", "Philip", "Ralf", "Ranulf", "Richard", "Robert", "Roman", "Roger", "Saer", "Samer", "Savaric", "Silvester", "Simon", "Stephan", "Terric", "Terry", "Theobald", "Thomas", "Thurstan", "Umfrey", "Virislav", "Waleran", "Walter", "Warin", "William", "Wimarc", "Ymbert"};

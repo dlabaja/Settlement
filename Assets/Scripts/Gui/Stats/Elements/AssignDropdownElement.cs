@@ -1,4 +1,5 @@
 using Buildings.Workplace;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,13 +12,13 @@ namespace Gui.Stats.Elements
             afterAwake = () =>
             {
                 var workplace = sender.GetComponent<Workplace>();
-                listObjects = workplace.GetWorkers().Select(x => x.gameObject).ToList();
+                listObjects = workplace.Workers.Select(x => x.gameObject).ToList();
                 OnItemsChanged();
 
                 workplace.OnWorkersChanged += () =>
                 {
-                    listObjects = workplace.GetWorkers().Select(x => x.gameObject).ToList();
-                    SetInnerLabel($"Workers: {listObjects.Count}/{workplace.GetMaxWorkers()}");
+                    listObjects = workplace.Workers.Select(x => x.gameObject).ToList();
+                    SetInnerLabel($"Workers: {listObjects.Count}/{workplace.MaxWorkers}");
                     OnItemsChanged();
                     ReloadDropdownItems();
                 };
@@ -25,7 +26,7 @@ namespace Gui.Stats.Elements
                 buttonClicked = delegate
                 {
                     var worker = FindObjectsOfType<Entity>()
-                        .FirstOrDefault(x => x.Workplace.name == Const.CustomObjects.Spawn.ToString());
+                        .FirstOrDefault(x => x.Workplace.name == Const.Buildings.Spawn.ToString());
                     sender.GetComponent<Workplace>().AssignWorker(worker);
                 };
 
@@ -36,7 +37,7 @@ namespace Gui.Stats.Elements
                 };
 
                 SetOuterLabel("Workers");
-                SetInnerLabel($"Workers: {listObjects.Count}/{workplace.GetMaxWorkers()}");
+                SetInnerLabel($"Workers: {listObjects.Count}/{workplace.MaxWorkers}");
                 SetDropdownButtonImage("Assets/Resources/Sprites/assign.png");
                 SetDropdownItemButtonImage("Assets/Resources/Sprites/unassign.png");
             };

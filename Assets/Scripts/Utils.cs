@@ -25,38 +25,10 @@ public static class Utils
         return Rnd.Next(max / Const.GameSpeed) == 0;
     }
 
-    public static string GenerateName(Const.Gender gender)
-    {
-        return gender == Const.Gender.Male
-            ? Const.MaleNames[Rnd.Next(Const.MaleNames.Count)]
-            : Const.FemaleNames[Rnd.Next(Const.FemaleNames.Count)];
-    }
-
-    public static Const.Gender GenerateGender()
-    {
-        return Rnd.Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
-    }
-
     public static string DictToString<TK, TV>(Dictionary<TK, TV> dict, string keyValSeparator = ": ", string itemSeparator = "; ")
         => dict.Aggregate("", (current, item) => current + $"{item.Key}{keyValSeparator}{item.Value}{itemSeparator}");
 
     public static string ListToString<T>(List<T> ls) => string.Join(", ", ls);
-
-    public static void LoadGameObjects(string path, Const.Parent parentName, int count)
-    {
-        var prefab = Resources.Load(path, typeof(GameObject));
-        var parent = GameObject.Find(parentName.ToString()).transform;
-        for (int i = 0; i < count; i++)
-        {
-            Object.Instantiate(prefab, parent);
-        }
-    }
-    
-    public static GameObject LoadGameObject(string path, Const.Parent parentName)
-    {
-        return Object.Instantiate(Resources.Load(path, typeof(GameObject)),
-            GameObject.Find(parentName.ToString()).transform) as GameObject;
-    }
 
     public static bool HasComponent<T>(this GameObject gm)
     {

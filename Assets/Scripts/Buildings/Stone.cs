@@ -12,7 +12,7 @@ namespace Buildings
             {
                 //todo během práce leavne job
                 await entity.Stop(2000);
-                entity.GetComponent<Inventory.Inventory>().AddItems(Const.Item.Stone, 1);
+                entity.GetComponent<Inventory.Inventory>().AddItems(Const.Item.Stone, Const.StoneDrop);
             }
         }
     }

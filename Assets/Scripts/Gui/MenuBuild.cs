@@ -1,3 +1,4 @@
+using Buildings;
 using Gui.Stats;
 using Inventory;
 using System;
@@ -35,7 +36,7 @@ namespace Gui
             buttonRoot.Q<Button>().clicked += () =>
             {
                 var b = button.GetComponent<MenuBuildButton>();
-                var gm = Utils.LoadGameObject(t.Name, Const.Parent.Buildings);
+                var gm = Building.Spawn(Enum.Parse<Const.Buildings>(t.Name));
                 gm.name = t.Name;
                 Stats.Stats.statsEnabled = false;
                 b.isBuilding = true;

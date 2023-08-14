@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8a412b6b664abaaae86d3df47fd63d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  workObject: 7
+  workObject: 6
   workers: []
   maxWorkers: 4
 --- !u!114 &9029656768288993032

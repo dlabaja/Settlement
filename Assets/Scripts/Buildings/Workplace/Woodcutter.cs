@@ -1,4 +1,5 @@
 using Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,7 +9,9 @@ namespace Buildings.Workplace
     {
         private void Awake()
         {
-            producingItems = (new List<Const.Item>{Const.Item.None}, new List<Const.Item>{Const.Item.Wood});
+            WorkObject = Const.Buildings.Tree;
+            MaxWorkers = 4;
+            ProducingItems = (new List<Const.Item>{Const.Item.None}, new List<Const.Item>{Const.Item.Wood});
         }
 
         public async Task OnCollision(Entity entity)

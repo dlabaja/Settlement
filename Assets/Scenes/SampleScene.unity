@@ -1779,6 +1779,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stonecutter
       objectReference: {fileID: 0}
+    - target: {fileID: 7641707671461164656, guid: b84a264fa7d92e693989dff21e945625, type: 3}
+      propertyPath: workObject
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b84a264fa7d92e693989dff21e945625, type: 3}
 --- !u!1001 &1531757851
@@ -1934,11 +1938,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.55
+      value: -6.85
       objectReference: {fileID: 0}
     - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.12
+      value: 2.36
       objectReference: {fileID: 0}
     - target: {fileID: 3014854604322073308, guid: 35365b15a1942dfa096395206cd47b40, type: 3}
       propertyPath: m_LocalPosition.z

@@ -34,5 +34,15 @@ namespace Buildings
 
             await Task.Delay(1000);
         }
+        
+        public static T Spawn<T>() where T : Building
+        {
+            return LoadGameObject(typeof(T).ToString(), "Buildings").GetComponent<T>();
+        }
+        
+        public static GameObject Spawn(Const.Buildings building)
+        {
+            return LoadGameObject(building.ToString(), "Buildings");
+        }
     }
 }

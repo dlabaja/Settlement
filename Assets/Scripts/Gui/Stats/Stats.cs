@@ -14,7 +14,7 @@ namespace Gui.Stats
         public static Stats GenerateStats(GameObject sender)
         {
             if (IsDuplicate(sender)) return null;
-            var obj = Utils.LoadGameObject("UI/Stats", Const.Parent.Gui).GetComponent<Stats>();
+            var obj = CustomObject.LoadGameObject("UI/Stats", "Gui").GetComponent<Stats>();
             obj.sender = sender;
             return obj;
         }

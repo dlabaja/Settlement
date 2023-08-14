@@ -23,7 +23,7 @@ namespace Gui.Stats
         public static Window GenerateWindow(GameObject sender)
         {
             if (IsDuplicate(sender)) return null;
-            var obj = Utils.LoadGameObject("UI/Window", Const.Parent.Gui).GetComponent<Window>();
+            var obj = CustomObject.LoadGameObject("UI/Window", "Gui").GetComponent<Window>();
             obj.sender = sender;
             return obj;
         }

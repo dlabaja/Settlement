@@ -13,10 +13,10 @@ using Random = System.Random;
 
 public class Entity : CustomObject, IStats
 {
-    [SerializeField] private new string name;
-    [SerializeField] private Const.Gender gender;
-    [SerializeField] private int water;
-    [SerializeField] private int sleep;
+    public string Name { get; private set; }
+    public Const.Gender Gender { get; private set; }
+    public int Water { get; set; }
+    public int Sleep { get; set; }
     [SerializeField] private GameObject workplace;
     [SerializeField] private GameObject house;
     private List<GameObject> lookingForBattery = new List<GameObject>();
@@ -35,12 +35,19 @@ public class Entity : CustomObject, IStats
         }
     }
 
+    public static Entity Spawn(string name = null)
+    {
+        var gm = LoadGameObject("Entity", "Entities").GetComponent<Entity>();
+        gm.Name = name ?? GenerateName(GenerateGender());
+        return gm;
+    }
+
     private IEnumerator ElementaryNeeds()
     {
         while (true)
         {
-            if (water <= 0) AddDestination(FindNearestObject<Well>());
-            else if (sleep <= 0) AddDestination(house); //todo FindHouse()
+            if (Water <= 0) AddDestination(FindNearestObject<Well>());
+            else if (Sleep <= 0) AddDestination(house); //todo FindHouse()
             yield return new WaitForSeconds(5);
         }
     }
@@ -65,11 +72,11 @@ public class Entity : CustomObject, IStats
         _navMesh = GetComponent<NavMeshAgent>();
         _inventory = GetComponent<Inventory.Inventory>();
 
-        gender = Utils.GenerateGender();
-        name = Utils.GenerateName(gender);
-        gameObject.name = name;
+        Gender = GenerateGender();
+        Name ??= GenerateName(Gender);
+        gameObject.name = Name;
         house = FindNearestObject<House>();
-        Workplace = GameObject.Find(Const.CustomObjects.Spawn.ToString());
+        Workplace = GameObject.Find(Const.Buildings.Spawn.ToString());
         RefillWater();
         RefillSleep();
 
@@ -103,8 +110,8 @@ public class Entity : CustomObject, IStats
     //works until inventory is full, then finds workplace
     public void Work()
     {
-        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().GetWorkObject());
-        if (_inventory.IsFull() || Workplace.GetComponent<Workplace>().GetWorkObject() == Const.CustomObjects.None || !workObjects.Any()) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
+        var workObjects = FindNearestObject(Workplace.GetComponent<Workplace>().WorkObject);
+        if (_inventory.IsFull() || Workplace.GetComponent<Workplace>().WorkObject == Const.Buildings.None || !workObjects.Any()) //todo plnej itemů jiného typu (GetItemRoom?) - najít nejbližší skladiště co to obsahuje 
         {
             AddDestination(Workplace);
             return;
@@ -113,24 +120,24 @@ public class Entity : CustomObject, IStats
         AddDestination(workObjects.FirstOrDefault(x => x != lookingFor));
     }
 
-    //returns nearest object of type T and adds it to the lookingFor
+    // returns nearest object of type T and adds it to the lookingFor
     private GameObject FindNearestObject<T>() where T : CustomObject
     {
         var s = FindObjectsOfType<T>().OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).ToList().FirstOrDefault()!.gameObject;
         return s ? s : null;
     }
 
-    //parses CustomObject enum to list of CustomObjects and returns its second or first item  
-    private List<GameObject> FindNearestObject(Const.CustomObjects type)
+    // parses CustomObject enum to list of CustomObjects and returns its second or first item  
+    private List<GameObject> FindNearestObject(Const.Buildings type)
     {
-        if (type == Const.CustomObjects.None) return new List<GameObject>();
+        if (type == Const.Buildings.None) return new List<GameObject>();
         var obj = FindObjectsOfType(
                 Type.GetType("Buildings." + type) ?? Type.GetType("Buildings.Workplace." + type))
             .OrderBy(t => (((CustomObject)t).transform.position - transform.position).sqrMagnitude)
             .Cast<CustomObject>()
             .Select(x => x.gameObject).ToList();
 
-        if (type == Const.CustomObjects.Tree)
+        if (type == Const.Buildings.Tree)
             return obj.Take(6).OrderBy(_ => new Random().Next()).ToList();
         return obj;
     }
@@ -152,6 +159,7 @@ public class Entity : CustomObject, IStats
             StartCoroutine(EmptyInventoryCoroutine());
             return;
         }
+
         foreach (var item in buildings!)
             AddDestination(item);
     }
@@ -160,6 +168,7 @@ public class Entity : CustomObject, IStats
     {
         while (true)
         {
+            if (!gameObject.activeInHierarchy) break;
             var buildings = _inventory.FindBuildingToEmptyInventory(_inventory);
             if (buildings == null) yield return new WaitForSeconds(1);
             else
@@ -174,21 +183,13 @@ public class Entity : CustomObject, IStats
 
     public List<GameObject> GetLookingForBattery() => lookingForBattery;
 
-    public int GetWater() => water;
+    public void RefillWater() => Water = 100;
 
-    public void RefillWater() => water = 100;
+    public void DecreaseWater() => Water = Mathf.Clamp(Water - 1, 0, 100);
 
-    public void DecreaseWater() => water = Mathf.Clamp(water - 1, 0, 100);
+    public void RefillSleep() => Sleep = 100;
 
-    public int GetSleep() => sleep;
-
-    public void RefillSleep() => sleep = 100;
-
-    public void DecreaseSleep() => sleep = Mathf.Clamp(sleep - 1, 0, 100);
-
-    public string GetName() => name;
-
-    public Const.Gender GetGender() => gender;
+    public void DecreaseSleep() => Sleep = Mathf.Clamp(Sleep - 1, 0, 100);
 
     public async Task Stop(int millis)
     {
@@ -197,14 +198,26 @@ public class Entity : CustomObject, IStats
         _navMesh.isStopped = false;
     }
 
+    private static string GenerateName(Const.Gender gender)
+    {
+        return gender == Const.Gender.Male
+            ? Const.MaleNames[new Random().Next(Const.MaleNames.Count)]
+            : Const.FemaleNames[new Random().Next(Const.FemaleNames.Count)];
+    }
+
+    private static Const.Gender GenerateGender()
+    {
+        return new Random().Next(2) == 0 ? Const.Gender.Male : Const.Gender.Female;
+    }
+
     public void GenerateStats()
     {
         Stats.GenerateStats(gameObject)
-            .AddLabel(name, 20)
-            .AddLabel(gender.ToString(), 17)
+            .AddLabel(Name, 20)
+            .AddLabel(Gender.ToString(), 17)
             .AddFocusDropdown(
                 FindObjectsOfType<Workplace>().OrderBy(x => x.name)
-                    .Where(x => !x.IsFull() && x.gameObject != Workplace)
+                    .Where(x => !x.HasMaxWorkers() && x.gameObject != Workplace)
                     .Select(x => x.gameObject)
                     .Prepend(Workplace).ToList(),
                 "Workplace"
@@ -221,8 +234,8 @@ public class Entity : CustomObject, IStats
                         return "";
                     }
                 })
-            .AddLabel(() => $"Sleep: {sleep.ToString()}")
-            .AddLabel(() => $"Water: {water.ToString()}")
+            .AddLabel(() => $"Sleep: {Sleep.ToString()}")
+            .AddLabel(() => $"Water: {Water.ToString()}")
             .AddSpace()
             .AddLabel(() => Utils.DictToString(_inventory.GetInventory()))
             .BuildWindow();

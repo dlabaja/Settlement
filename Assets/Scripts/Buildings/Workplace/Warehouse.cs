@@ -12,12 +12,16 @@ namespace Buildings.Workplace
     public class Warehouse : Workplace, ICollideable, IStats
     {
         private List<Entity> availableWorkers = new List<Entity>();
-        public readonly Dictionary<int, Const.WarehouseMode> itemMode = new Dictionary<int, Const.WarehouseMode>();
+        public Dictionary<int, Const.WarehouseMode> itemMode = new Dictionary<int, Const.WarehouseMode>();
 
         //todo tlačítko #3 (zákaz braní itemů)   
         private void Awake()
         {
-            OnWorkersChanged += () => availableWorkers = workers;
+            MaxWorkers = 4;
+            ProducingItems = (new List<Const.Item>{Const.Item.None}, new List<Const.Item>{Const.Item.None});
+            
+            itemMode = new Dictionary<int, Const.WarehouseMode>();
+            OnWorkersChanged += () => availableWorkers = Workers;
             for (int i = 0; i < 4; i++)
                 itemMode.Add(i, Const.WarehouseMode.ALLOW);
             InvokeRepeating(nameof(FindItemsToStore), 0f, 2f);

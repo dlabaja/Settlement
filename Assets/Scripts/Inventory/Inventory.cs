@@ -9,8 +9,8 @@ namespace Inventory
 {
     public class Inventory : MonoBehaviour
     {
-        [SerializeField] private int slots = 1;
-        [SerializeField] private int stackSize = 100;
+        public int slots = 1;
+        public int stackSize = 100;
         private Dictionary<int, ItemStruct> _inventory = new();
         [SerializeField] public List<ItemStruct> _startValues = new();
         [SerializeField] private bool itemsAreConstant;
@@ -125,7 +125,7 @@ namespace Inventory
 
         public bool IsEmpty() => CountAllItems() == 0;
 
-        //pokud má objekt konstantní itemy, volat to na něm
+        // pokud má objekt konstantní itemy, volat to na něm
         public void TransferItems(Item item, int count, GameObject receiver = null, GameObject sender = null)
         {
             if (sender == null) sender = gameObject;
@@ -134,7 +134,7 @@ namespace Inventory
             var senderInv = sender.GetComponent<Inventory>();
             var receiverInv = receiver.GetComponent<Inventory>();
 
-            //přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
+            // přidá do svého inventáře zbytek po přidávání do cizího inventáře nebo tak nějak
             if (receiverInv.IsFull()) return;
             if ((!_inventory.ContainsValue(new ItemStruct(item, 0)) && GetItemCount(item) == 0) && receiver.HasComponent<Warehouse>()) return;
 

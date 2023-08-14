@@ -6,9 +6,11 @@ namespace Buildings.Workplace
 {
     public class Stonecutter : Workplace, ICollideable
     {
-        private void Awake()
+        public void Awake()
         {
-            producingItems = (new List<Const.Item>{Const.Item.None}, new List<Const.Item>{Const.Item.Stone});
+            WorkObject = Const.Buildings.Stone;
+            MaxWorkers = 4;
+            ProducingItems = (new List<Const.Item>{Const.Item.None}, new List<Const.Item>{Const.Item.Stone});
         }
 
         public async Task OnCollision(Entity entity)

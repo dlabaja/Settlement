@@ -10,13 +10,13 @@ namespace Inventory
 {
     public class GlobalInventory : MonoBehaviour
     {
-        private static readonly Dictionary<Const.Item, int> _globalInventory = new();
+        public static readonly Dictionary<Const.Item, int> GlobalInventoryDict = new();
 
         private void Awake()
         {
             foreach (var i in Enum.GetValues(typeof(Const.Item)).Cast<Const.Item>())
                 if (i != Const.Item.None)
-                    _globalInventory.TryAdd(i, 0);
+                    GlobalInventoryDict.TryAdd(i, 0);
             try
             {
                 var gI = GetComponent<UIDocument>().rootVisualElement;
@@ -30,14 +30,14 @@ namespace Inventory
             while (true)
             {
                 UpdateGlobalInventoryValues();
-                root.Q<Label>("Text").text = Utils.DictToString(_globalInventory);
+                root.Q<Label>("Text").text = Utils.DictToString(GlobalInventoryDict);
                 yield return new WaitForSeconds(1);
             }
         }
 
         private static void UpdateGlobalInventoryValues()
         {
-            _globalInventory.Clear();
+            GlobalInventoryDict.Clear();
 
             foreach (var item in FindObjectsOfType<Inventory>())
             {
@@ -46,8 +46,8 @@ namespace Inventory
                 foreach (var i in item.GetInventory().Values)
                 {
                     if (i.item == Const.Item.None) continue;
-                    if (!_globalInventory.ContainsKey(i.item)) _globalInventory[i.item] = 0;
-                    _globalInventory[i.item] += i.count;
+                    if (!GlobalInventoryDict.ContainsKey(i.item)) GlobalInventoryDict[i.item] = 0;
+                    GlobalInventoryDict[i.item] += i.count;
                 }
             }
         }

@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         
-        Utils.LoadGameObjects("Entity", Parent.Entities, 11);
+        CustomObject.LoadGameObjects("Entity", Parent.Entities, 11);
         Time.timeScale = 3;
         GameSpeed = 3;
 
