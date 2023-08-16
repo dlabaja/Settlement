@@ -49,7 +49,6 @@ namespace Buildings.Workplace
             {
                 var bounds = GetComponent<Collider>().bounds;
                 Collider[] colliders = Physics.OverlapBox(transform.position, transform.localScale);
-                //Gizmos.DrawWireCube(transform.position, transform.localScale);
                 foreach (var entity in colliders
                              .Where(x => x.gameObject.HasComponent<Entity>() && x.GetComponent<Entity>().Workplace == gameObject)
                              .Select(x => x.GetComponent<Entity>()))
