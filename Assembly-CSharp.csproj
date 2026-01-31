@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/Components/CameraComponent.cs" />
-    <Compile Include="Assets/Scripts/Objects/CameraController.cs" />
+    <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
+    <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
+    <Compile Include="Assets/Scripts/Models/Controllers/CameraController.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/Scripts/Logging.cs" />
     <Reference Include="UnityEngine">
