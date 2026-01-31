@@ -46,10 +46,11 @@
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/Components/CameraComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
+    <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraController.cs" />
+    <Compile Include="Assets/Scripts/Components/ControllerComponent.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/Scripts/Logging.cs" />
     <Reference Include="UnityEngine">

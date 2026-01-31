@@ -5,7 +5,7 @@ namespace Models.Controllers
     public class CameraController
     {
         private readonly Camera _camera;
-        private Transform _transform;
+        private readonly Transform _transform;
         public float MoveSpeed { get; set; } = 10;
 
         public CameraController(Camera camera)
