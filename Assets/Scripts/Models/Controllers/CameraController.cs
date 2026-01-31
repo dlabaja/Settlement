@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Objects
+namespace Models.Controllers
 {
     public class CameraController
     {
@@ -11,6 +11,7 @@ namespace Objects
         public CameraController(Camera camera)
         {
             _camera = camera;
+            _transform = _camera.transform;
         }
         
         private void Move(Vector3 vector, float deltaTime)
