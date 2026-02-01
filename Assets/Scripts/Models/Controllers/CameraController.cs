@@ -45,8 +45,8 @@ namespace Models.Controllers
         public void Zoom(float scrollFactor, Vector3 startPos, ref Vector3 currentVelocity)
         {
             var endPos = startPos + (_transform.forward * (scrollFactor * ZoomFactor));
-            _rigidbody.MovePosition(Vector3.SmoothDamp(_transform.position, endPos, ref currentVelocity, 0.05f));
-            Debug.Log(currentVelocity);
+            _rigidbody.MovePosition(Vector3.SmoothDamp(_transform.position, endPos, 
+                ref currentVelocity, 0.05f, 50));
         }
     }
 }

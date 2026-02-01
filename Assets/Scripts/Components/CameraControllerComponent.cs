@@ -14,7 +14,7 @@ namespace Components
         private (KeyControl keyControl, Action<float> onPress)[] _keyControlsWithAction;
         private CameraController _cameraController;
         private InputAction _zoomAction;
-        private bool _zoomActive;
+        private int _zoomActive;
         private float _zoomFactor;
         private Vector3 _zoomVelocity;
         private Vector3 _zoomStartPost;
@@ -30,6 +30,7 @@ namespace Components
             {
                 if (keyControl.IsPressed)
                 {
+                    _zoomActive = 0;
                     onPress(deltaTime);
                 }
             }
@@ -37,25 +38,36 @@ namespace Components
 
         private void ProcessZoom()
         {
-            if (_zoomAction.WasPerformedThisFrame() && !_zoomActive)
+            if (_zoomAction.WasPerformedThisFrame())
             {
                 _zoomFactor = _zoomAction.ReadValue<Vector2>().y;
-                _zoomActive = true;
-                _zoomVelocity = _camera.transform.forward;
+                _zoomActive = 200;
                 _zoomStartPost = _camera.transform.position;
             }
             
-            if (_zoomActive)
+            if (_zoomActive > 0)
             {
                 _cameraController.Zoom(_zoomFactor, _zoomStartPost, ref _zoomVelocity);
-                _zoomActive = !VectorUtils.ApproxEql(_zoomVelocity, Vector3.zero, 0.1f);
+                _zoomActive = VectorUtils.ApproxEql(_zoomVelocity, Vector3.zero, 0.1f) ? 0 : _zoomActive - 1;
             }
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            _zoomActive = 0;
+        }
+
+        private void OnCollisionStay(Collision other)
+        {
+            _zoomActive = 0;
         }
 
         public void Awake()
         {
             var cameraMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
-            _cameraController = new CameraController(_camera.GetComponent<Camera>(), _camera.GetComponent<Rigidbody>());
+            _zoomVelocity = _camera.transform.forward;
+            _cameraController = new CameraController(_camera.GetComponent<Camera>(), 
+                _camera.GetComponent<Rigidbody>());
             _keyControlsWithAction = new (KeyControl keyControl, Action<float> onPress)[]
             {
                 (GetKeyControl(cameraMap, InputActionName.CameraForward), _cameraController.MoveForward),
