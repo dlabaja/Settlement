@@ -13,5 +13,10 @@ namespace Utils
         {
             return Math.Abs(a - b);
         }
+        
+        public static bool Approx(float a, float b, float eps)
+        {
+            return Diff(a, b) < eps;
+        }
     }
 }
