@@ -5,38 +5,40 @@ namespace Models.Controllers
     public class CameraMovementController
     {
         private readonly Transform _transform;
+        private readonly Rigidbody _rigidbody;
         private readonly Vector3 _planeLockVector = new Vector3(1, 0, 1);
         public float MoveSpeed { get; set; } = 10;
 
-        public CameraMovementController(Transform transform)
+        public CameraMovementController(Transform transform, Rigidbody rigidbody)
         {
             _transform = transform;
+            _rigidbody = rigidbody;
         }
         
-        private void MoveOnPlane(Vector3 vector, float deltaTime)
+        public void Move(Vector3 vector, float deltaTime)
         {
             vector.Scale(_planeLockVector);
-            _transform.position += vector * (MoveSpeed * deltaTime);
+            _rigidbody.MovePosition(_transform.position + vector * (MoveSpeed * deltaTime));
         }
 
-        public void MoveForward(float deltaTime)
+        public Vector3 Forward()
         {
-           MoveOnPlane(_transform.forward, deltaTime);
+           return _transform.forward;
         }
         
-        public void MoveBackward(float deltaTime)
+        public Vector3 Backward()
         {
-            MoveOnPlane(- _transform.forward, deltaTime);
+            return -_transform.forward;
         }
         
-        public void MoveRight(float deltaTime)
+        public Vector3 Right()
         {
-            MoveOnPlane(_transform.right, deltaTime);
+            return _transform.right;
         }
         
-        public void MoveLeft(float deltaTime)
+        public Vector3 Left()
         {
-            MoveOnPlane(- _transform.right, deltaTime);
+            return -_transform.right;
         }
     }
 }

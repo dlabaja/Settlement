@@ -10,7 +10,7 @@ namespace Components
     public class CameraControllerComponent : MonoBehaviour
     {
         [SerializeField] private GameObject _camera;
-        private (KeyControl keyControl, Action<float> onPress)[] _keyControlsWithAction;
+        private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
         private CameraMovementController _cameraMovementController;
         private CameraZoomController _cameraZoomController;
         private InputAction _zoomAction;
@@ -22,14 +22,15 @@ namespace Components
 
         private void ProcessMovement(float deltaTime)
         {
-            foreach (var (keyControl, onPress) in _keyControlsWithAction)
+            var vector = Vector3.zero;
+            foreach (var (keyControl, action) in _keyControlsWithAction)
             {
                 if (keyControl.IsPressed)
                 {
-                    //_cameraZoomController.StopZoom();
-                    onPress(deltaTime);
+                    vector += action();
                 }
             }
+            _cameraMovementController.Move(vector, deltaTime);
         }
 
         private void ProcessZoom()
@@ -59,14 +60,15 @@ namespace Components
         {
             var cameraMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
             var transform = _camera.GetComponent<Camera>().transform;
-            _cameraZoomController = new CameraZoomController(transform, _camera.GetComponent<Rigidbody>());
-            _cameraMovementController = new CameraMovementController(transform);
-            _keyControlsWithAction = new (KeyControl keyControl, Action<float> onPress)[]
+            var rigidbody = _camera.GetComponent<Rigidbody>();
+            _cameraZoomController = new CameraZoomController(transform, rigidbody);
+            _cameraMovementController = new CameraMovementController(transform, rigidbody);
+            _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
-                (GetKeyControl(cameraMap, InputActionName.CameraForward), _cameraMovementController.MoveForward),
-                (GetKeyControl(cameraMap, InputActionName.CameraBackward), _cameraMovementController.MoveBackward),
-                (GetKeyControl(cameraMap, InputActionName.CameraLeft), _cameraMovementController.MoveLeft),
-                (GetKeyControl(cameraMap, InputActionName.CameraRight), _cameraMovementController.MoveRight)
+                (GetKeyControl(cameraMap, InputActionName.CameraForward), action: _cameraMovementController.Forward),
+                (GetKeyControl(cameraMap, InputActionName.CameraBackward), action: _cameraMovementController.Backward),
+                (GetKeyControl(cameraMap, InputActionName.CameraLeft), action: _cameraMovementController.Left),
+                (GetKeyControl(cameraMap, InputActionName.CameraRight), action: _cameraMovementController.Right)
             };
             _zoomAction = cameraMap.FindAction(InputActionName.CameraZoom);
         }
