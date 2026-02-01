@@ -1033,22 +1033,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Up",
-                    "type": "Button",
+                    "name": "Zoom",
+                    "type": "Value",
                     "id": "6f1587f0-106d-4198-9ca2-bcbca6d34d41",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Down",
-                    "type": "Button",
-                    "id": "534bc82a-a4bd-4627-966b-4e2e3dac2e7c",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -1058,7 +1049,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "",
                     "action": "Forward",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -1098,23 +1089,12 @@
                 },
                 {
                     "name": "",
-                    "id": "e693bec3-79cb-4d3c-b46e-365d69ff6da8",
-                    "path": "",
+                    "id": "4d79108a-1fc1-4805-b0e6-c6a491294010",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Up",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6e3781bd-c79c-4a0d-8d60-c1f223f788fc",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Down",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

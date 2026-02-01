@@ -50,9 +50,11 @@
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraController.cs" />
-    <Compile Include="Assets/Scripts/Components/ControllerComponent.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/Scripts/Logging.cs" />
+    <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
+    <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
+    <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

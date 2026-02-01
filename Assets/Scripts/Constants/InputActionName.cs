@@ -6,7 +6,6 @@ namespace Constants
         public const string CameraBackward = "Backward";
         public const string CameraRight = "Right";
         public const string CameraLeft = "Left";
-        public const string CameraUp = "Up";
-        public const string CameraDown = "Down";
+        public const string CameraZoom = "Zoom";
     }
 }
