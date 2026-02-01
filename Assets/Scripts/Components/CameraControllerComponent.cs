@@ -4,7 +4,6 @@ using Models.Controls;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using VectorUtils = Utils.VectorUtils;
 
 namespace Components
 {
@@ -12,12 +11,9 @@ namespace Components
     {
         [SerializeField] private GameObject _camera;
         private (KeyControl keyControl, Action<float> onPress)[] _keyControlsWithAction;
-        private CameraController _cameraController;
+        private CameraMovementController _cameraMovementController;
+        private CameraZoomController _cameraZoomController;
         private InputAction _zoomAction;
-        private int _zoomActive;
-        private float _zoomFactor;
-        private Vector3 _zoomVelocity;
-        private Vector3 _zoomStartPost;
 
         private static KeyControl GetKeyControl(InputActionMap actionMap, string actionName)
         {
@@ -30,7 +26,7 @@ namespace Components
             {
                 if (keyControl.IsPressed)
                 {
-                    _zoomActive = 0;
+                    //_cameraZoomController.StopZoom();
                     onPress(deltaTime);
                 }
             }
@@ -40,40 +36,37 @@ namespace Components
         {
             if (_zoomAction.WasPerformedThisFrame())
             {
-                _zoomFactor = _zoomAction.ReadValue<Vector2>().y;
-                _zoomActive = 200;
-                _zoomStartPost = _camera.transform.position;
+                _cameraZoomController.StartZoom(_zoomAction.ReadValue<Vector2>().y);
             }
             
-            if (_zoomActive > 0)
+            if (!_cameraZoomController.ZoomEnded)
             {
-                _cameraController.Zoom(_zoomFactor, _zoomStartPost, ref _zoomVelocity);
-                _zoomActive = VectorUtils.ApproxEql(_zoomVelocity, Vector3.zero, 0.1f) ? 0 : _zoomActive - 1;
+                _cameraZoomController.Zoom();
             }
         }
 
         private void OnCollisionEnter(Collision other)
         {
-            _zoomActive = 0;
+            _cameraZoomController.StopZoom();
         }
 
         private void OnCollisionStay(Collision other)
         {
-            _zoomActive = 0;
+            _cameraZoomController.StopZoom();
         }
 
         public void Awake()
         {
             var cameraMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
-            _zoomVelocity = _camera.transform.forward;
-            _cameraController = new CameraController(_camera.GetComponent<Camera>(), 
-                _camera.GetComponent<Rigidbody>());
+            var transform = _camera.GetComponent<Camera>().transform;
+            _cameraZoomController = new CameraZoomController(transform, _camera.GetComponent<Rigidbody>());
+            _cameraMovementController = new CameraMovementController(transform);
             _keyControlsWithAction = new (KeyControl keyControl, Action<float> onPress)[]
             {
-                (GetKeyControl(cameraMap, InputActionName.CameraForward), _cameraController.MoveForward),
-                (GetKeyControl(cameraMap, InputActionName.CameraBackward), _cameraController.MoveBackward),
-                (GetKeyControl(cameraMap, InputActionName.CameraLeft), _cameraController.MoveLeft),
-                (GetKeyControl(cameraMap, InputActionName.CameraRight), _cameraController.MoveRight)
+                (GetKeyControl(cameraMap, InputActionName.CameraForward), _cameraMovementController.MoveForward),
+                (GetKeyControl(cameraMap, InputActionName.CameraBackward), _cameraMovementController.MoveBackward),
+                (GetKeyControl(cameraMap, InputActionName.CameraLeft), _cameraMovementController.MoveLeft),
+                (GetKeyControl(cameraMap, InputActionName.CameraRight), _cameraMovementController.MoveRight)
             };
             _zoomAction = cameraMap.FindAction(InputActionName.CameraZoom);
         }
