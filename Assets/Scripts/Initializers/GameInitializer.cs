@@ -6,7 +6,7 @@ namespace Initializers
 {
     public class GameInitializer
     {
-        public static void Init(ContainerBuilder builder)
+        public void Init(ContainerBuilder builder)
         {
             builder.RegisterValue(new SettingsManager(new SettingsModel()));
         }

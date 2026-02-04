@@ -8,7 +8,7 @@ namespace Components
     {
         public void InstallBindings(ContainerBuilder builder)
         {
-            GameInitializer.Init(builder);
+            new GameInitializer().Init(builder);
         }
     }
 }
