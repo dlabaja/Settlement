@@ -4,15 +4,12 @@ using Models.Controls;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Utils;
 
 namespace Components
 {
     public class CameraControllerComponent : MonoBehaviour
     {
-        [SerializeField] private GameObject _camera;
         private Rigidbody _rigidbody;
-        private Transform _transform;
         private InputActionMap _actionMap;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
         private CameraMovementController _cameraMovementController;
@@ -37,7 +34,7 @@ namespace Components
                     vector += action();
                 }
             }
-            return _cameraMovementController.MovedVectorDelta(vector, Time.deltaTime) - _camera.transform.position;
+            return _cameraMovementController.MovedVectorDelta(vector, Time.deltaTime) - transform.position;
         }
 
         private Vector3 ZoomVectorDelta()
@@ -47,7 +44,7 @@ namespace Components
                 _cameraZoomController.StartZoom(_zoomAction.ReadValue<Vector2>().y);
             }
             
-            return _cameraZoomController.ZoomedVectorDelta(Time.deltaTime);
+            return _cameraZoomController.ZoomedVectorDelta(transform.forward, Time.deltaTime);
         }
 
         private Vector3 RotationDelta()
@@ -69,12 +66,11 @@ namespace Components
 
         public void Awake()
         {
-            _transform = _camera.GetComponent<Camera>().transform;
             _actionMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
-            _rigidbody = _camera.GetComponent<Rigidbody>();
-            _cameraZoomController = new CameraZoomController(_transform);
-            _cameraMovementController = new CameraMovementController(_transform);
-            _cameraRotationController = new CameraRotationController(_transform);
+            _rigidbody = GetComponent<Rigidbody>();
+            _cameraMovementController = new CameraMovementController(transform);
+            _cameraZoomController = new CameraZoomController();
+            _cameraRotationController = new CameraRotationController();
             _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
                 (GetKeyControl(InputActionName.CameraForward), _cameraMovementController.Forward),
@@ -93,8 +89,8 @@ namespace Components
             var zoomedVector = ZoomVectorDelta();
             var rotation = RotationDelta();
             _rigidbody.Move(
-                _camera.transform.position + movementVector + zoomedVector,
-                Quaternion.Euler(_camera.transform.eulerAngles + rotation));
+                transform.position + movementVector + zoomedVector,
+                Quaternion.Euler(transform.eulerAngles + rotation));
         }
     }
 }

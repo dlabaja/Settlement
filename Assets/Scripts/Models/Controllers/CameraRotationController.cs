@@ -4,13 +4,7 @@ namespace Models.Controllers
 {
     public class CameraRotationController
     {
-        private readonly Transform _transform;
-        private readonly int speedFactor = 8;  
-        
-        public CameraRotationController(Transform transform)
-        {
-            _transform = transform;
-        }
+        private readonly int speedFactor = 8;
         
         public Vector3 VectorToRotationDelta(Vector2 vector, float deltaTime)
         {

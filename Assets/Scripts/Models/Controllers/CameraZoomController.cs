@@ -4,16 +4,10 @@ namespace Models.Controllers
 {
     public class CameraZoomController
     {
-        private readonly Transform _transform;
         private int _remainingTicks = maxRemainingTicks;
         private float _direction;
         private const int maxRemainingTicks = 20;
         private const float speedFactor = 40;
-
-        public CameraZoomController(Transform transform)
-        {
-            _transform = transform;
-        }
 
         public void StartZoom(float direction)
         {
@@ -21,14 +15,14 @@ namespace Models.Controllers
             _remainingTicks = maxRemainingTicks;
         }
 
-        public Vector3 ZoomedVectorDelta(float deltaTime)
+        public Vector3 ZoomedVectorDelta(Vector3 forward, float deltaTime)
         {
             if (ZoomEnded)
             {
                 return Vector3.zero;
             }
             _remainingTicks--;
-            return _transform.forward * (_direction * speedFactor * deltaTime);
+            return forward * (_direction * speedFactor * deltaTime);
         }
 
         public bool ZoomEnded
