@@ -4,14 +4,14 @@ namespace Managers
 {
     public class SettingsManager
     {
-        public SettingsManager(SettingsModel settings)
+        public SettingsManager(Settings settings)
         {
             
         }
 
-        public static SettingsModel LoadSettings()
+        public static Settings LoadSettings()
         {
-            return new SettingsModel();
+            return new Settings();
         }
 
         public static void SaveSettings()

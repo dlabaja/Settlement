@@ -1,6 +1,6 @@
-namespace Models.Data.Settings
+namespace Models.DTOs.Settings
 {
-    public class CameraSettingsModel
+    public class CameraSettings
     {
         public int ZoomSpeed { get; set; }
         public int RotationSpeed { get; set; }

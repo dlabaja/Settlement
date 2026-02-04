@@ -8,7 +8,7 @@ namespace Initializers
     {
         public void Init(ContainerBuilder builder)
         {
-            builder.RegisterValue(new SettingsManager(new SettingsModel()));
+            builder.RegisterValue(new SettingsManager(new Settings()));
         }
     }
 }
