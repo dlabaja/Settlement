@@ -51,9 +51,11 @@
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraZoomController.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
+    <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/Scripts/Logging.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
+    <Compile Include="Assets/Scripts/Models/Controllers/CameraRotationController.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Reference Include="UnityEngine">

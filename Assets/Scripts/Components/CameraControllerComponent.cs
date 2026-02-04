@@ -4,6 +4,7 @@ using Models.Controls;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace Components
 {
@@ -11,14 +12,19 @@ namespace Components
     {
         [SerializeField] private GameObject _camera;
         private Rigidbody _rigidbody;
+        private Transform _transform;
+        private InputActionMap _actionMap;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
         private CameraMovementController _cameraMovementController;
         private CameraZoomController _cameraZoomController;
+        private CameraRotationController _cameraRotationController;
         private InputAction _zoomAction;
+        private InputAction _rotateAction;
+        private KeyControl _allowRotationKey;
 
-        private static KeyControl GetKeyControl(InputActionMap actionMap, string actionName)
+        private KeyControl GetKeyControl(string actionName)
         {
-            return new KeyControl(actionMap.FindAction(actionName));
+            return new KeyControl(_actionMap.FindAction(actionName));
         }
 
         private Vector3 MovementVectorDelta()
@@ -42,7 +48,13 @@ namespace Components
             }
             
             return _cameraZoomController.ZoomedVectorDelta(Time.deltaTime);
+        }
 
+        private Vector3 RotationDelta()
+        {
+            return _allowRotationKey.IsPressed 
+                ? _cameraRotationController.VectorToRotationDelta(_rotateAction.ReadValue<Vector2>(), Time.deltaTime) 
+                : Vector3.zero;
         }
 
         private void OnCollisionEnter()
@@ -57,27 +69,32 @@ namespace Components
 
         public void Awake()
         {
-            var cameraMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
-            var transform = _camera.GetComponent<Camera>().transform;
+            _transform = _camera.GetComponent<Camera>().transform;
+            _actionMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
             _rigidbody = _camera.GetComponent<Rigidbody>();
-            _cameraZoomController = new CameraZoomController(transform);
-            _cameraMovementController = new CameraMovementController(transform);
+            _cameraZoomController = new CameraZoomController(_transform);
+            _cameraMovementController = new CameraMovementController(_transform);
+            _cameraRotationController = new CameraRotationController(_transform);
             _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
-                (GetKeyControl(cameraMap, InputActionName.CameraForward), action: _cameraMovementController.Forward),
-                (GetKeyControl(cameraMap, InputActionName.CameraBackward), action: _cameraMovementController.Backward),
-                (GetKeyControl(cameraMap, InputActionName.CameraLeft), action: _cameraMovementController.Left),
-                (GetKeyControl(cameraMap, InputActionName.CameraRight), action: _cameraMovementController.Right)
+                (GetKeyControl(InputActionName.CameraForward), _cameraMovementController.Forward),
+                (GetKeyControl(InputActionName.CameraBackward), _cameraMovementController.Backward),
+                (GetKeyControl(InputActionName.CameraLeft), _cameraMovementController.Left),
+                (GetKeyControl(InputActionName.CameraRight), _cameraMovementController.Right),
             };
-            _zoomAction = cameraMap.FindAction(InputActionName.CameraZoom);
+            _zoomAction = _actionMap.FindAction(InputActionName.CameraZoom);
+            _rotateAction = _actionMap.FindAction(InputActionName.CameraRotate);
+            _allowRotationKey = GetKeyControl(InputActionName.CameraAllowRotate);
         }
 
         public void Update()
         {
             var movementVector = MovementVectorDelta();
             var zoomedVector = ZoomVectorDelta();
-            Logging.Log(movementVector, zoomedVector);
-            _rigidbody.MovePosition(_camera.transform.position + movementVector + zoomedVector);
+            var rotation = RotationDelta();
+            _rigidbody.Move(
+                _camera.transform.position + movementVector + zoomedVector,
+                Quaternion.Euler(_camera.transform.eulerAngles + rotation));
         }
     }
 }
