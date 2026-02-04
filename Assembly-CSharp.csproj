@@ -44,18 +44,23 @@
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Library/PackageCache/com.gustavopsantos.reflex@fabfbc86f712/Injectors/Source-Generator/Reflex.Generator.Injector.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/Models/Controllers/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
+    <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraZoomController.cs" />
+    <Compile Include="Assets/Scripts/Models/Data/Settings/SettingsModel.cs" />
+    <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
-    <Compile Include="Assets/Scripts/Logging.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraRotationController.cs" />
+    <Compile Include="Assets/Scripts/Components/GameInitializerComponent.cs" />
+    <Compile Include="Assets/Scripts/Models/Data/Settings/CameraSettingsModel.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Reference Include="UnityEngine">
@@ -856,6 +861,9 @@
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Reflex.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Reflex.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
@@ -870,6 +878,9 @@
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="Reflex">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Reflex.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AI.Navigation.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
