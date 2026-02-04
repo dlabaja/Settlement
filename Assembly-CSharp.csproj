@@ -52,7 +52,7 @@
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraZoomController.cs" />
-    <Compile Include="Assets/Scripts/Models/Data/Settings/SettingsModel.cs" />
+    <Compile Include="Assets\Scripts\Models\DTOs\Settings\Settings.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
@@ -61,7 +61,7 @@
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraRotationController.cs" />
     <Compile Include="Assets/Scripts/Components/GameInitializerComponent.cs" />
-    <Compile Include="Assets/Scripts/Models/Data/Settings/CameraSettingsModel.cs" />
+    <Compile Include="Assets\Scripts\Models\DTOs\Settings\CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
