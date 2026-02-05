@@ -82,44 +82,14 @@
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Data/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
-    <None Include="Library/PackageCache/com.unity.ai.navigation@5218e4bf7edc/ValidationExceptions.json" />
-    <None Include="Library/PackageCache/com.unity.burst@973857688024/package.json" />
-    <None Include="Library/PackageCache/com.unity.test-framework.performance@0840f58e4562/package.json" />
-    <None Include="Library/PackageCache/com.unity.inputsystem@57d0e36f6123/package.json" />
-    <None Include="Library/PackageCache/com.unity.collections@aea9d3bd5e19/Unity.Collections.LowLevel.ILSupport/README.txt" />
-    <None Include="Library/PackageCache/com.unity.inputsystem@57d0e36f6123/ValidationConfig.json" />
     <None Include="Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/useSharedDesignerContext.txt" />
     <None Include="Assets/Packages/System.Text.Json.10.0.2/useSharedDesignerContext.txt" />
     <None Include="Assets/Packages/System.IO.Pipelines.10.0.2/lib/netstandard2.0/System.IO.Pipelines.xml" />
-    <None Include="Library/PackageCache/com.unity.test-framework.performance@0840f58e4562/ValidationExceptions.json" />
-    <None Include="Library/PackageCache/com.unity.timeline@7f8b2fb101b6/package.json" />
-    <None Include="Library/PackageCache/com.unity.ide.visualstudio@a99d56dec63f/ValidationConfig.json" />
-    <None Include="Library/PackageCache/com.unity.mathematics@19a9377c4ffa/package.json" />
-    <None Include="Library/PackageCache/com.unity.burst@973857688024/ValidationExceptions.json" />
-    <None Include="Library/PackageCache/com.unity.visualscripting@191c0d7e3b69/package.json" />
-    <None Include="Library/PackageCache/com.unity.collab-proxy@1ec4e416a4af/package.json" />
-    <None Include="Library/PackageCache/com.unity.ide.visualstudio@a99d56dec63f/package.json" />
-    <None Include="Library/PackageCache/com.unity.ide.rider@1f60b3138684/package.json" />
-    <None Include="Library/PackageCache/com.unity.searcher@d45a78918735/package.json" />
-    <None Include="Library/PackageCache/com.unity.ide.rider@1f60b3138684/ValidationExceptions.json" />
-    <None Include="Library/PackageCache/com.unity.nuget.mono-cecil@ecb9724e46ff/package.json" />
-    <None Include="Library/PackageCache/com.unity.visualscripting@191c0d7e3b69/ValidationExceptions.json" />
     <None Include="Assets/Packages/System.Text.Encodings.Web.10.0.2/useSharedDesignerContext.txt" />
-    <None Include="Library/PackageCache/com.unity.ide.visualstudio@a99d56dec63f/ValidationExceptions.json" />
     <None Include="Assets/csc.rsp" />
-    <None Include="Library/PackageCache/com.unity.inputsystem@57d0e36f6123/ValidationExceptions.json" />
     <None Include="Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml" />
     <None Include="Assets/Packages/System.IO.Pipelines.10.0.2/useSharedDesignerContext.txt" />
-    <None Include="Library/PackageCache/com.unity.collab-proxy@1ec4e416a4af/ValidationConfig.json" />
-    <None Include="Library/PackageCache/com.unity.ai.navigation@5218e4bf7edc/package.json" />
-    <None Include="Library/PackageCache/com.unity.timeline@7f8b2fb101b6/ValidationExceptions.json" />
-    <None Include="Library/PackageCache/com.unity.visualscripting@191c0d7e3b69/ValidationConfig.json" />
-    <None Include="Library/PackageCache/com.unity.collections@aea9d3bd5e19/package.json" />
-    <None Include="Library/PackageCache/com.unity.mathematics@19a9377c4ffa/ValidationExceptions.json" />
     <None Include="Assets/Packages/System.Text.Json.10.0.2/lib/netstandard2.0/System.Text.Json.xml" />
-    <None Include="Library/PackageCache/com.unity.collections@aea9d3bd5e19/pvpExceptions.json" />
-    <None Include="Library/PackageCache/com.unity.burst@973857688024/Unity.Burst.Unsafe.xml" />
-    <None Include="Library/PackageCache/com.unity.collections@aea9d3bd5e19/ValidationExceptions.json" />
     <None Include="Assets/Packages/System.Text.Encodings.Web.10.0.2/lib/netstandard2.0/System.Text.Encodings.Web.xml" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -925,11 +895,17 @@
     <Reference Include="Unity.Rendering.LightTransport.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Rendering.LightTransport.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AI.Navigation">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
+    </Reference>
     <Reference Include="Reflex.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Reflex.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.2D.Editor.Overrides">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Editor.Overrides.dll</HintPath>
@@ -937,8 +913,17 @@
     <Reference Include="Unity.RenderPipelines.Universal.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.AI.Navigation.Updater">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.AI.Navigation.Updater.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+    </Reference>
     <Reference Include="Reflex">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Reflex.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.dll</HintPath>
     </Reference>
     <Reference Include="PPv2URPConverters">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
@@ -949,11 +934,35 @@
     <Reference Include="Unity.RenderPipelines.Universal.2D.Runtime">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualScripting.Shared.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.Shared.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.UnifiedRayTracing.Runtime">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.UnifiedRayTracing.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="CsprojModifier.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/CsprojModifier.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Rider.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.AI.Navigation.Editor.ConversionSystem">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.AI.Navigation.Editor.ConversionSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
@@ -961,11 +970,35 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualScripting.Flow">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.Flow.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualScripting.Flow.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.Flow.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualStudio.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem.ForUI">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.InputSystem.ForUI.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.GPUDriven.Runtime">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.State.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.State.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Shaders">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
@@ -976,6 +1009,12 @@
     <Reference Include="Unity.Multiplayer.Center.Common">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Multiplayer.Center.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Core.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.Core.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InternalAPIEngineBridge.004">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.004.dll</HintPath>
     </Reference>
@@ -985,11 +1024,17 @@
     <Reference Include="Unity.RenderPipelines.Universal.Runtime">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualScripting.State">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Universal.Config.Runtime">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Collections.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.Collections.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
@@ -997,116 +1042,14 @@
     <Reference Include="Unity.RenderPipelines.Core.Editor.Shared">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.Shared.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.InputSystem.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Unity.AI.Navigation.csproj">
-      <Project>{2baf4b71-4802-c5b2-4efb-22c01908e144}</Project>
-      <Name>Unity.AI.Navigation</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.SettingsProvider.Editor.csproj">
-      <Project>{16191128-ed3f-f566-72b9-b8b53e7f4e02}</Project>
-      <Name>Unity.VisualScripting.SettingsProvider.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.AI.Navigation.Updater.csproj">
-      <Project>{d9bdc46b-1c2b-2feb-a0b9-f7e164c193ec}</Project>
-      <Name>Unity.AI.Navigation.Updater</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{4621a8f1-03ed-caf6-547f-ae2bbfd4f106}</Project>
-      <Name>Unity.Timeline</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.AI.Navigation.Editor.csproj">
-      <Project>{0b2cb992-6b65-9bd3-857e-e294a9acf5d7}</Project>
-      <Name>Unity.AI.Navigation.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Shared.Editor.csproj">
-      <Project>{62d95133-7f45-d940-a500-be0af9ee3fb9}</Project>
-      <Name>Unity.VisualScripting.Shared.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Searcher.Editor.csproj">
-      <Project>{e0b686d1-8f9e-dc3a-0ab0-be8ffd08ae83}</Project>
-      <Name>Unity.Searcher.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{1a87aa31-2f3d-86c3-0949-4b3a8a653082}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.Editor.csproj">
-      <Project>{c17adeea-c5ff-65c5-4c59-8f45819aaf28}</Project>
-      <Name>Unity.Burst.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Core.csproj">
-      <Project>{d821c8a0-d690-3029-8081-904d578315c6}</Project>
-      <Name>Unity.VisualScripting.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
-      <Project>{4d21c9ec-9891-f1d2-b3e6-04ff605e2c6f}</Project>
-      <Name>Unity.Mathematics.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Rider.Editor.csproj">
-      <Project>{754269d9-9f95-d9a6-ce98-05cfafaccb83}</Project>
-      <Name>Unity.Rider.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.AI.Navigation.Editor.ConversionSystem.csproj">
-      <Project>{aac6505c-a63d-3429-9fd5-92c57cc0d03b}</Project>
-      <Name>Unity.AI.Navigation.Editor.ConversionSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.csproj">
-      <Project>{21a27afc-84e9-27f8-5dce-58b998c5ae05}</Project>
-      <Name>Unity.VisualScripting.Flow</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Flow.Editor.csproj">
-      <Project>{2b802f9c-930f-64e2-40f4-38af04fb855c}</Project>
-      <Name>Unity.VisualScripting.Flow.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
-      <Project>{0b16611b-2782-673d-5f8f-11b464ee8fc2}</Project>
-      <Name>Unity.VisualStudio.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Collections.csproj">
-      <Project>{35394215-7b16-6380-a133-f5fb6761baa4}</Project>
-      <Name>Unity.Collections</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.InputSystem.ForUI.csproj">
-      <Project>{63481100-ea48-c113-2151-c1394f95d1f7}</Project>
-      <Name>Unity.InputSystem.ForUI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.Editor.csproj">
-      <Project>{5d96843a-3ab1-2b86-f4e0-7173ca3eb59a}</Project>
-      <Name>Unity.Timeline.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj">
-      <Project>{9ea55b4c-3435-c36d-e627-5c52eda11707}</Project>
-      <Name>Unity.VisualScripting.State.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{ea31c3a0-3f05-a3c4-ae5f-bd6e97e76287}</Project>
-      <Name>Unity.Mathematics</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{c83d9ed5-c142-5d37-f8da-58405481d517}</Project>
-      <Name>Unity.Burst</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.Core.Editor.csproj">
-      <Project>{e50bc094-d42d-49dd-48e3-da168ad396d0}</Project>
-      <Name>Unity.VisualScripting.Core.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.VisualScripting.State.csproj">
-      <Project>{3d2f24c6-8b2a-b2d2-a464-98795571730d}</Project>
-      <Name>Unity.VisualScripting.State</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Collections.Editor.csproj">
-      <Project>{9f71c82a-1cca-d34a-2c9e-b14f6d5b5166}</Project>
-      <Name>Unity.Collections.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.InputSystem.csproj">
-      <Project>{671bef57-40c2-f2ea-a352-32ffd94cc492}</Project>
-      <Name>Unity.InputSystem</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
