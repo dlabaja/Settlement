@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.cysharp.csprojmodifier": {
+      "version": "https://github.com/Cysharp/CsprojModifier.git?path=src/CsprojModifier/Assets/CsprojModifier",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c91cd7ac9068de3d1a96b5b31453239cac47d51e"
+    },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
       "depth": 0,
@@ -13,13 +20,6 @@
       "source": "git",
       "dependencies": {},
       "hash": "a855f992ab888d2e92027dc38b4db3ab42e5f679"
-    },
-    "com.kandreyc.unity-csharp-patch": {
-      "version": "https://github.com/kandreyc/unity-csharp-patch.git#v1.6.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "5efe0855410091a105721c0095d3af32759b1516"
     },
     "com.unity.ai.navigation": {
       "version": "2.0.9",
