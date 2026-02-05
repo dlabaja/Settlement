@@ -19,7 +19,7 @@ namespace Utils
 
         public static void SaveJson(string path, string json)
         {
-            IOUtils.CreateFile(path, json);
+            IOUtils.SaveFile(path, json);
         }
     }
 }

@@ -1,22 +1,36 @@
+using Configs;
+using Constants;
 using Models.Data.Settings;
+using System.Threading.Tasks;
+using Utils;
 
 namespace Managers
 {
     public class SettingsManager
     {
+        public Settings Settings { get; }
+        
         public SettingsManager(Settings settings)
         {
-            
+            Settings = settings;
         }
 
-        /*public static Settings LoadSettings()
+        public async static Task<Settings> GetSettings()
         {
-            return new Settings();
-        }*/
+            try
+            {
+                var data = await JsonUtils.JsonToModel<Settings>(Paths.SettingsJson);
+                return data;
+            }
+            catch
+            {
+                return DefaultSettingsConfig.defaultSettings;
+            }
+        }
 
-        public static void SaveSettings()
+        public void SaveSettings()
         {
-            
+            IOUtils.SaveFile(Paths.SettingsJson, JsonUtils.ModelToJson(Settings));
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Utils
 {
     public static class IOUtils
     {
-        public static void CreateFile(string path, string content)
+        public static void SaveFile(string path, string content)
         {
             using StreamWriter sw = File.CreateText(path);
             sw.WriteLine(content);

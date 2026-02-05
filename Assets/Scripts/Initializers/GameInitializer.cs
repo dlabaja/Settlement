@@ -1,5 +1,5 @@
+using Configs;
 using Managers;
-using Models.Data.Settings;
 using Reflex.Core;
 
 namespace Initializers
@@ -8,7 +8,7 @@ namespace Initializers
     {
         public void Init(ContainerBuilder builder)
         {
-            //builder.RegisterValue(new SettingsManager(new Settings()));
+            builder.RegisterValue(new SettingsManager(DefaultSettingsConfig.defaultSettings));
         }
     }
 }
