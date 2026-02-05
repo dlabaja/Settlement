@@ -9,10 +9,10 @@ namespace Managers
             
         }
 
-        public static Settings LoadSettings()
+        /*public static Settings LoadSettings()
         {
             return new Settings();
-        }
+        }*/
 
         public static void SaveSettings()
         {
