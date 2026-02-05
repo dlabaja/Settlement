@@ -41,6 +41,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/de/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/zh-Hans/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/pl/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/cs/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/tr/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/pt-BR/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/it/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/es/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/ko/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/System.Text.Json.SourceGeneration.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/ja/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/fr/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/ru/System.Text.Json.SourceGeneration.resources.dll" />
+    <Analyzer Include="/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/analyzers/dotnet/roslyn4.0/cs/zh-Hant/System.Text.Json.SourceGeneration.resources.dll" />
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Tools/BuildPipeline/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
@@ -51,25 +65,31 @@
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
+    <Compile Include="Assets/Scripts/Models/DTOs/Settings/Settings.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraZoomController.cs" />
-    <Compile Include="Assets\Scripts\Models\DTOs\Settings\Settings.cs" />
+    <Compile Include="Assets/Scripts/Constants/Paths.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
+    <Compile Include="Assets/Scripts/Models/DTOs/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
+    <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraRotationController.cs" />
     <Compile Include="Assets/Scripts/Components/GameInitializerComponent.cs" />
-    <Compile Include="Assets\Scripts\Models\DTOs\Settings\CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
-    <Compile Include="Assets\Scripts\Constants\Paths.cs" />
-    <Compile Include="Assets\Scripts\Utils\IOUtils.cs" />
-    <Reference Include="System.Text.Json, Version=10.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Text.Json.10.0.2\lib\net462\System.Text.Json.dll</HintPath>
-    </Reference>
+    <None Include="Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/useSharedDesignerContext.txt" />
+    <None Include="Assets/Packages/System.Text.Json.10.0.2/useSharedDesignerContext.txt" />
+    <None Include="Assets/Packages/System.IO.Pipelines.10.0.2/lib/netstandard2.0/System.IO.Pipelines.xml" />
+    <None Include="Assets/Packages/System.Text.Encodings.Web.10.0.2/useSharedDesignerContext.txt" />
+    <None Include="Assets/Scripts/csc.rsp" />
+    <None Include="Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml" />
+    <None Include="Assets/Packages/System.IO.Pipelines.10.0.2/useSharedDesignerContext.txt" />
+    <None Include="Assets/Packages/System.Text.Json.10.0.2/lib/netstandard2.0/System.Text.Json.xml" />
+    <None Include="Assets/Packages/System.Text.Encodings.Web.10.0.2/lib/netstandard2.0/System.Text.Encodings.Web.xml" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -484,6 +504,18 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>/home/dlabaja/Settlement/Library/PackageCache/com.unity.collections@aea9d3bd5e19/Unity.Collections.Tests/System.Runtime.CompilerServices.Unsafe/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Text.Json">
+      <HintPath>/home/dlabaja/Settlement/Assets/Packages/System.Text.Json.10.0.2/lib/netstandard2.0/System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web">
+      <HintPath>/home/dlabaja/Settlement/Assets/Packages/System.Text.Encodings.Web.10.0.2/lib/netstandard2.0/System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipelines">
+      <HintPath>/home/dlabaja/Settlement/Assets/Packages/System.IO.Pipelines.10.0.2/lib/netstandard2.0/System.IO.Pipelines.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+      <HintPath>/home/dlabaja/Settlement/Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll</HintPath>
     </Reference>
@@ -865,11 +897,11 @@
     <Reference Include="Unity.AI.Navigation">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.AI.Navigation.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
-      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Reflex.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Reflex.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
@@ -894,6 +926,9 @@
     </Reference>
     <Reference Include="PPv2URPConverters">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/PPv2URPConverters.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityCSharpPatch.Editor">
+      <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityCSharpPatch.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime.Shared">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll</HintPath>
@@ -1014,7 +1049,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
