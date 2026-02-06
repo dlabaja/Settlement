@@ -1,17 +1,16 @@
 using Models.Data.Settings;
 
-namespace Configs
+namespace Configs;
+
+public static class DefaultSettingsConfig
 {
-    public static class DefaultSettingsConfig
+    public static readonly Settings defaultSettings = new Settings
     {
-        public static readonly Settings defaultSettings = new Settings
+        CameraSettings = new CameraSettings
         {
-            CameraSettings = new CameraSettings
-            {
-                ZoomSpeed = 40,
-                RotationSpeed = 8,
-                MoveSpeed = 10
-            }
-        };
-    }
+            ZoomSpeed = 40,
+            RotationSpeed = 8,
+            MoveSpeed = 10
+        }
+    };
 }

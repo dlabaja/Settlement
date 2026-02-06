@@ -11,6 +11,7 @@ namespace Components
 {
     public class CameraControllerComponent : MonoBehaviour
     {
+        [Autowired] private SettingsManager _settingsManager;
         private Rigidbody _rigidbody;
         private InputActionMap _actionMap;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
@@ -20,7 +21,6 @@ namespace Components
         private InputAction _zoomAction;
         private InputAction _rotateAction;
         private KeyControl _allowRotationKey;
-        [Autowired] private SettingsManager _settingsManager;
 
         private KeyControl GetKeyControl(string actionName)
         {

@@ -1,14 +1,13 @@
 using UnityEngine;
 
-namespace Utils
+namespace Utils;
+
+public static class VectorUtils
 {
-    public static class VectorUtils
+    public static bool Approx(this Vector3 vec1, Vector3 vec2, float eps)
     {
-        public static bool Approx(this Vector3 vec1, Vector3 vec2, float eps)
-        {
-            return MathUtils.Approx(vec1.x, vec2.x, eps) 
-                   && MathUtils.Approx(vec1.y, vec2.y, eps) 
-                   && MathUtils.Approx(vec1.z, vec2.z, eps);
-        }
+        return vec1.x.Approx(vec2.x, eps) 
+               && vec1.y.Approx(vec2.y, eps) 
+               && vec1.z.Approx(vec2.z, eps);
     }
 }

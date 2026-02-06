@@ -1,7 +1,6 @@
-namespace Models.Data.Settings
+namespace Models.Data.Settings;
+
+public class Settings
 {
-    public class Settings
-    {
-        public required CameraSettings CameraSettings { get; set; }
-    }
+    public required CameraSettings CameraSettings { get; set; }
 }

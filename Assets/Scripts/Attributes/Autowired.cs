@@ -2,11 +2,10 @@ using JetBrains.Annotations;
 using Reflex.Attributes;
 using System;
 
-namespace Attributes
+namespace Attributes;
+
+[MeansImplicitUse(ImplicitUseKindFlags.Assign)]
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method)]
+public class AutowiredAttribute : InjectAttribute
 {
-    [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Method)]
-    public class AutowiredAttribute : InjectAttribute
-    {
-    }
 }

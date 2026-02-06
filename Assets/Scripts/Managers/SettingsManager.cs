@@ -4,33 +4,32 @@ using Models.Data.Settings;
 using System.Threading.Tasks;
 using Utils;
 
-namespace Managers
+namespace Managers;
+
+public class SettingsManager
 {
-    public class SettingsManager
-    {
-        public Settings Settings { get; }
+    public Settings Settings { get; }
         
-        public SettingsManager(Settings settings)
-        {
-            Settings = settings;
-        }
+    public SettingsManager(Settings settings)
+    {
+        Settings = settings;
+    }
 
-        public async static Task<Settings> GetSettings()
+    public async static Task<Settings> GetSettings()
+    {
+        try
         {
-            try
-            {
-                var data = await JsonUtils.JsonToModel<Settings>(Paths.SettingsJson);
-                return data;
-            }
-            catch
-            {
-                return DefaultSettingsConfig.defaultSettings;
-            }
+            var data = await JsonUtils.JsonToModel<Settings>(Paths.SettingsJson);
+            return data;
         }
+        catch
+        {
+            return DefaultSettingsConfig.defaultSettings;
+        }
+    }
 
-        public void SaveSettings()
-        {
-            IOUtils.SaveFile(Paths.SettingsJson, JsonUtils.ModelToJson(Settings));
-        }
+    public void SaveSettings()
+    {
+        IOUtils.SaveFile(Paths.SettingsJson, JsonUtils.ModelToJson(Settings));
     }
 }
