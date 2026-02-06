@@ -1,4 +1,3 @@
-using Attributes;
 using Managers;
 using UnityEngine;
 
@@ -6,14 +5,15 @@ namespace Models.Controllers
 {
     public class CameraMovementController
     {
-        [Autowired] private SettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private readonly Transform _transform;
         private readonly Vector3 _planeLockVector = new Vector3(1, 0, 1);
         private float MoveSpeed => _settingsManager.Settings.CameraSettings.MoveSpeed;
 
-        public CameraMovementController(Transform transform)
+        public CameraMovementController(Transform transform, SettingsManager settingsManager)
         {
             _transform = transform;
+            _settingsManager = settingsManager;
         }
 
         public Vector3 MovedVectorDelta(Vector3 vector, float deltaTime)

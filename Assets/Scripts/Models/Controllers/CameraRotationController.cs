@@ -1,4 +1,3 @@
-using Attributes;
 using Managers;
 using UnityEngine;
 
@@ -6,8 +5,13 @@ namespace Models.Controllers
 {
     public class CameraRotationController
     {
-        [Autowired] private SettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private int RotationSpeed => _settingsManager.Settings.CameraSettings.RotationSpeed;
+
+        public CameraRotationController(SettingsManager settingsManager)
+        {
+            _settingsManager = settingsManager;
+        }
         
         public Vector3 VectorToRotationDelta(Vector2 vector, float deltaTime)
         {

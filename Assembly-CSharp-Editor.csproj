@@ -1096,6 +1096,6 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <!--LangVersion.props:505bdbd4c9eed2be8b2656476fa7d4bbcb3d7aff5a6dd8ba4a463c1e7464d8de-->
+  <!--LangVersion.props:670a8d85e26c83db413028bd2301640ff218869509438620316c36f482333b02-->
   <Import Project="LangVersion.props" />
 </Project>

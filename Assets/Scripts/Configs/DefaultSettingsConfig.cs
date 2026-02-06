@@ -8,9 +8,9 @@ namespace Configs
         {
             CameraSettings = new CameraSettings
             {
-                ZoomSpeed = 0,
-                RotationSpeed = 0,
-                MoveSpeed = 0
+                ZoomSpeed = 40,
+                RotationSpeed = 8,
+                MoveSpeed = 10
             }
         };
     }

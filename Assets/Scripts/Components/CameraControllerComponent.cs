@@ -1,4 +1,6 @@
+using Attributes;
 using Constants;
+using Managers;
 using Models.Controllers;
 using Models.Controls;
 using System;
@@ -18,6 +20,7 @@ namespace Components
         private InputAction _zoomAction;
         private InputAction _rotateAction;
         private KeyControl _allowRotationKey;
+        [Autowired] private SettingsManager _settingsManager;
 
         private KeyControl GetKeyControl(string actionName)
         {
@@ -68,9 +71,9 @@ namespace Components
         {
             _actionMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
             _rigidbody = GetComponent<Rigidbody>();
-            _cameraMovementController = new CameraMovementController(transform);
-            _cameraZoomController = new CameraZoomController();
-            _cameraRotationController = new CameraRotationController();
+            _cameraMovementController = new CameraMovementController(transform, _settingsManager);
+            _cameraZoomController = new CameraZoomController(_settingsManager);
+            _cameraRotationController = new CameraRotationController(_settingsManager);
             _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
                 (GetKeyControl(InputActionName.CameraForward), _cameraMovementController.Forward),

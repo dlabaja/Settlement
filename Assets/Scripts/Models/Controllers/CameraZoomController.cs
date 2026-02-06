@@ -1,4 +1,3 @@
-using Attributes;
 using Managers;
 using UnityEngine;
 
@@ -6,12 +5,17 @@ namespace Models.Controllers
 {
     public class CameraZoomController
     {
-        [Autowired] private SettingsManager _settingsManager;
+        private readonly SettingsManager _settingsManager;
         private int _remainingTicks = maxRemainingTicks;
         private float _direction;
         private const int maxRemainingTicks = 20;
         private float ZoomSpeed => _settingsManager.Settings.CameraSettings.ZoomSpeed;
 
+        public CameraZoomController(SettingsManager settingsManager)
+        {
+            _settingsManager = settingsManager;
+        }
+        
         public void StartZoom(float direction)
         {
             _direction = direction;

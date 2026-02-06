@@ -1,4 +1,3 @@
-using Configs;
 using Managers;
 using Reflex.Core;
 
@@ -6,9 +5,9 @@ namespace Initializers
 {
     public class GameInitializer
     {
-        public void Init(ContainerBuilder builder)
+        public async void Init(ContainerBuilder builder)
         {
-            builder.RegisterValue(new SettingsManager(DefaultSettingsConfig.defaultSettings));
+            builder.RegisterValue(new SettingsManager(await SettingsManager.GetSettings()));
         }
     }
 }
