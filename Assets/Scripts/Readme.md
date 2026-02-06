@@ -1,0 +1,12 @@
+# Struktura Scripts složky
+- Attributes - atributy
+- Components - všechny Monobehaviour komponenty
+- Convertors - převodníky (zatím JSON->Model)
+- Data - čisté datové třídy
+- Defaults - defaultní instance datových tříd, fallback při nepovedené konverzi
+- Enums - enumy
+- Factories - factorky tvořící třídy z Models, musí se injectovat pokud mají deps
+- Initializers - třídy initující DI, statický kontejner pro přesun dat
+- Managers - DI třídy
+- Models - třídy s "bussiness" logikou
+- Utils - statické třídy se statickými metodami rozšiřující jiné třídy nebo tak nějak
