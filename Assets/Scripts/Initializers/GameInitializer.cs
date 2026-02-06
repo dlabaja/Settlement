@@ -1,12 +1,13 @@
 using Managers;
+using Models.Data;
 using Reflex.Core;
 
 namespace Initializers;
 
 public class GameInitializer
 {
-    public async void Init(ContainerBuilder builder)
+    public void Init(ContainerBuilder builder, AsyncInitData data)
     {
-        builder.RegisterValue(new SettingsManager(await SettingsManager.GetSettings()));
+        builder.RegisterValue(new SettingsManager(data.Settings));
     }
 }

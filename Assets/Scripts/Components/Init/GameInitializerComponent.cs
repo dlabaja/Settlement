@@ -2,13 +2,13 @@ using Initializers;
 using Reflex.Core;
 using UnityEngine;
 
-namespace Components
+namespace Components.Init
 {
     public class GameInitializerComponent : MonoBehaviour, IInstaller
     {
         public void InstallBindings(ContainerBuilder builder)
         {
-            new GameInitializer().Init(builder);
+            new GameInitializer().Init(builder, AsyncInitDataContainer.AsyncInitData);
         }
     }
 }
