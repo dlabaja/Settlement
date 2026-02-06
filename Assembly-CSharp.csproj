@@ -60,49 +60,53 @@
     <Analyzer Include="/home/dlabaja/Settlement/Library/PackageCache/com.gustavopsantos.reflex@fabfbc86f712/Injectors/Source-Generator/Reflex.Generator.Injector.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/Factories/VillagerFactory.cs" />
     <Compile Include="Assets/Resources/RequiredKeyword/RequiredKeyword.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
+    <Compile Include="Assets/Scripts/Defaults/SettingsDefault.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraZoomController.cs" />
+    <Compile Include="Assets/Scripts/Managers/VillagerConfigManager.cs" />
+    <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
     <Compile Include="Assets/Scripts/Constants/Paths.cs" />
+    <Compile Include="Assets/Scripts/Components/Objects/VillagerComponent.cs" />
+    <Compile Include="Assets/Scripts/Data/ClientData.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
+    <Compile Include="Assets/Scripts/Converters/SettingsConverter.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
     <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
-    <Compile Include="Assets\Scripts\Defaults\SettingsDefault.cs" />
+    <Compile Include="Assets/Scripts/Data/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraRotationController.cs" />
     <Compile Include="Assets/Scripts/Constants/SceneNames.cs" />
-    <Compile Include="Assets\Scripts\Defaults\VillagerNamesDefault.cs" />
-    <Compile Include="Assets\Scripts\Convertors\VillagerNamesConverter.cs" />
-    <Compile Include="Assets\Scripts\Factories\VillagerFactory.cs" />
-    <Compile Include="Assets\Scripts\Initializers\ClientDataContainer.cs" />
+    <Compile Include="Assets/Scripts/Defaults/VillagerNamesDefault.cs" />
+    <Compile Include="Assets/Scripts/Converters/Converter.cs" />
+    <Compile Include="Assets/Scripts/Initializers/ClientDataContainer.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
     <Compile Include="Assets/Scripts/Components/GameStartComponent.cs" />
+    <Compile Include="Assets/Scripts/Models/Objects/Villager/Villager.cs" />
+    <Compile Include="Assets/Scripts/Utils/RandomUtils.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
+    <Compile Include="Assets/Scripts/Enums/Gender.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
-    <Compile Include="Assets\Scripts\Data\ClientData.cs" />
-    <Compile Include="Assets\Scripts\Data\Settings\CameraSettings.cs" />
-    <Compile Include="Assets\Scripts\Data\Settings\Settings.cs" />
-    <Compile Include="Assets\Scripts\Data\Villagers\VillagerNames.cs" />
-    <Compile Include="Assets\Scripts\Enums\Gender.cs" />
-    <Compile Include="Assets\Scripts\Managers\VillagerConfigManager.cs" />
-    <Compile Include="Assets\Scripts\Models\Objects\Villager\Villager.cs" />
-    <Compile Include="Assets\Scripts\Convertors\SettingsConverter.cs" />
-    <Compile Include="Assets\Scripts\Utils\RandomUtils.cs" />
+    <Compile Include="Assets/Scripts/Data/Villagers/VillagerNames.cs" />
+    <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets/Resources/Data/settings.json" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/useSharedDesignerContext.txt" />
     <None Include="Assets/Packages/System.Text.Json.10.0.2/useSharedDesignerContext.txt" />
     <None Include="Assets/Packages/System.IO.Pipelines.10.0.2/lib/netstandard2.0/System.IO.Pipelines.xml" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMPro_Mobile.cginc" />
+    <None Include="Assets/Resources/Data/villager_names.json" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF SSD.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets/TextMesh Pro/Shaders/SDFFunctions.hlsl" />
@@ -128,7 +132,6 @@
     <None Include="Assets/TextMesh Pro/Sprites/EmojiOne.json" />
     <None Include="Assets/Packages/System.Text.Encodings.Web.10.0.2/lib/netstandard2.0/System.Text.Encodings.Web.xml" />
     <None Include="Assets/TextMesh Pro/Shaders/TMP_Sprite.shader" />
-    <None Include="Assets\Resources\Data\settings.json" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -1087,10 +1090,7 @@
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Resources\Data\villager_names.json" />
-    <Content Include="Assets\Scripts\Readme.md" />
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

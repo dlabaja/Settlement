@@ -669,7 +669,7 @@ MonoBehaviour:
       m_Data: 47840
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 46602
+    - m_Data: 46760
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -702,7 +702,7 @@ MonoBehaviour:
       m_Data: 0
     m_ExpandedIDs:
     - m_Data: 0
-    - m_Data: 46602
+    - m_Data: 46760
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1411,7 +1411,7 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 24.150581, y: -1.6309836, z: -53.000057}
+    m_Target: {x: 1260.549, y: 645.1025, z: -418.6235}
     speed: 2
     m_Value: {x: 24.150581, y: -1.6309836, z: -53.000057}
   m_RenderMode: 0
@@ -1459,11 +1459,11 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.482
   m_Rotation:
-    m_Target: {x: 0.15304303, y: 0.7670253, z: -0.19877821, w: 0.59054416}
+    m_Target: {x: 0.15249155, y: 0.23722987, z: -0.037734147, w: 0.9586712}
     speed: 2
     m_Value: {x: 0.15304305, y: 0.76702535, z: -0.19877821, w: 0.59054416}
   m_Size:
-    m_Target: 29.644142
+    m_Target: 133.92372
     speed: 2
     m_Value: 29.644142
   m_Ortho:
@@ -1579,23 +1579,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 1274
-      height: 470
-    m_Scale: {x: 0.3263889, y: 0.3263889}
-    m_Translation: {x: 637, y: 235}
+      width: 434
+      height: 446
+    m_Scale: {x: 0.16953126, y: 0.16953126}
+    m_Translation: {x: 217, y: 222.99998}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -1951.6595
-      y: -720
-      width: 3903.319
-      height: 1440
+      x: -1280
+      y: -1315.3916
+      width: 2560
+      height: 2630.7832
     m_MinimalGUI: 1
-  m_defaultScale: 0.3263889
-  m_LastWindowPixelSize: {x: 1274, y: 491}
+  m_defaultScale: 0.16953126
+  m_LastWindowPixelSize: {x: 434, y: 467}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000100000100
