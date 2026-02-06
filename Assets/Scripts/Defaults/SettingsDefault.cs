@@ -1,10 +1,10 @@
-using Models.Data.Settings;
+using Data.Settings;
 
-namespace Configs;
+namespace Defaults;
 
-public static class DefaultSettingsConfig
+public static class SettingsDefault
 {
-    public static readonly Settings defaultSettings = new Settings
+    public static readonly Settings Settings = new Settings
     {
         CameraSettings = new CameraSettings
         {
