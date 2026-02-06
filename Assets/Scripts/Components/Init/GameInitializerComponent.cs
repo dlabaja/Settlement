@@ -1,5 +1,6 @@
 using Initializers;
 using Reflex.Core;
+using System;
 using UnityEngine;
 
 namespace Components.Init
@@ -8,7 +9,12 @@ namespace Components.Init
     {
         public void InstallBindings(ContainerBuilder builder)
         {
-            new GameInitializer().Init(builder, AsyncInitDataContainer.AsyncInitData);
+            var data = ClientDataContainer.ClientData;
+            if (data == null)
+            {
+                throw new Exception("AsyncInitData not loaded from the boot scene");
+            }
+            new GameInitializer().Init(builder, data);
         }
     }
 }

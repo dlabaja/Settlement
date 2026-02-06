@@ -1,7 +1,5 @@
-using Configs;
 using Constants;
-using Models.Data.Settings;
-using System.Threading.Tasks;
+using Data.Settings;
 using Utils;
 
 namespace Managers;
@@ -13,19 +11,6 @@ public class SettingsManager
     public SettingsManager(Settings settings)
     {
         Settings = settings;
-    }
-
-    public async static Task<Settings> GetSettings()
-    {
-        try
-        {
-            var data = await JsonUtils.JsonToModel<Settings>(Paths.SettingsJson);
-            return data;
-        }
-        catch
-        {
-            return DefaultSettingsConfig.defaultSettings;
-        }
     }
 
     public void SaveSettings()
