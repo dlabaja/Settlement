@@ -60,7 +60,9 @@
     <Analyzer Include="/home/dlabaja/Settlement/Library/PackageCache/com.gustavopsantos.reflex@fabfbc86f712/Injectors/Source-Generator/Reflex.Generator.Injector.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/Scripts/Models/Data/AsyncInitData.cs" />
     <Compile Include="Assets/Resources/RequiredKeyword/RequiredKeyword.cs" />
+    <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
@@ -77,11 +79,15 @@
     <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
     <Compile Include="Assets/Scripts/Configs/DefaultSettingsConfig.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/CameraRotationController.cs" />
-    <Compile Include="Assets/Scripts/Components/GameInitializerComponent.cs" />
+    <Compile Include="Assets/Scripts/Constants/SceneNames.cs" />
+    <Compile Include="Assets/Scripts/Initializers/AsyncInitDataContainer.cs" />
+    <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
+    <Compile Include="Assets/Scripts/Components/GameStartComponent.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Components/CameraControllerComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Data/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
+    <None Include="Assets/Resources/Settings/settings.json" />
     <None Include="Assets/Packages/Microsoft.Bcl.AsyncInterfaces.10.0.2/useSharedDesignerContext.txt" />
     <None Include="Assets/Packages/System.Text.Json.10.0.2/useSharedDesignerContext.txt" />
     <None Include="Assets/Packages/System.IO.Pipelines.10.0.2/lib/netstandard2.0/System.IO.Pipelines.xml" />
