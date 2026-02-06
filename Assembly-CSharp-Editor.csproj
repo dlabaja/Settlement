@@ -60,7 +60,7 @@
     <Analyzer Include="/home/dlabaja/Settlement/Library/PackageCache/com.gustavopsantos.reflex@fabfbc86f712/Injectors/Source-Generator/Reflex.Generator.Injector.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
+    <Compile Include="Assets/Editor/DefaultSceneOnPlay.cs" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
