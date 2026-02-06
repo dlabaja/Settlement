@@ -1,4 +1,4 @@
-namespace Models.Data.Settings;
+namespace Data.Settings;
 
 public class Settings
 {
