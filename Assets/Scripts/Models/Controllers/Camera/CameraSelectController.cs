@@ -1,6 +1,4 @@
-using Constants;
-using Managers;
-using System.Collections.Generic;
+using Delegates;
 using UnityEngine;
 
 namespace Models.Controllers.Camera;
@@ -11,17 +9,31 @@ public class CameraSelectController
     public GameObject LastSelected;
     public GameObject Highlighted;
     public GameObject Selected;
-    private Dictionary<GameObject, Material> _originalMaterials;
-    private Material _defaultMaterial;
-    private Material _highlightMaterial;
-    private Material _selectMaterial;
-
-    public CameraSelectController(MaterialsManager materialsManager)
+    public event ObjectChangedNullable<GameObject> HighlightedChanged;
+    public event ObjectChangedNullable<GameObject> SelectedChanged;
+    
+    public void Select(GameObject gameObject)
     {
-        _defaultMaterial = materialsManager.GetByName(MaterialName.Default);
-        _highlightMaterial = materialsManager.GetByName(MaterialName.Highlight);
-        _selectMaterial = materialsManager.GetByName(MaterialName.Select);
-        _originalMaterials = new Dictionary<GameObject, Material>();
+        if (gameObject == Selected)
+        {
+            return;
+        }
+
+        LastSelected = Selected;
+        Selected = gameObject;
+        SelectedChanged?.Invoke(Selected, LastSelected);
+    }
+    
+    public void ResetSelect()
+    {
+        if (!Selected)
+        {
+            return;
+        }
+
+        LastSelected = Selected;
+        Selected = null;
+        SelectedChanged?.Invoke(Selected, LastSelected);
     }
     
     public void Highlight(GameObject gameObject)
@@ -33,12 +45,7 @@ public class CameraSelectController
         
         LastHighlighted = Highlighted;
         Highlighted = gameObject;
-        if (LastHighlighted)
-        {
-            ResetMaterial(LastHighlighted);
-        }
-        AddOriginalMaterial(Highlighted);
-        SetMaterial(Highlighted, _highlightMaterial);
+        HighlightedChanged?.Invoke(Highlighted, LastHighlighted);
     }
 
     public void ResetHighlight()
@@ -50,30 +57,6 @@ public class CameraSelectController
 
         LastHighlighted = Highlighted;
         Highlighted = null;
-        if (LastHighlighted)
-        {
-            ResetMaterial(LastHighlighted);
-        }
-    }
-    
-    private void AddOriginalMaterial(GameObject gameObject)
-    {
-        _originalMaterials.TryAdd(gameObject, gameObject.GetComponent<Renderer>().material);
-    }
-
-    private Material GetOriginalMaterial(GameObject gameObject)
-    {
-        var value = _originalMaterials.TryGetValue(gameObject, out var material);
-        return value ? material : _defaultMaterial;
-    }
-
-    private void SetMaterial(GameObject gameObject, Material material)
-    {
-        gameObject.GetComponent<Renderer>().material = material;
-    }
-    
-    private void ResetMaterial(GameObject gameObject)
-    {
-        gameObject.GetComponent<Renderer>().material = GetOriginalMaterial(gameObject);
+        HighlightedChanged?.Invoke(Highlighted, LastHighlighted);
     }
 }

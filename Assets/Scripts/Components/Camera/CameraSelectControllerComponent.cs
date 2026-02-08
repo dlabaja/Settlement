@@ -1,16 +1,11 @@
 using Attributes;
 using Constants;
 using Instances;
-using Interfaces;
-using JetBrains.Annotations;
 using Managers;
 using Models.Controllers.Camera;
 using Models.Controls;
-using Models.Objects;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using Views;
 
 namespace Components.Camera
 {
@@ -20,13 +15,15 @@ namespace Components.Camera
         [Autowired] private MousePositionManager _mousePositionManager;
         private CameraSelectController _cameraSelectController;
         private CameraRayController _cameraRayController;
+        private CameraSelectView _cameraSelectView;
         private KeyControl _selectedKey;
         private LayerMask _selectableLayerMask;
         
         public void Awake()
         {
             _cameraRayController = new CameraRayController(GetComponent<UnityEngine.Camera>());
-            _cameraSelectController = new CameraSelectController(_materialsManager);
+            _cameraSelectController = new CameraSelectController();
+            _cameraSelectView = new CameraSelectView(_cameraSelectController, _materialsManager);
             _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
             _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
         }
@@ -36,13 +33,10 @@ namespace Components.Camera
             var hit = _cameraRayController.TryRaycast(_mousePositionManager.Position, out var raycastedObj, _selectableLayerMask);
             if (hit)
             {
-                var go = raycastedObj.transform.gameObject;
-                _cameraSelectController.Highlight(go);
+                _cameraSelectController.Highlight(raycastedObj.transform.gameObject);
+                return;
             }
-            else if (_cameraSelectController.Highlighted)
-            {
-                _cameraSelectController.ResetHighlight();
-            }
+            _cameraSelectController.ResetHighlight();
         }
     }
 }
