@@ -15,6 +15,6 @@ public class SettingsManager
 
     public void SaveSettings()
     {
-        IOUtils.SaveFile(Paths.SettingsJson, JsonUtils.ModelToJson(Settings));
+        IOUtils.SaveFile(Path.SettingsJson, JsonUtils.ModelToJson(Settings));
     }
 }

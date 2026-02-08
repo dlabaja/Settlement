@@ -1,6 +1,6 @@
 using Data.Villagers;
 
-namespace Data;
+namespace Data.Init;
 
 public class ClientData
 {

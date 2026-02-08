@@ -11,7 +11,7 @@ namespace Components.Init
         public IEnumerator Start()
         {
             yield return ClientDataContainer.Init();
-            SceneManager.LoadSceneAsync(SceneNames.Game);
+            SceneManager.LoadSceneAsync(SceneName.Game);
         }
     }
 }
