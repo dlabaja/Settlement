@@ -4,6 +4,7 @@ using Instances;
 using Managers;
 using Models.Controllers.Camera;
 using Models.Controls;
+using System;
 using UnityEngine;
 using Views.Camera;
 
@@ -29,6 +30,11 @@ namespace Components.Camera
         public void Update()
         {
             _cameraSelectView.Process(_cameraRayController, _mousePositionManager.Position, _selectedKey.WasPressedThisFrame());
+        }
+
+        private void OnDestroy()
+        {
+            _cameraSelectView.Dispose();
         }
     }
 }

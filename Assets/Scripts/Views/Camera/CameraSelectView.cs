@@ -1,4 +1,5 @@
 using Constants;
+using JetBrains.Annotations;
 using Managers;
 using Models.Controllers.Camera;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Views.Camera;
 public class CameraSelectView
 {
     private readonly CameraSelectController _cameraSelectController;
-    private readonly Dictionary<GameObject, Material> _originalMaterials;
+    private readonly Dictionary<Renderer, Material> _originalMaterials;
     private readonly Material _defaultMaterial;
     private readonly Material _highlightMaterial;
     private readonly Material _selectMaterial;
@@ -20,11 +21,17 @@ public class CameraSelectView
         _defaultMaterial = materialsManager.GetByName(MaterialName.Default);
         _highlightMaterial = materialsManager.GetByName(MaterialName.Highlight);
         _selectMaterial = materialsManager.GetByName(MaterialName.Select);
-        _originalMaterials = new Dictionary<GameObject, Material>();
+        _originalMaterials = new Dictionary<Renderer, Material>();
         _cameraSelectController = cameraSelectController;
+        _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
         cameraSelectController.HighlightedChanged += HighlightedChanged;
         cameraSelectController.SelectedChanged += OnSelectedChanged;
-        _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
+    }
+
+    public void Dispose()
+    {
+        _cameraSelectController.HighlightedChanged -= HighlightedChanged;
+        _cameraSelectController.SelectedChanged -= OnSelectedChanged;
     }
 
     public void Process(CameraRayController cameraRayController, Vector3 mousePosition, bool selectPressed)
@@ -56,56 +63,60 @@ public class CameraSelectView
         _cameraSelectController.ResetHighlight();
     }
 
-    private void HighlightedChanged(GameObject newObject, GameObject oldObject)
+    private void HighlightedChanged([CanBeNull] GameObject newObject, [CanBeNull] GameObject oldObject)
     {
         if (newObject)
         {
-            AddOriginalMaterial(newObject);
-        }
-
-        if (newObject && newObject != _cameraSelectController.Selected)
-        {
-            SetMaterial(newObject, _highlightMaterial);
+            var newRenderer = newObject.GetComponent<Renderer>();
+            AddOriginalMaterial(newRenderer);
+            if (newObject != _cameraSelectController.Selected)
+            {
+                SetMaterial(newRenderer, _highlightMaterial);
+            }
         }
 
         if (oldObject && oldObject != _cameraSelectController.Selected)
         {
-            ResetMaterial(oldObject);
+            var oldRenderer = oldObject.GetComponent<Renderer>();
+            ResetMaterial(oldRenderer);
         }
     }
     
-    private void OnSelectedChanged(GameObject newObject, GameObject oldObject)
+    private void OnSelectedChanged([CanBeNull] GameObject newObject, [CanBeNull] GameObject oldObject)
     {
         if (newObject)
         {
-            AddOriginalMaterial(newObject);
-            SetMaterial(newObject, _selectMaterial);
+            var newRenderer = newObject.GetComponent<Renderer>();
+            AddOriginalMaterial(newRenderer);
+            SetMaterial(newRenderer, _selectMaterial);
         }
 
         if (oldObject)
         {
-            ResetMaterial(oldObject);
+            var oldRenderer = oldObject.GetComponent<Renderer>();
+            ResetMaterial(oldRenderer);
         }
     }
 
-    private void AddOriginalMaterial(GameObject gameObject)
+    private void AddOriginalMaterial(Renderer renderer)
     {
-        _originalMaterials.TryAdd(gameObject, gameObject.GetComponent<Renderer>().material);
+        _originalMaterials.TryAdd(renderer, renderer.sharedMaterial);
     }
 
-    private Material GetOriginalMaterial(GameObject gameObject)
+    private Material GetOriginalMaterial(Renderer renderer)
     {
-        var value = _originalMaterials.TryGetValue(gameObject, out var material);
+        var value = _originalMaterials.TryGetValue(renderer, out var material);
         return value ? material : _defaultMaterial;
     }
 
-    private void SetMaterial(GameObject gameObject, Material material)
+    private void SetMaterial(Renderer renderer, Material material)
     {
-        gameObject.GetComponent<Renderer>().material = material;
+        renderer.sharedMaterial = material;
     }
     
-    private void ResetMaterial(GameObject gameObject)
+    private void ResetMaterial(Renderer renderer)
     {
-        gameObject.GetComponent<Renderer>().material = GetOriginalMaterial(gameObject);
+        renderer.sharedMaterial = GetOriginalMaterial(renderer);
+        _originalMaterials.Remove(renderer);
     }
 }
