@@ -4,14 +4,14 @@ namespace Models.Controls;
 
 public class KeyControl
 {
-    private readonly InputAction _action;
+    public InputAction Action { get; }
     public bool IsPressed { get; private set; }
         
     public KeyControl(InputAction action)
     {
-        _action = action;
-        _action.started += OnButtonPressed;
-        _action.canceled += OnButtonReleased;
+        Action = action;
+        Action.started += OnButtonPressed;
+        Action.canceled += OnButtonReleased;
     }
 
     private void OnButtonReleased(InputAction.CallbackContext obj)
@@ -26,6 +26,6 @@ public class KeyControl
 
     public bool WasPressedThisFrame()
     {
-        return _action.WasPressedThisFrame();
+        return Action.WasPressedThisFrame();
     }
 }
