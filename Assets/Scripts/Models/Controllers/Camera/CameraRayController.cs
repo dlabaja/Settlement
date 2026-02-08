@@ -11,9 +11,9 @@ public class CameraRayController
         _camera = camera;
     }
 
-    public bool TryRaycast(Vector3 mousePosition, out RaycastHit hit)
+    public bool TryRaycast(Vector3 mousePosition, out RaycastHit hit, LayerMask? mask)
     {
         Ray ray = _camera.ScreenPointToRay(mousePosition);
-        return Physics.Raycast(ray, out hit);
+        return Physics.Raycast(ray, out hit, Mathf.Infinity, mask ?? Physics.DefaultRaycastLayers);
     }
 }
