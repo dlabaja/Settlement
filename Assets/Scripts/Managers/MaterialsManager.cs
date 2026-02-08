@@ -1,4 +1,3 @@
-using Constants;
 using System.Linq;
 using UnityEngine;
 
@@ -20,6 +19,6 @@ public class MaterialsManager
 
     public static Material[] LoadAllMaterials()
     {
-        return Resources.LoadAll<Material>(Path.Materials);
+        return Resources.LoadAll<Material>("Materials");
     }
 }
