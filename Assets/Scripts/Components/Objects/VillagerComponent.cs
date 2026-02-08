@@ -1,11 +1,12 @@
 using Attributes;
 using Factories;
+using Interfaces;
 using Models.Objects.Villager;
 using UnityEngine;
 
 namespace Components.Objects
 {
-    public class VillagerComponent : MonoBehaviour
+    public class VillagerComponent : MonoBehaviour, ISelectable
     {
         [SerializeField] private string _name;
         [Autowired] private VillagerFactory _villagerFactory;

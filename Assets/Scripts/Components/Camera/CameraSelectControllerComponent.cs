@@ -1,8 +1,12 @@
 using Attributes;
 using Constants;
+using Instances;
+using Interfaces;
+using JetBrains.Annotations;
 using Managers;
 using Models.Controllers.Camera;
 using Models.Controls;
+using Models.Objects;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,53 +19,28 @@ namespace Components.Camera
         [Autowired] private MousePositionManager _mousePositionManager;
         private CameraSelectController _cameraSelectController;
         private CameraRayController _cameraRayController;
-        private Renderer CurrentHighlighted;
-        private Renderer CurrentSelected;
         private KeyControl _selectedKey;
-    
-        public void Start()
+        private LayerMask _selectableLayerMask;
+        
+        public void Awake()
         {
             _cameraRayController = new CameraRayController(GetComponent<UnityEngine.Camera>());
             _cameraSelectController = new CameraSelectController(_materialsManager);
-            _selectedKey = new KeyControl(new InputAction(InputActionName.CameraSelect));
+            _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
+            _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
         }
 
         public void Update()
         {
-            var hit = _cameraRayController.TryRaycast(_mousePositionManager.Position, out var raycastedObj);
-            if (!hit)
+            var hit = _cameraRayController.TryRaycast(_mousePositionManager.Position, out var raycastedObj, _selectableLayerMask);
+            if (hit)
             {
-                return;
+                _cameraSelectController.Highlight(raycastedObj.transform.gameObject);
             }
-        
-            ManageHighlight(raycastedObj.transform.gameObject);
-            if (_selectedKey.WasPressedThisFrame())
+            else if (_cameraSelectController.Highlighted)
             {
-                ManageSelect(raycastedObj.transform.gameObject);
+                _cameraSelectController.ResetHighlight();
             }
-        }
-
-        private void ManageHighlight(GameObject raycasted)
-        {
-            Manage(raycasted, ref CurrentHighlighted, _cameraSelectController.Highlight);
-        }
-
-        private void ManageSelect(GameObject raycasted)
-        {
-            Manage(raycasted, ref CurrentSelected, _cameraSelectController.Select);
-        }
-
-        private void Manage(GameObject raycasted, ref Renderer currentRenderer, Action<Renderer> func)
-        {
-            if (raycasted == currentRenderer.gameObject)
-            {
-                return;
-            }
-
-            var _renderer = raycasted.GetComponent<Renderer>();
-            _cameraSelectController.Reset(currentRenderer);
-            func(_renderer);
-            currentRenderer = _renderer;
         }
     }
 }

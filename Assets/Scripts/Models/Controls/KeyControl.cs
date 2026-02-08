@@ -6,6 +6,7 @@ public class KeyControl
 {
     public InputAction Action { get; }
     public bool IsPressed { get; private set; }
+    public bool ToggleState { get; private set; }
         
     public KeyControl(InputAction action)
     {
@@ -22,6 +23,7 @@ public class KeyControl
     private void OnButtonPressed(InputAction.CallbackContext obj)
     {
         IsPressed = true;
+        ToggleState = !ToggleState;
     }
 
     public bool WasPressedThisFrame()
