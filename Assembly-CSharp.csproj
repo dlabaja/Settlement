@@ -85,11 +85,13 @@
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
     <Compile Include="Assets/Scripts/Instances/SettingsInstances.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
+    <Compile Include="Assets/Scripts/Instances/InputActionMaps.cs" />
     <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraZoomController.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Data/Init/ClientData.cs" />
     <Compile Include="Assets/Scripts/Components/Camera/CameraControllerComponent.cs" />
+    <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
     <Compile Include="Assets/Scripts/Initializers/ClientDataContainer.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
