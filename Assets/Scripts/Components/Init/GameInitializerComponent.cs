@@ -1,6 +1,7 @@
 using Constants;
 using Data.Init;
 using Initializers;
+using Instances;
 using Reflex.Core;
 using System;
 using UnityEngine;
@@ -24,11 +25,10 @@ namespace Components.Init
 
         private InitData GetInitData()
         {
-            var mouseActionMap = InputSystem.actions.FindActionMap(InputActionMapName.Mouse);
             return new InitData
             {
-                mousePositionAction = mouseActionMap.FindAction(InputActionName.MousePosition),
-                mousePositionDeltaAction = mouseActionMap.FindAction(InputActionName.MouseDelta)
+                mousePositionAction = InputActionMaps.Mouse.FindAction(InputActionName.MousePosition),
+                mousePositionDeltaAction = InputActionMaps.Mouse.FindAction(InputActionName.MouseDelta)
             };
         }
     }

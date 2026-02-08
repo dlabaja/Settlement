@@ -1,5 +1,6 @@
 using Attributes;
 using Constants;
+using Instances;
 using Managers;
 using Models.Controllers.Camera;
 using Models.Controls;
@@ -14,7 +15,6 @@ namespace Components.Camera
         [Autowired] private SettingsManager _settingsManager;
         [Autowired] private MousePositionManager _mousePositionManager;
         private Rigidbody _rigidbody;
-        private InputActionMap _actionMap;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
         private CameraMovementController _cameraMovementController;
         private CameraZoomController _cameraZoomController;
@@ -24,7 +24,7 @@ namespace Components.Camera
 
         private KeyControl GetKeyControl(string actionName)
         {
-            return new KeyControl(_actionMap.FindAction(actionName));
+            return new KeyControl(InputActionMaps.Camera.FindAction(actionName));
         }
 
         private Vector3 MovementVectorDelta()
@@ -69,7 +69,6 @@ namespace Components.Camera
 
         public void Awake()
         {
-            _actionMap = InputSystem.actions.FindActionMap(InputActionMapName.Camera);
             _rigidbody = GetComponent<Rigidbody>();
             _cameraMovementController = new CameraMovementController(transform, _settingsManager);
             _cameraZoomController = new CameraZoomController(_settingsManager);
@@ -81,7 +80,7 @@ namespace Components.Camera
                 (GetKeyControl(InputActionName.CameraLeft), _cameraMovementController.Left),
                 (GetKeyControl(InputActionName.CameraRight), _cameraMovementController.Right),
             };
-            _zoomAction = _actionMap.FindAction(InputActionName.CameraZoom);
+            _zoomAction = InputActionMaps.Camera.FindAction(InputActionName.CameraZoom);
             _allowRotationKey = GetKeyControl(InputActionName.CameraAllowRotate);
         }
 
