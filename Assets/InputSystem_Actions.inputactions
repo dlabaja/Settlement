@@ -1042,18 +1042,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Rotate",
-                    "type": "Value",
-                    "id": "1ab4e373-dd3a-4906-9415-97dd64b660f8",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "RotateAllow",
                     "type": "Button",
                     "id": "359f4576-b5b1-4053-91b8-393058a4b3d8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "a1f66c25-e9e5-4dcb-8f10-c0e7073129b3",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -1118,23 +1118,71 @@
                 },
                 {
                     "name": "",
-                    "id": "ad8d4732-7bdc-4284-8f32-c89ff63cf8ba",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Rotate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "0f767c62-e45d-4393-b6de-c13b757bce17",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "RotateAllow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d34466e-c8ff-4b94-8b89-630ffa50a853",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Mouse",
+            "id": "c55eebae-2a0d-4753-8798-16657bc17256",
+            "actions": [
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "cc5f2787-5a06-4281-a092-1373e8bc8fce",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Delta",
+                    "type": "Value",
+                    "id": "6b20664a-ddfa-4a38-88c6-3a5ddcb13261",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "80292638-1c68-4690-be8f-b87dc3f74096",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9bf7fd24-3a8f-45de-a8b3-ad8bc31989ca",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
