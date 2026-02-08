@@ -1,6 +1,6 @@
 using Constants;
 using Data.Settings;
-using Defaults;
+using Instances;
 using System.Threading.Tasks;
 using Utils;
 
@@ -10,6 +10,6 @@ public static class SettingsConverter
 {
     public async static Task<Settings> FromJson()
     {
-        return await Converter.FromJson(Paths.SettingsJson, SettingsDefault.Settings);
+        return await Converter.FromJson(Path.SettingsJson, SettingsInstances.Default);
     }
 }

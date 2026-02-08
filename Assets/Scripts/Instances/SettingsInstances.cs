@@ -1,10 +1,10 @@
 using Data.Settings;
 
-namespace Defaults;
+namespace Instances;
 
-public static class SettingsDefault
+public static class SettingsInstances
 {
-    public static readonly Settings Settings = new Settings
+    public static readonly Settings Default = new Settings
     {
         CameraSettings = new CameraSettings
         {
