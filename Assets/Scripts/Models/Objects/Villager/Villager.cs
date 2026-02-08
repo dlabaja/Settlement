@@ -3,7 +3,7 @@ using Enums;
 
 namespace Models.Objects.Villager;
 
-public class Villager
+public class Villager : CustomObject
 {
     public string Name { get; }
     public Gender Gender { get; }
