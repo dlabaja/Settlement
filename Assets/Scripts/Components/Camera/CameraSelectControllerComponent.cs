@@ -5,7 +5,7 @@ using Managers;
 using Models.Controllers.Camera;
 using Models.Controls;
 using UnityEngine;
-using Views;
+using Views.Camera;
 
 namespace Components.Camera
 {

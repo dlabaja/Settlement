@@ -4,7 +4,7 @@ using Models.Controllers.Camera;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Views;
+namespace Views.Camera;
 
 public class CameraSelectView
 {

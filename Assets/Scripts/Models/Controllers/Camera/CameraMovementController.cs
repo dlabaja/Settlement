@@ -19,7 +19,7 @@ public class CameraMovementController
     public Vector3 MovedVectorDelta(Vector3 vector, float deltaTime)
     {
         vector.Scale(_planeLockVector);
-        return _transform.position + vector * (MoveSpeed * deltaTime);
+        return vector * (MoveSpeed * deltaTime);
     }
 
     public Vector3 Forward()
