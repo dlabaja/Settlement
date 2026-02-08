@@ -8,6 +8,7 @@ using Models.Controllers.Camera;
 using Models.Controls;
 using Models.Objects;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,7 +36,8 @@ namespace Components.Camera
             var hit = _cameraRayController.TryRaycast(_mousePositionManager.Position, out var raycastedObj, _selectableLayerMask);
             if (hit)
             {
-                _cameraSelectController.Highlight(raycastedObj.transform.gameObject);
+                var go = raycastedObj.transform.gameObject;
+                _cameraSelectController.Highlight(go);
             }
             else if (_cameraSelectController.Highlighted)
             {

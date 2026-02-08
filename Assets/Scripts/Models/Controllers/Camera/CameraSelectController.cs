@@ -7,21 +7,23 @@ namespace Models.Controllers.Camera;
 
 public class CameraSelectController
 {
-    private readonly Material _defaultMaterial;
-    private readonly Material _highlightMaterial;
-    private readonly Material _selectMaterial;
-    private readonly Dictionary<Renderer, Material> _originalMaterials;
+    public GameObject LastHighlighted;
+    public GameObject LastSelected;
     public GameObject Highlighted;
     public GameObject Selected;
+    private Dictionary<GameObject, Material> _originalMaterials;
+    private Material _defaultMaterial;
+    private Material _highlightMaterial;
+    private Material _selectMaterial;
 
     public CameraSelectController(MaterialsManager materialsManager)
     {
         _defaultMaterial = materialsManager.GetByName(MaterialName.Default);
         _highlightMaterial = materialsManager.GetByName(MaterialName.Highlight);
         _selectMaterial = materialsManager.GetByName(MaterialName.Select);
-        _originalMaterials = new Dictionary<Renderer, Material>();
+        _originalMaterials = new Dictionary<GameObject, Material>();
     }
-
+    
     public void Highlight(GameObject gameObject)
     {
         if (gameObject == Highlighted)
@@ -29,36 +31,49 @@ public class CameraSelectController
             return;
         }
         
-        HighlightRenderer(gameObject.GetComponent<Renderer>());
-    }
-
-    private void HighlightRenderer(Renderer renderer)
-    {
-        _originalMaterials.TryAdd(renderer, renderer.material);
-        renderer.material = _highlightMaterial;
-        ResetHighlight();
-        Highlighted = renderer.gameObject;
-    }
-    
-    public void Select(Renderer renderer)
-    {
-        _originalMaterials.TryAdd(renderer, renderer.material);
-        renderer.material = _selectMaterial;
-    }
-    
-    private void Reset(Renderer renderer)
-    {
-        renderer.material = _originalMaterials.ContainsKey(renderer) 
-            ? _originalMaterials[renderer]
-            : _defaultMaterial;
+        LastHighlighted = Highlighted;
+        Highlighted = gameObject;
+        if (LastHighlighted)
+        {
+            ResetMaterial(LastHighlighted);
+        }
+        AddOriginalMaterial(Highlighted);
+        SetMaterial(Highlighted, _highlightMaterial);
     }
 
     public void ResetHighlight()
     {
-        if (Highlighted)
+        if (!Highlighted)
         {
-            Reset(Highlighted.GetComponent<Renderer>());
-            Highlighted = null;
+            return;
         }
+
+        LastHighlighted = Highlighted;
+        Highlighted = null;
+        if (LastHighlighted)
+        {
+            ResetMaterial(LastHighlighted);
+        }
+    }
+    
+    private void AddOriginalMaterial(GameObject gameObject)
+    {
+        _originalMaterials.TryAdd(gameObject, gameObject.GetComponent<Renderer>().material);
+    }
+
+    private Material GetOriginalMaterial(GameObject gameObject)
+    {
+        var value = _originalMaterials.TryGetValue(gameObject, out var material);
+        return value ? material : _defaultMaterial;
+    }
+
+    private void SetMaterial(GameObject gameObject, Material material)
+    {
+        gameObject.GetComponent<Renderer>().material = material;
+    }
+    
+    private void ResetMaterial(GameObject gameObject)
+    {
+        gameObject.GetComponent<Renderer>().material = GetOriginalMaterial(gameObject);
     }
 }
