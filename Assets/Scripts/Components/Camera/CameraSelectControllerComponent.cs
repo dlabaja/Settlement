@@ -17,7 +17,6 @@ namespace Components.Camera
         private CameraRayController _cameraRayController;
         private CameraSelectView _cameraSelectView;
         private KeyControl _selectedKey;
-        private LayerMask _selectableLayerMask;
         
         public void Awake()
         {
@@ -25,18 +24,11 @@ namespace Components.Camera
             _cameraSelectController = new CameraSelectController();
             _cameraSelectView = new CameraSelectView(_cameraSelectController, _materialsManager);
             _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
-            _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
         }
 
         public void Update()
         {
-            var hit = _cameraRayController.TryRaycast(_mousePositionManager.Position, out var raycastedObj, _selectableLayerMask);
-            if (hit)
-            {
-                _cameraSelectController.Highlight(raycastedObj.transform.gameObject);
-                return;
-            }
-            _cameraSelectController.ResetHighlight();
+            _cameraSelectView.Process(_cameraRayController, _mousePositionManager.Position, _selectedKey.WasPressedThisFrame());
         }
     }
 }
