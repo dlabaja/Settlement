@@ -7,6 +7,8 @@
 - Enums - enumy
 - Factories - factorky tvořící třídy z Models, musí se injectovat pokud mají deps
 - Initializers - třídy initující DI, statický kontejner pro přesun dat
+- Interfaces - interfacy
 - Managers - DI třídy
 - Models - třídy s "bussiness" logikou
 - Utils - statické třídy se statickými metodami rozšiřující jiné třídy nebo tak nějak
+- Views - třídy spravující vizuální stránku hry (render, move, ...), ideálně event-driven

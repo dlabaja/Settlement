@@ -80,7 +80,9 @@
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
     <Compile Include="Assets/Scripts/Constants/Path.cs" />
+    <Compile Include="Assets/Scripts/Views/Camera/CameraSelectView.cs" />
     <Compile Include="Assets/Scripts/Converters/SettingsConverter.cs" />
+    <Compile Include="Assets/Scripts/Delegates/ObjectChangedDelegate.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
     <Compile Include="Assets/Scripts/Instances/SettingsInstances.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Assets/Scripts/Enums/Gender.cs" />
     <Compile Include="Assets/Scripts/Instances/VillagerNamesInstances.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
+    <Compile Include="Assets/Scripts/Views/Camera/CameraControllerView.cs" />
     <Compile Include="Assets/Scripts/Data/Villagers/VillagerNames.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
     <Compile Include="Assets/Scripts/Components/Camera/CameraSelectControllerComponent.cs" />
