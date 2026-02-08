@@ -1,17 +1,18 @@
 using Attributes;
 using Constants;
 using Managers;
-using Models.Controllers;
+using Models.Controllers.Camera;
 using Models.Controls;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Components
+namespace Components.Camera
 {
     public class CameraControllerComponent : MonoBehaviour
     {
         [Autowired] private SettingsManager _settingsManager;
+        [Autowired] private MousePositionManager _mousePositionManager;
         private Rigidbody _rigidbody;
         private InputActionMap _actionMap;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
@@ -19,7 +20,6 @@ namespace Components
         private CameraZoomController _cameraZoomController;
         private CameraRotationController _cameraRotationController;
         private InputAction _zoomAction;
-        private InputAction _rotateAction;
         private KeyControl _allowRotationKey;
 
         private KeyControl GetKeyControl(string actionName)
@@ -53,7 +53,7 @@ namespace Components
         private Vector3 RotationDelta()
         {
             return _allowRotationKey.IsPressed 
-                ? _cameraRotationController.VectorToRotationDelta(_rotateAction.ReadValue<Vector2>(), Time.deltaTime) 
+                ? _cameraRotationController.VectorToRotationDelta(_mousePositionManager.Delta, Time.deltaTime) 
                 : Vector3.zero;
         }
 
@@ -82,7 +82,6 @@ namespace Components
                 (GetKeyControl(InputActionName.CameraRight), _cameraMovementController.Right),
             };
             _zoomAction = _actionMap.FindAction(InputActionName.CameraZoom);
-            _rotateAction = _actionMap.FindAction(InputActionName.CameraRotate);
             _allowRotationKey = GetKeyControl(InputActionName.CameraAllowRotate);
         }
 

@@ -1,7 +1,7 @@
 using Managers;
 using UnityEngine;
 
-namespace Models.Controllers;
+namespace Models.Controllers.Camera;
 
 public class CameraZoomController
 {
