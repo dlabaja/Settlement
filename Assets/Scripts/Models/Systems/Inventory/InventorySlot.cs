@@ -14,7 +14,7 @@ public class InventorySlot
         ItemCount = 0;
     }
 
-    public bool AddItems(int count, out int overflow)
+    public bool TryAddItems(int count, out int overflow)
     {
         overflow = 0;
         if (!HasItemType)
@@ -33,7 +33,7 @@ public class InventorySlot
         return true;
     }
 
-    public bool RemoveItems(int count, out int underflow)
+    public bool TryRemoveItems(int count, out int underflow)
     {
         underflow = 0;
         if (!HasItemType)

@@ -14,4 +14,9 @@ public static class ArrayUtils
 
         return array;
     }
+
+    public static bool OutOfBounds<T>(T[] array, int index)
+    {
+        return !MathUtils.InInterval(index, 0, array.Length - 1);
+    } 
 }

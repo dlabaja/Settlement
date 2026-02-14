@@ -18,4 +18,10 @@ public static class MathUtils
     {
         return Diff(a, b) < eps;
     }
+
+    // inclusive
+    public static bool InInterval(int num, int start, int end)
+    {
+        return start <= num && num <= end;
+    }
 }
