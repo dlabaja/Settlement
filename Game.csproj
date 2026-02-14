@@ -76,7 +76,6 @@
     <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraSelectController.cs" />
     <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraRayController.cs" />
     <Compile Include="Assets/Scripts/Managers/VillagerConfigManager.cs" />
-    <Compile Include="Assets/Scripts/Models/Systems/Inventory/InventorySlotArray.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
     <Compile Include="Assets/Scripts/Components/Objects/VillagerComponent.cs" />
     <Compile Include="Assets/Scripts/RequiredKeyword.cs" />
