@@ -1083,9 +1083,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{b990bd28-1b33-8dc0-b1ef-f20b7f314d50}</Project>
-      <Name>Assembly-CSharp</Name>
+    <ProjectReference Include="Game.csproj">
+      <Project>{2e198892-7d07-7f14-7a97-297df5a7c14e}</Project>
+      <Name>Game</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
