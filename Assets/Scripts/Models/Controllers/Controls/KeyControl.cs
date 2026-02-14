@@ -1,6 +1,6 @@
 using UnityEngine.InputSystem;
 
-namespace Models.Controls;
+namespace Models.Controllers.Controls;
 
 public class KeyControl
 {

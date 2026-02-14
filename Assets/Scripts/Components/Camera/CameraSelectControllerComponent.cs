@@ -3,7 +3,7 @@ using Constants;
 using Instances;
 using Managers;
 using Models.Controllers.Camera;
-using Models.Controls;
+using Models.Controllers.Controls;
 using System;
 using UnityEngine;
 using Views.Camera;
