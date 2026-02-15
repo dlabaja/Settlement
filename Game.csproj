@@ -101,7 +101,6 @@
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
     <Compile Include="Assets/Scripts/Components/GameStartComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/MaterialName.cs" />
-    <Compile Include="Assets/Scripts/Models/Objects/Villager/Villager.cs" />
     <Compile Include="Assets/Scripts/Utils/RandomUtils.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/MousePositionManager.cs" />
@@ -115,11 +114,24 @@
     <Compile Include="Assets/Scripts/Data/Villagers/VillagerNames.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
     <Compile Include="Assets/Scripts/Components/Camera/CameraSelectControllerComponent.cs" />
+    <Compile Include="Assets\Scripts\Components\Objects\CustomObjectComponent.cs" />
     <Compile Include="Assets\Scripts\DataTypes\PriorityQueue.cs" />
     <Compile Include="Assets\Scripts\Delegates\TaskDelegate.cs" />
+    <Compile Include="Assets\Scripts\Enums\CustomObjectType.cs" />
     <Compile Include="Assets\Scripts\Enums\TaskPriority.cs" />
-    <Compile Include="Assets\Scripts\Models\Systems\VillagerTaskManager\VillagerTask.cs" />
-    <Compile Include="Assets\Scripts\Models\Systems\VillagerTaskManager\VillagerTaskManager.cs" />
+    <Compile Include="Assets\Scripts\Factories\CustomObjectFactory.cs" />
+    <Compile Include="Assets\Scripts\Managers\PlaceManager.cs" />
+    <Compile Include="Assets\Scripts\Models\Objects\Buildings\Church.cs" />
+    <Compile Include="Assets\Scripts\Models\Objects\Buildings\House.cs" />
+    <Compile Include="Assets\Scripts\Models\Objects\Buildings\Spawn.cs" />
+    <Compile Include="Assets\Scripts\Models\Objects\Nature\BerryBush.cs" />
+    <Compile Include="Assets\Scripts\Models\Objects\Nature\Tree.cs" />
+    <Compile Include="Assets\Scripts\Models\Villager\Villager.cs" />
+    <Compile Include="Assets\Scripts\Models\Villager\VillagerPlaces\VillagerPlaceManager.cs" />
+    <Compile Include="Assets\Scripts\Models\Villager\VillagerStats\VillagerStat.cs" />
+    <Compile Include="Assets\Scripts\Models\Villager\VillagerStats\VillagerStatsManager.cs" />
+    <Compile Include="Assets\Scripts\Models\Villager\VillagerTasks\VillagerTask.cs" />
+    <Compile Include="Assets\Scripts\Models\Villager\VillagerTasks\VillagerTasksManager.cs" />
     <None Include="Assets/Scripts/Game.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
