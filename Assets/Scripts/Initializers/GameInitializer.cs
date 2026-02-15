@@ -19,12 +19,16 @@ public class GameInitializer
     {
         builder.RegisterValue(new SettingsManager(data.Settings));
         builder.RegisterValue(new VillagerConfigManager(data.VillagerNames));
-        builder.RegisterValue(new MaterialsManager(MaterialsManager.LoadAllMaterials()));
         builder.RegisterValue(new MousePositionManager(initData.mousePositionAction, initData.mousePositionDeltaAction));
+        
+        builder.RegisterValue(new MaterialsManager(MaterialsManager.LoadAllMaterials()));
+        
+        builder.RegisterValue(new PlaceManager());
     }
 
     private void RegisterFactories(ContainerBuilder builder)
     {
         builder.RegisterType(typeof(VillagerFactory), Lifetime.Singleton, Resolution.Lazy);
+        builder.RegisterType(typeof(CustomObjectFactory), Lifetime.Singleton, Resolution.Lazy);
     }
 }
