@@ -1,5 +1,8 @@
+using Enums;
+
 namespace Models.Objects;
 
-public class CustomObject
+public abstract class CustomObject
 {
+    public abstract CustomObjectType CustomObjectType { get; }
 }
