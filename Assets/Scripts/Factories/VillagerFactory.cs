@@ -1,6 +1,6 @@
 using Attributes;
 using Managers;
-using Models.Objects.Villager;
+using Models.Villager;
 
 namespace Factories;
 

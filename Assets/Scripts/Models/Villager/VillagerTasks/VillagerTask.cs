@@ -1,8 +1,7 @@
 using Delegates;
-using Models.Objects.Villager;
 using UnityEngine;
 
-namespace Models.Systems.TaskManager;
+namespace Models.Villager.VillagerTasks;
 
 public class VillagerTask
 {

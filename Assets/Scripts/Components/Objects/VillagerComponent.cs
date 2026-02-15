@@ -1,7 +1,7 @@
 using Attributes;
 using Factories;
 using Interfaces;
-using Models.Objects.Villager;
+using Models.Villager;
 using UnityEngine;
 
 namespace Components.Objects

@@ -4,13 +4,13 @@ using JetBrains.Annotations;
 using System;
 using System.Threading.Tasks;
 
-namespace Models.Systems.TaskManager;
+namespace Models.Villager.VillagerTasks;
 
-public class VillagerTaskManager
+public class VillagerTasksManager
 {
     public PriorityQueue<VillagerTask> Tasks { get; } = new PriorityQueue<VillagerTask>();
     [CanBeNull] public VillagerTask CurrentRunningTask { get; private set; } = null;
-    public event Action OnTaskCompleted; 
+    public event Action TaskCompleted; 
 
     public void Add(VillagerTask villagerTask, TaskPriority priority)
     {
@@ -32,6 +32,6 @@ public class VillagerTaskManager
         CurrentRunningTask = task;
         await task.Task(task.Source, task.Destination);
         CurrentRunningTask = null;
-        OnTaskCompleted?.Invoke();
+        TaskCompleted?.Invoke();
     } 
 }

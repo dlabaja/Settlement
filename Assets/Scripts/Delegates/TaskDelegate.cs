@@ -1,4 +1,4 @@
-using Models.Objects.Villager;
+using Models.Villager;
 using System.Threading.Tasks;
 using UnityEngine;
 
