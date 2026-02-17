@@ -12,13 +12,13 @@
 - Initializers - třídy initující DI, statický kontejner pro přesun async dat z bootu do hry
 - Instances - instance objektů
 - Interfaces - interfacy
-- Managers - DI třídy
+- Services - DI třídy
 - Models - třídy s "bussiness" logikou, čistý C# bez Unity
 - Utils - statické třídy se statickými metodami rozšiřující jiné třídy nebo tak nějak
 - Views - třídy spravující vizuální stránku hry (render, move, ...), ideálně event-driven
 
 # Obecná architektura
-#### Component -> Controller -> Model -|-> View
+#### Component -> Controller -> Model --(event)-> View
 - Component - MonoBehaviour, Unity lifecycle, Input systém, init View, správa Controlleru
 - Controller - reference na objekty, ovládání Modelů
 - Model - Čistý objekt pokud možno bez Unity, testovatelné, logika
