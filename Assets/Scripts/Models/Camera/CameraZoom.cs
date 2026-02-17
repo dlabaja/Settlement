@@ -1,9 +1,9 @@
 using Managers;
 using UnityEngine;
 
-namespace Models.Controllers.Camera;
+namespace Models.Camera;
 
-public class CameraZoomController
+public class CameraZoom
 {
     private readonly SettingsManager _settingsManager;
     private int _remainingTicks = maxRemainingTicks;
@@ -11,7 +11,7 @@ public class CameraZoomController
     private const int maxRemainingTicks = 20;
     private float ZoomSpeed => _settingsManager.Settings.CameraSettings.ZoomSpeed;
 
-    public CameraZoomController(SettingsManager settingsManager)
+    public CameraZoom(SettingsManager settingsManager)
     {
         _settingsManager = settingsManager;
     }

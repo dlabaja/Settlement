@@ -1,14 +1,14 @@
 using Managers;
 using UnityEngine;
 
-namespace Models.Controllers.Camera;
+namespace Models.Camera;
 
-public class CameraRotationController
+public class CameraRotation
 {
     private readonly SettingsManager _settingsManager;
     private int RotationSpeed => _settingsManager.Settings.CameraSettings.RotationSpeed;
 
-    public CameraRotationController(SettingsManager settingsManager)
+    public CameraRotation(SettingsManager settingsManager)
     {
         _settingsManager = settingsManager;
     }

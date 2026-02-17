@@ -1,9 +1,9 @@
 using Delegates;
 using UnityEngine;
 
-namespace Models.Controllers.Camera;
+namespace Models.Camera;
 
-public class CameraSelectController
+public class CameraSelect
 {
     public GameObject LastHighlighted;
     public GameObject LastSelected;
