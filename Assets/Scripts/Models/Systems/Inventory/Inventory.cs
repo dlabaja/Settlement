@@ -1,4 +1,5 @@
 using Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Utils;
@@ -64,6 +65,20 @@ public class Inventory
                 slot.ResetSlot(ItemType.None);
             }
         }
+    }
+
+    public void Transfer(Inventory inventory, int count, ItemType itemType)
+    {
+        var itemCount = Math.Min(GetItemCount(itemType), count);
+        Remove(itemCount, itemType, out _);
+        inventory.Add(itemCount, itemType, out int overflow);
+        Add(overflow, itemType, out _);
+    }
+
+    public int GetItemCount(ItemType type)
+    {
+        var slots = GetSlotsWithType(type);
+        return slots.Sum(slot => slot.ItemCount);
     }
 
     // empty slots or slots with type of first arg
