@@ -1,35 +1,28 @@
 using Attributes;
 using Constants;
+using Controllers.Camera;
 using Instances;
 using Managers;
-using Models.Camera;
 using Models.Controls;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
-using Views.Camera;
 
 namespace Components.Camera
 {
-    public class CameraControllerComponent : MonoBehaviour
+    public class CameraMovementComponent : MonoBehaviour
     {
         [Autowired] private SettingsManager _settingsManager;
         [Autowired] private MousePositionManager _mousePositionManager;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
-        private CameraMovement _cameraMovement;
-        private CameraZoom _cameraZoom;
-        private CameraRotation _cameraRotation;
-        private CameraControllerView _cameraControllerView;
+        private CameraMovementController _cameraMovementController;
         private InputAction _zoomAction;
         private KeyControl _allowRotationKey;
 
         public void Awake()
         {
-            _cameraMovement = new CameraMovement(_settingsManager);
-            _cameraZoom = new CameraZoom(_settingsManager);
-            _cameraRotation = new CameraRotation(_settingsManager);
-            _cameraControllerView = new CameraControllerView(gameObject, _cameraMovement, _cameraZoom, _cameraRotation);
+            _cameraMovementController = new CameraMovementController(GetComponent<Rigidbody>(), transform, _settingsManager);
             _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
                 (GetKeyControl(InputActionName.CameraForward), transform.Forward),
@@ -51,10 +44,8 @@ namespace Components.Camera
                     movementDirection += action();
                 }
             }
-            var movementVector = _cameraControllerView.MovementDelta(movementDirection);
-            var zoomedVector = _cameraControllerView.ZoomDelta(_zoomAction.WasPerformedThisFrame(), _zoomAction.ReadValue<Vector2>().y);
-            var rotation = _cameraControllerView.RotationDelta(_allowRotationKey.IsPressed, _mousePositionManager.Delta);
-            _cameraControllerView.Process(movementVector, zoomedVector, rotation);
+            _cameraMovementController.UpdateMovement(movementDirection, _zoomAction.WasPerformedThisFrame(), 
+                _zoomAction.ReadValue<Vector2>().y, _allowRotationKey.IsPressed, _mousePositionManager.Delta);
         }
         
         private KeyControl GetKeyControl(string actionName)
@@ -64,12 +55,12 @@ namespace Components.Camera
         
         private void OnCollisionEnter()
         {
-            _cameraZoom.StopZoom();
+            _cameraMovementController.StopZoom();
         }
 
         private void OnCollisionStay()
         {
-            _cameraZoom.StopZoom();
+            _cameraMovementController.StopZoom();
         }
     }
 }

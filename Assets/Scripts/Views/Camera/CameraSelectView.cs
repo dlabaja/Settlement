@@ -14,18 +14,14 @@ public class CameraSelectView
     private readonly Material _defaultMaterial;
     private readonly Material _highlightMaterial;
     private readonly Material _selectMaterial;
-    private readonly LayerMask _selectableLayerMask;
-    private readonly UnityEngine.Camera _camera;
     
-    public CameraSelectView(UnityEngine.Camera camera, CameraSelect cameraSelect, MaterialsManager materialsManager)
+    public CameraSelectView(CameraSelect cameraSelect, MaterialsManager materialsManager)
     {
         _defaultMaterial = materialsManager.GetByName(MaterialName.Default);
         _highlightMaterial = materialsManager.GetByName(MaterialName.Highlight);
         _selectMaterial = materialsManager.GetByName(MaterialName.Select);
         _originalMaterials = new Dictionary<Renderer, Material>();
         _cameraSelect = cameraSelect;
-        _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
-        _camera = camera;
         cameraSelect.HighlightedChanged += HighlightedChanged;
         cameraSelect.SelectedChanged += OnSelectedChanged;
     }
@@ -34,35 +30,6 @@ public class CameraSelectView
     {
         _cameraSelect.HighlightedChanged -= HighlightedChanged;
         _cameraSelect.SelectedChanged -= OnSelectedChanged;
-    }
-
-    public void Process(CameraRay cameraRay, Vector3 mousePosition, bool selectPressed)
-    {
-        var hit = cameraRay.TryRaycast(_camera, mousePosition, out var raycastedObj, _selectableLayerMask);
-        if (hit)
-        {
-            ProcessHit(raycastedObj.transform.gameObject, selectPressed);
-            return;
-        }
-        ProcessMiss(selectPressed);
-    }
-
-    private void ProcessHit(GameObject hitObj, bool selectPressed)
-    {
-        if (selectPressed)
-        {
-            _cameraSelect.Select(hitObj);
-        }
-        _cameraSelect.Highlight(hitObj);
-    }
-
-    private void ProcessMiss(bool selectPressed)
-    {
-        if (selectPressed)
-        {
-            _cameraSelect.ResetSelect();
-        }
-        _cameraSelect.ResetHighlight();
     }
 
     private void HighlightedChanged([CanBeNull] GameObject newObject, [CanBeNull] GameObject oldObject)
