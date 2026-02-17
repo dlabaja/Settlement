@@ -1,22 +1,22 @@
-using Models.Controllers.Camera;
+using Models.Camera;
 using UnityEngine;
 
 namespace Views.Camera;
 
 public class CameraControllerView
 {
-    private readonly CameraMovementController _cameraMovementController;
-    private readonly CameraZoomController _cameraZoomController;
-    private readonly CameraRotationController _cameraRotationController;
+    private readonly CameraMovement _cameraMovement;
+    private readonly CameraZoom _cameraZoom;
+    private readonly CameraRotation _cameraRotation;
     private readonly Rigidbody _rigidbody;
     private readonly Transform _transform;
 
-    public CameraControllerView(GameObject camera, CameraMovementController cameraMovementController, 
-        CameraZoomController cameraZoomController, CameraRotationController cameraRotationController)
+    public CameraControllerView(GameObject camera, CameraMovement cameraMovement, 
+        CameraZoom cameraZoom, CameraRotation cameraRotation)
     {
-        _cameraMovementController = cameraMovementController;
-        _cameraZoomController = cameraZoomController;
-        _cameraRotationController = cameraRotationController;
+        _cameraMovement = cameraMovement;
+        _cameraZoom = cameraZoom;
+        _cameraRotation = cameraRotation;
         _rigidbody = camera.GetComponent<Rigidbody>();
         _transform = camera.transform;
     }
@@ -30,23 +30,23 @@ public class CameraControllerView
     
     public Vector3 MovementDelta(Vector3 movementDirection)
     {
-        return _cameraMovementController.MovedVectorDelta(movementDirection, Time.deltaTime);
+        return _cameraMovement.MovedVectorDelta(movementDirection, Time.deltaTime);
     }
 
     public Vector3 ZoomDelta(bool zoomPerformed, float direction)
     {
         if (zoomPerformed)
         {
-            _cameraZoomController.StartZoom(direction);
+            _cameraZoom.StartZoom(direction);
         }
             
-        return _cameraZoomController.ZoomedVectorDelta(_transform.forward, Time.deltaTime);
+        return _cameraZoom.ZoomedVectorDelta(_transform.forward, Time.deltaTime);
     }
 
     public Vector3 RotationDelta(bool rotationKeyPressed, Vector3 mouseDelta)
     {
         return rotationKeyPressed 
-            ? _cameraRotationController.VectorToRotationDelta(mouseDelta, Time.deltaTime) 
+            ? _cameraRotation.VectorToRotationDelta(mouseDelta, Time.deltaTime) 
             : Vector3.zero;
     }
 }
