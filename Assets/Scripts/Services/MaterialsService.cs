@@ -1,13 +1,13 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Managers;
+namespace Services;
 
-public class MaterialsManager
+public class MaterialsService
 {
     private readonly Material[] _materials;
     
-    public MaterialsManager(Material[] materials)
+    public MaterialsService(Material[] materials)
     {
         _materials = materials;
     }

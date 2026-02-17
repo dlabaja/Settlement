@@ -1,12 +1,12 @@
 using Attributes;
-using Managers;
+using Services;
 using UnityEngine;
 
 namespace Components
 {
     public class GameStartComponent : MonoBehaviour
     {
-        [Autowired] private SettingsManager _settingsManager;
+        [Autowired] private SettingsService _settingsService;
         
         public void Awake()
         {

@@ -1,19 +1,19 @@
-using Managers;
+using Services;
 using UnityEngine;
 
 namespace Models.Camera;
 
 public class CameraZoom
 {
-    private readonly SettingsManager _settingsManager;
+    private readonly SettingsService _settingsService;
     private int _remainingTicks = maxRemainingTicks;
     private float _direction;
     private const int maxRemainingTicks = 20;
-    private float ZoomSpeed => _settingsManager.Settings.CameraSettings.ZoomSpeed;
+    private float ZoomSpeed => _settingsService.Settings.CameraSettings.ZoomSpeed;
 
-    public CameraZoom(SettingsManager settingsManager)
+    public CameraZoom(SettingsService settingsService)
     {
-        _settingsManager = settingsManager;
+        _settingsService = settingsService;
     }
         
     public void StartZoom(float direction)

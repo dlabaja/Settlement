@@ -1,8 +1,8 @@
 using Data.Init;
 using Factories;
-using Managers;
 using Reflex.Core;
 using Reflex.Enums;
+using Services;
 using Resolution = Reflex.Enums.Resolution;
 
 namespace Initializers;
@@ -17,13 +17,13 @@ public class GameInitializer
 
     private void RegisterManagers(ContainerBuilder builder, ClientData data, InitData initData)
     {
-        builder.RegisterValue(new SettingsManager(data.Settings));
+        builder.RegisterValue(new SettingsService(data.Settings));
         builder.RegisterValue(new VillagerConfigManager(data.VillagerNames));
-        builder.RegisterValue(new MousePositionManager(initData.mousePositionAction, initData.mousePositionDeltaAction));
+        builder.RegisterValue(new MousePositionService(initData.mousePositionAction, initData.mousePositionDeltaAction));
         
-        builder.RegisterValue(new MaterialsManager(MaterialsManager.LoadAllMaterials()));
+        builder.RegisterValue(new MaterialsService(MaterialsService.LoadAllMaterials()));
         
-        builder.RegisterValue(new PlaceManager());
+        builder.RegisterValue(new PlaceService());
     }
 
     private void RegisterFactories(ContainerBuilder builder)

@@ -1,8 +1,8 @@
 using Attributes;
 using Enums;
 using Factories;
-using Managers;
 using Models.Objects;
+using Services;
 using UnityEngine;
 
 namespace Components.Objects
@@ -11,18 +11,18 @@ namespace Components.Objects
     {
         [SerializeField] private CustomObjectType _customObjectType;
         [Autowired] private CustomObjectFactory _customObjectFactory;
-        [Autowired] private PlaceManager _placeManager;
+        [Autowired] private PlaceService _placeService;
         private CustomObject _customObject;
 
         public void Awake()
         {
             _customObject = _customObjectFactory.Create(_customObjectType);
-            _placeManager.Add(_customObjectType, _customObject, gameObject);
+            _placeService.Add(_customObjectType, _customObject, gameObject);
         }
 
         public void OnDestroy()
         {
-            _placeManager.Remove(_customObjectType, _customObject, gameObject);
+            _placeService.Remove(_customObjectType, _customObject, gameObject);
         }
     }
 }

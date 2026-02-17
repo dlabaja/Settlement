@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Managers;
+namespace Services;
 
-public class MousePositionManager
+public class MousePositionService
 {
     public InputAction PositionAction { get; }
     public InputAction DeltaAction { get; }
     
-    public MousePositionManager(InputAction positionAction, InputAction deltaAction)
+    public MousePositionService(InputAction positionAction, InputAction deltaAction)
     {
         PositionAction = positionAction;
         DeltaAction = deltaAction;

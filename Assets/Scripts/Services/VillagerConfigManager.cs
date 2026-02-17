@@ -2,7 +2,7 @@ using Data.Villagers;
 using Enums;
 using Utils;
 
-namespace Managers;
+namespace Services;
 
 public class VillagerConfigManager
 {

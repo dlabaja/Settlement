@@ -2,9 +2,9 @@ using Attributes;
 using Constants;
 using Controllers.Camera;
 using Instances;
-using Managers;
 using Models.Camera;
 using Models.Controls;
+using Services;
 using UnityEngine;
 using Views.Camera;
 
@@ -12,8 +12,8 @@ namespace Components.Camera
 {
     public class CameraSelectComponent : MonoBehaviour
     {
-        [Autowired] private MaterialsManager _materialsManager;
-        [Autowired] private MousePositionManager _mousePositionManager;
+        [Autowired] private MaterialsService _materialsService;
+        [Autowired] private MousePositionService _mousePositionService;
         private CameraSelect _cameraSelect;
         private CameraSelectView _cameraSelectView;
         private CameraSelectController _cameraSelectController;
@@ -24,14 +24,14 @@ namespace Components.Camera
         {
             _cameraSelect = new CameraSelect();
             _camera = GetComponent<UnityEngine.Camera>();
-            _cameraSelectView = new CameraSelectView(_cameraSelect, _materialsManager);
+            _cameraSelectView = new CameraSelectView(_cameraSelect, _materialsService);
             _cameraSelectController = new CameraSelectController(_cameraSelect);
             _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
         }
 
         public void Update()
         {
-            _cameraSelectController.UpdateRaycast(_camera, _mousePositionManager.Position, _selectedKey.WasPressedThisFrame());
+            _cameraSelectController.UpdateRaycast(_camera, _mousePositionService.Position, _selectedKey.WasPressedThisFrame());
         }
 
         private void OnDestroy()

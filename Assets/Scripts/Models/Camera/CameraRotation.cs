@@ -1,16 +1,16 @@
-using Managers;
+using Services;
 using UnityEngine;
 
 namespace Models.Camera;
 
 public class CameraRotation
 {
-    private readonly SettingsManager _settingsManager;
-    private int RotationSpeed => _settingsManager.Settings.CameraSettings.RotationSpeed;
+    private readonly SettingsService _settingsService;
+    private int RotationSpeed => _settingsService.Settings.CameraSettings.RotationSpeed;
 
-    public CameraRotation(SettingsManager settingsManager)
+    public CameraRotation(SettingsService settingsService)
     {
-        _settingsManager = settingsManager;
+        _settingsService = settingsService;
     }
         
     public Vector3 VectorToRotationDelta(Vector2 vector, float deltaTime)

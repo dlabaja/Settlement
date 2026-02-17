@@ -2,8 +2,8 @@ using Attributes;
 using Constants;
 using Controllers.Camera;
 using Instances;
-using Managers;
 using Models.Controls;
+using Services;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,8 +13,8 @@ namespace Components.Camera
 {
     public class CameraMovementComponent : MonoBehaviour
     {
-        [Autowired] private SettingsManager _settingsManager;
-        [Autowired] private MousePositionManager _mousePositionManager;
+        [Autowired] private SettingsService _settingsService;
+        [Autowired] private MousePositionService _mousePositionService;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
         private CameraMovementController _cameraMovementController;
         private InputAction _zoomAction;
@@ -22,7 +22,7 @@ namespace Components.Camera
 
         public void Awake()
         {
-            _cameraMovementController = new CameraMovementController(GetComponent<Rigidbody>(), transform, _settingsManager);
+            _cameraMovementController = new CameraMovementController(GetComponent<Rigidbody>(), transform, _settingsService);
             _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
                 (GetKeyControl(InputActionName.CameraForward), transform.Forward),
@@ -45,7 +45,7 @@ namespace Components.Camera
                 }
             }
             _cameraMovementController.UpdateMovement(movementDirection, _zoomAction.WasPerformedThisFrame(), 
-                _zoomAction.ReadValue<Vector2>().y, _allowRotationKey.IsPressed, _mousePositionManager.Delta);
+                _zoomAction.ReadValue<Vector2>().y, _allowRotationKey.IsPressed, _mousePositionService.Delta);
         }
         
         private KeyControl GetKeyControl(string actionName)

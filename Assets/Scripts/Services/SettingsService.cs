@@ -2,13 +2,13 @@ using Constants;
 using Data.Settings;
 using Utils;
 
-namespace Managers;
+namespace Services;
 
-public class SettingsManager
+public class SettingsService
 {
     public Settings Settings { get; }
         
-    public SettingsManager(Settings settings)
+    public SettingsService(Settings settings)
     {
         Settings = settings;
     }

@@ -1,7 +1,7 @@
 using Constants;
 using JetBrains.Annotations;
-using Managers;
 using Models.Camera;
+using Services;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,11 +15,11 @@ public class CameraSelectView
     private readonly Material _highlightMaterial;
     private readonly Material _selectMaterial;
     
-    public CameraSelectView(CameraSelect cameraSelect, MaterialsManager materialsManager)
+    public CameraSelectView(CameraSelect cameraSelect, MaterialsService materialsService)
     {
-        _defaultMaterial = materialsManager.GetByName(MaterialName.Default);
-        _highlightMaterial = materialsManager.GetByName(MaterialName.Highlight);
-        _selectMaterial = materialsManager.GetByName(MaterialName.Select);
+        _defaultMaterial = materialsService.GetByName(MaterialName.Default);
+        _highlightMaterial = materialsService.GetByName(MaterialName.Highlight);
+        _selectMaterial = materialsService.GetByName(MaterialName.Select);
         _originalMaterials = new Dictionary<Renderer, Material>();
         _cameraSelect = cameraSelect;
         cameraSelect.HighlightedChanged += HighlightedChanged;

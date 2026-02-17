@@ -3,9 +3,9 @@ using Models.Objects;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Managers;
+namespace Services;
 
-public class PlaceManager
+public class PlaceService
 {
     private Dictionary<CustomObjectType, List<CustomObject>> _customObjects = new Dictionary<CustomObjectType, List<CustomObject>>();
     private Dictionary<CustomObjectType, List<GameObject>> _gameObjects = new Dictionary<CustomObjectType, List<GameObject>>();

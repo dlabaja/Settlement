@@ -1,5 +1,5 @@
-using Managers;
 using Models.Camera;
+using Services;
 using UnityEngine;
 
 namespace Controllers.Camera;
@@ -12,11 +12,11 @@ public class CameraMovementController
     private readonly Rigidbody _rigidbody;
     private readonly Transform _transform;
     
-    public CameraMovementController(Rigidbody rigidbody, Transform transform, SettingsManager settingsManager)
+    public CameraMovementController(Rigidbody rigidbody, Transform transform, SettingsService settingsService)
     {
-        _cameraMovement = new CameraMovement(settingsManager);
-        _cameraZoom = new CameraZoom(settingsManager);
-        _cameraRotation = new CameraRotation(settingsManager);
+        _cameraMovement = new CameraMovement(settingsService);
+        _cameraZoom = new CameraZoom(settingsService);
+        _cameraRotation = new CameraRotation(settingsService);
         _rigidbody = rigidbody;
         _transform = transform;
     }
