@@ -61,78 +61,78 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/Enums/ItemType.cs" />
+    <Compile Include="Assets/Scripts/Models/Villager/Villager.cs" />
     <Compile Include="Assets/Scripts/Interfaces/ISelectable.cs" />
     <Compile Include="Assets/Scripts/Factories/VillagerFactory.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/Inventory.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Objects/CustomObject.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
+    <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
+    <Compile Include="Assets/Scripts/Components/Objects/CustomObjectComponent.cs" />
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
+    <Compile Include="Assets/Scripts/Models/Villager/VillagerPlaces/VillagerPlaceManager.cs" />
+    <Compile Include="Assets/Scripts/Models/Villager/VillagerTasks/VillagerTask.cs" />
+    <Compile Include="Assets/Scripts/Models/Objects/Buildings/House.cs" />
     <Compile Include="Assets/Scripts/Managers/MaterialsManager.cs" />
+    <Compile Include="Assets/Scripts/Models/Objects/Buildings/Church.cs" />
     <Compile Include="Assets/Scripts/Constants/SceneName.cs" />
+    <Compile Include="Assets/Scripts/Models/Camera/CameraRotation.cs" />
+    <Compile Include="Assets/Scripts/Models/Villager/VillagerTasks/VillagerTasksManager.cs" />
     <Compile Include="Assets/Scripts/Managers/VillagerConfigManager.cs" />
+    <Compile Include="Assets/Scripts/Controllers/Camera/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
+    <Compile Include="Assets/Scripts/Models/Camera/CameraMovement.cs" />
+    <Compile Include="Assets/Scripts/Models/Objects/Nature/BerryBush.cs" />
+    <Compile Include="Assets/Scripts/Components/Villager/VillagerComponent.cs" />
+    <Compile Include="Assets/Scripts/Models/Camera/CameraZoom.cs" />
     <Compile Include="Assets/Scripts/RequiredKeyword.cs" />
+    <Compile Include="Assets/Scripts/Enums/CustomObjectType.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
     <Compile Include="Assets/Scripts/Constants/Path.cs" />
     <Compile Include="Assets/Scripts/Views/Camera/CameraSelectView.cs" />
     <Compile Include="Assets/Scripts/Converters/SettingsConverter.cs" />
+    <Compile Include="Assets/Scripts/Managers/PlaceManager.cs" />
     <Compile Include="Assets/Scripts/Delegates/ObjectChangedDelegate.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
+    <Compile Include="Assets/Scripts/Delegates/TaskDelegate.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
+    <Compile Include="Assets/Scripts/Factories/CustomObjectFactory.cs" />
     <Compile Include="Assets/Scripts/Instances/SettingsInstances.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
     <Compile Include="Assets/Scripts/Instances/InputActionMaps.cs" />
+    <Compile Include="Assets/Scripts/DataTypes/PriorityQueue.cs" />
     <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Data/Init/ClientData.cs" />
-    <Compile Include="Assets\Scripts\Components\Camera\CameraMovementComponent.cs" />
+    <Compile Include="Assets/Scripts/Components/Camera/CameraMovementComponent.cs" />
+    <Compile Include="Assets/Scripts/Enums/TaskPriority.cs" />
+    <Compile Include="Assets/Scripts/Models/Camera/CameraRay.cs" />
+    <Compile Include="Assets/Scripts/Controllers/Camera/CameraSelectController.cs" />
+    <Compile Include="Assets/Scripts/Components/Camera/CameraSelectComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
     <Compile Include="Assets/Scripts/Initializers/ClientDataContainer.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
+    <Compile Include="Assets/Scripts/Models/Camera/CameraSelect.cs" />
+    <Compile Include="Assets/Scripts/Models/Objects/Buildings/Spawn.cs" />
     <Compile Include="Assets/Scripts/Components/GameStartComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/MaterialName.cs" />
     <Compile Include="Assets/Scripts/Utils/RandomUtils.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/MousePositionManager.cs" />
+    <Compile Include="Assets/Scripts/Models/Villager/VillagerStats/VillagerStatsManager.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/InventorySlot.cs" />
     <Compile Include="Assets/Scripts/Data/Init/InitData.cs" />
     <Compile Include="Assets/Scripts/Enums/Gender.cs" />
+    <Compile Include="Assets/Scripts/Models/Villager/VillagerStats/VillagerStat.cs" />
     <Compile Include="Assets/Scripts/Instances/VillagerNamesInstances.cs" />
     <Compile Include="Assets/Scripts/Utils/ArrayUtils.cs" />
     <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
     <Compile Include="Assets/Scripts/Data/Villagers/VillagerNames.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
-    <Compile Include="Assets\Scripts\Components\Camera\CameraSelectComponent.cs" />
-    <Compile Include="Assets\Scripts\Components\Objects\CustomObjectComponent.cs" />
-    <Compile Include="Assets\Scripts\Components\Villager\VillagerComponent.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Camera\CameraMovementController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Camera\CameraSelectController.cs" />
-    <Compile Include="Assets\Scripts\DataTypes\PriorityQueue.cs" />
-    <Compile Include="Assets\Scripts\Delegates\TaskDelegate.cs" />
-    <Compile Include="Assets\Scripts\Enums\CustomObjectType.cs" />
-    <Compile Include="Assets\Scripts\Enums\TaskPriority.cs" />
-    <Compile Include="Assets\Scripts\Factories\CustomObjectFactory.cs" />
-    <Compile Include="Assets\Scripts\Managers\PlaceManager.cs" />
-    <Compile Include="Assets\Scripts\Models\Camera\CameraMovement.cs" />
-    <Compile Include="Assets\Scripts\Models\Camera\CameraRay.cs" />
-    <Compile Include="Assets\Scripts\Models\Camera\CameraRotation.cs" />
-    <Compile Include="Assets\Scripts\Models\Camera\CameraSelect.cs" />
-    <Compile Include="Assets\Scripts\Models\Camera\CameraZoom.cs" />
-    <Compile Include="Assets\Scripts\Models\Controls\KeyControl.cs" />
-    <Compile Include="Assets\Scripts\Models\Objects\Buildings\Church.cs" />
-    <Compile Include="Assets\Scripts\Models\Objects\Buildings\House.cs" />
-    <Compile Include="Assets\Scripts\Models\Objects\Buildings\Spawn.cs" />
-    <Compile Include="Assets\Scripts\Models\Objects\Nature\BerryBush.cs" />
-    <Compile Include="Assets\Scripts\Models\Objects\Nature\Tree.cs" />
-    <Compile Include="Assets\Scripts\Models\Villager\Villager.cs" />
-    <Compile Include="Assets\Scripts\Models\Villager\VillagerPlaces\VillagerPlaceManager.cs" />
-    <Compile Include="Assets\Scripts\Models\Villager\VillagerStats\VillagerStat.cs" />
-    <Compile Include="Assets\Scripts\Models\Villager\VillagerStats\VillagerStatsManager.cs" />
-    <Compile Include="Assets\Scripts\Models\Villager\VillagerTasks\VillagerTask.cs" />
-    <Compile Include="Assets\Scripts\Models\Villager\VillagerTasks\VillagerTasksManager.cs" />
+    <Compile Include="Assets/Scripts/Models/Objects/Nature/Tree.cs" />
     <None Include="Assets/Scripts/Game.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -975,6 +975,7 @@
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

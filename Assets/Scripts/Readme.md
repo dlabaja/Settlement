@@ -8,8 +8,8 @@
 - DataTypes - vlastní datové struktury
 - Delegates - delegáti (funkce)
 - Enums - enumy
-- Factories - factorky tvořící třídy z Models, musí se injectovat pokud (některé mají deps)
-- Initializers - třídy initující DI, statický kontejner pro přesun dat
+- Factories - factorky tvořící třídy z Models, musí se injectovat (některé mají deps)
+- Initializers - třídy initující DI, statický kontejner pro přesun async dat z bootu do hry
 - Instances - instance objektů
 - Interfaces - interfacy
 - Managers - DI třídy
@@ -18,9 +18,9 @@
 - Views - třídy spravující vizuální stránku hry (render, move, ...), ideálně event-driven
 
 # Obecná architektura
-#### Component -> Controller -> Model
-- Component - MonoBehaviour, Unity lifecycle, Input systém
-- Controller - reference na objekty, ovládání modelů
+#### Component -> Controller -> Model -|-> View
+- Component - MonoBehaviour, Unity lifecycle, Input systém, init View, správa Controlleru
+- Controller - reference na objekty, ovládání Modelů
 - Model - Čistý objekt pokud možno bez Unity, testovatelné, logika
 - View - vizuální stránka objektů (materiály, ...), ovládáno skrz eventy z Modelů
 

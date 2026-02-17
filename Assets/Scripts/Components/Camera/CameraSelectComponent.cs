@@ -25,6 +25,7 @@ namespace Components.Camera
             _cameraSelect = new CameraSelect();
             _camera = GetComponent<UnityEngine.Camera>();
             _cameraSelectView = new CameraSelectView(_cameraSelect, _materialsManager);
+            _cameraSelectController = new CameraSelectController(_cameraSelect);
             _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
         }
 
