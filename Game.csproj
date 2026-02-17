@@ -63,8 +63,6 @@
     <Compile Include="Assets/Scripts/Enums/ItemType.cs" />
     <Compile Include="Assets/Scripts/Interfaces/ISelectable.cs" />
     <Compile Include="Assets/Scripts/Factories/VillagerFactory.cs" />
-    <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraRotationController.cs" />
-    <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/Inventory.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Objects/CustomObject.cs" />
@@ -72,12 +70,8 @@
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
     <Compile Include="Assets/Scripts/Managers/MaterialsManager.cs" />
     <Compile Include="Assets/Scripts/Constants/SceneName.cs" />
-    <Compile Include="Assets/Scripts/Models/Controllers/Controls/KeyControl.cs" />
-    <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraSelectController.cs" />
-    <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraRayController.cs" />
     <Compile Include="Assets/Scripts/Managers/VillagerConfigManager.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
-    <Compile Include="Assets/Scripts/Components/Objects/VillagerComponent.cs" />
     <Compile Include="Assets/Scripts/RequiredKeyword.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Managers/SettingsManager.cs" />
@@ -91,7 +85,6 @@
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
     <Compile Include="Assets/Scripts/Instances/InputActionMaps.cs" />
     <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
-    <Compile Include="Assets/Scripts/Models/Controllers/Camera/CameraZoomController.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/CameraSettings.cs" />
     <Compile Include="Assets/Scripts/Data/Init/ClientData.cs" />
     <Compile Include="Assets/Scripts/Components/Camera/CameraControllerComponent.cs" />
@@ -115,12 +108,19 @@
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
     <Compile Include="Assets/Scripts/Components/Camera/CameraSelectControllerComponent.cs" />
     <Compile Include="Assets\Scripts\Components\Objects\CustomObjectComponent.cs" />
+    <Compile Include="Assets\Scripts\Components\Villager\VillagerComponent.cs" />
     <Compile Include="Assets\Scripts\DataTypes\PriorityQueue.cs" />
     <Compile Include="Assets\Scripts\Delegates\TaskDelegate.cs" />
     <Compile Include="Assets\Scripts\Enums\CustomObjectType.cs" />
     <Compile Include="Assets\Scripts\Enums\TaskPriority.cs" />
     <Compile Include="Assets\Scripts\Factories\CustomObjectFactory.cs" />
     <Compile Include="Assets\Scripts\Managers\PlaceManager.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\CameraRay.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\CameraRotation.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\CameraSelect.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\CameraZoom.cs" />
+    <Compile Include="Assets\Scripts\Models\Controls\KeyControl.cs" />
     <Compile Include="Assets\Scripts\Models\Objects\Buildings\Church.cs" />
     <Compile Include="Assets\Scripts\Models\Objects\Buildings\House.cs" />
     <Compile Include="Assets\Scripts\Models\Objects\Buildings\Spawn.cs" />
@@ -973,6 +973,9 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
