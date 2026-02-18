@@ -5,7 +5,6 @@ using Instances;
 using Reflex.Core;
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Components.Init
 {
