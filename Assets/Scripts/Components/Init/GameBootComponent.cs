@@ -10,7 +10,7 @@ namespace Components.Init
     {
         public IEnumerator Start()
         {
-            yield return ClientDataContainer.Init();
+            yield return ClientDataInitializer.Init();
             SceneManager.LoadSceneAsync(SceneName.Game);
         }
     }

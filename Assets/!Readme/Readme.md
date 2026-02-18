@@ -24,7 +24,8 @@
 - Model - Čistý objekt pokud možno bez Unity, testovatelné, logika
 - View - vizuální stránka objektů (materiály, ...), ovládáno skrz eventy z Modelů
 
-![](https://i.imgur.com/wb7Fc5Q.png)
+![architecture.png](architecture.png)
 
 # O projektu
 - Projekt používá C# preview (11), aby vše fungovalo musí se projekt v Edit -> Project Settings -> Editor -> C# Project Modifier přidat k importu
+- NuGet se musí stahovat přes Unity Package Manager

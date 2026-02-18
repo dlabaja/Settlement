@@ -20,7 +20,7 @@ namespace Components.Init
 
         private ClientData GetClientData()
         {
-            return ClientDataContainer.ClientData ?? throw new Exception("AsyncInitData not loaded from the boot scene");
+            return ClientDataInitializer.ClientData ?? throw new Exception("AsyncInitData not loaded from the boot scene");
         }
 
         private InitData GetInitData()

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Initializers;
 
-public static class ClientDataContainer
+public static class ClientDataInitializer
 {
     [CanBeNull] public static ClientData ClientData { get; private set; }
     

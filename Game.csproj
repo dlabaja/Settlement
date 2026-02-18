@@ -113,7 +113,7 @@
     <Compile Include="Assets/Scripts/Components/Camera/CameraSelectComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
-    <Compile Include="Assets/Scripts/Initializers/ClientDataContainer.cs" />
+    <Compile Include="Assets\Scripts\Initializers\ClientDataInitializer.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraSelect.cs" />
     <Compile Include="Assets/Scripts/Models/Objects/Buildings/Spawn.cs" />
@@ -975,7 +975,12 @@
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Scripts\architecture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Scripts\.readme\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
