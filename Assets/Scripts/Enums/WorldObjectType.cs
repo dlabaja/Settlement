@@ -1,6 +1,6 @@
 namespace Enums;
 
-public enum CustomObjectType
+public enum WorldObjectType
 {
     Spawn,
     Tree,

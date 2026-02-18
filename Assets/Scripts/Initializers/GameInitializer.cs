@@ -18,17 +18,17 @@ public class GameInitializer
     private void RegisterManagers(ContainerBuilder builder, ClientData data, InitData initData)
     {
         builder.RegisterValue(new SettingsService(data.Settings));
-        builder.RegisterValue(new VillagerConfigManager(data.VillagerNames));
+        builder.RegisterValue(new VillagerConfigService(data.VillagerNames));
         builder.RegisterValue(new MousePositionService(initData.mousePositionAction, initData.mousePositionDeltaAction));
         
         builder.RegisterValue(new MaterialsService(MaterialsService.LoadAllMaterials()));
         
-        builder.RegisterValue(new PlaceService());
+        builder.RegisterValue(new WorldObjectsService());
     }
 
     private void RegisterFactories(ContainerBuilder builder)
     {
         builder.RegisterType(typeof(VillagerFactory), Lifetime.Singleton, Resolution.Lazy);
-        builder.RegisterType(typeof(CustomObjectFactory), Lifetime.Singleton, Resolution.Lazy);
+        builder.RegisterType(typeof(WorldObjectFactory), Lifetime.Singleton, Resolution.Lazy);
     }
 }

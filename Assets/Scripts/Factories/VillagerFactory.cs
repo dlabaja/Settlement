@@ -6,11 +6,11 @@ namespace Factories;
 
 public class VillagerFactory
 {
-    [Autowired] private VillagerConfigManager _configManager;
+    [Autowired] private VillagerConfigService _configService;
 
     public Villager Create()
     {
-        var gender = _configManager.GetRandomGender();
-        return new Villager(_configManager.GetRandomName(gender), gender);
+        var gender = _configService.GetRandomGender();
+        return new Villager(_configService.GetRandomName(gender), gender);
     }
 }

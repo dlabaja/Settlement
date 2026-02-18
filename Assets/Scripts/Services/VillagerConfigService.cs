@@ -4,11 +4,11 @@ using Utils;
 
 namespace Services;
 
-public class VillagerConfigManager
+public class VillagerConfigService
 {
     private readonly VillagerNames _villagerNames;
     
-    public VillagerConfigManager(VillagerNames villagerNames)
+    public VillagerConfigService(VillagerNames villagerNames)
     {
         _villagerNames = villagerNames;
     }

@@ -1,9 +1,10 @@
 using Models.Objects;
+using Models.WorldObjects;
 
 namespace Models.Villager.VillagerPlaces;
 
 public class VillagerPlaceManager
 {
-    public CustomObject Home;
-    public CustomObject Workplace;
+    public WorldObject Home;
+    public WorldObject Workplace;
 }
