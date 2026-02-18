@@ -1,7 +1,7 @@
-using Attributes;
 using Enums;
 using Factories;
 using Interfaces;
+using Reflex.Attributes;
 using UnityEngine;
 
 namespace Components.Villager
@@ -10,7 +10,7 @@ namespace Components.Villager
     {
         [SerializeField] private string _name;
         [SerializeField] private Gender _gender;
-        [Autowired] private VillagerFactory _villagerFactory;
+        [Inject] private VillagerFactory _villagerFactory;
         private Models.Villager.Villager _villager;
     
         public void Start()

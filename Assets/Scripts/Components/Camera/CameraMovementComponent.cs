@@ -1,8 +1,8 @@
-using Attributes;
 using Constants;
 using Controllers.Camera;
 using Instances;
 using Models.Controls;
+using Reflex.Attributes;
 using Services;
 using System;
 using UnityEngine;
@@ -13,8 +13,8 @@ namespace Components.Camera
 {
     public class CameraMovementComponent : MonoBehaviour
     {
-        [Autowired] private SettingsService _settingsService;
-        [Autowired] private MousePositionService _mousePositionService;
+        [Inject] private SettingsService _settingsService;
+        [Inject] private MousePositionService _mousePositionService;
         private (KeyControl keyControl, Func<Vector3> action)[] _keyControlsWithAction;
         private CameraMovementController _cameraMovementController;
         private InputAction _zoomAction;

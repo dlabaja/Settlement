@@ -1,4 +1,3 @@
-using Attributes;
 using Models.Villager;
 using Services;
 
@@ -6,7 +5,12 @@ namespace Factories;
 
 public class VillagerFactory
 {
-    [Autowired] private VillagerConfigService _configService;
+    private readonly VillagerConfigService _configService;
+
+    public VillagerFactory(VillagerConfigService configService)
+    {
+        _configService = configService;
+    }
 
     public Villager Create()
     {

@@ -1,16 +1,17 @@
-using Attributes;
 using Enums;
 using Factories;
+using Interfaces;
+using Reflex.Attributes;
 using Services;
 using UnityEngine;
 
 namespace Components.WorldObject
 {
-    public class WorldObjectComponent : MonoBehaviour
+    public class WorldObjectComponent : MonoBehaviour, ISelectable
     {
         [SerializeField] private WorldObjectType worldObjectType;
-        [Autowired] private WorldObjectFactory _worldObjectFactory;
-        [Autowired] private WorldObjectsService _worldObjectsService;
+        [Inject] private WorldObjectFactory _worldObjectFactory;
+        [Inject] private WorldObjectsService _worldObjectsService;
         private Models.WorldObjects.WorldObject _worldObject;
 
         public void Awake()

@@ -1,9 +1,9 @@
-using Attributes;
 using Constants;
 using Controllers.Camera;
 using Instances;
 using Models.Camera;
 using Models.Controls;
+using Reflex.Attributes;
 using Services;
 using UnityEngine;
 using Views.Camera;
@@ -12,8 +12,8 @@ namespace Components.Camera
 {
     public class CameraSelectComponent : MonoBehaviour
     {
-        [Autowired] private MaterialsService _materialsService;
-        [Autowired] private MousePositionService _mousePositionService;
+        [Inject] private MaterialsService _materialsService;
+        [Inject] private MousePositionService _mousePositionService;
         private CameraSelect _cameraSelect;
         private CameraSelectView _cameraSelectView;
         private CameraSelectController _cameraSelectController;

@@ -1,4 +1,4 @@
-using Constants;
+using Interfaces;
 using Models.Camera;
 using UnityEngine;
 
@@ -6,7 +6,6 @@ namespace Controllers.Camera;
 
 public class CameraSelectController
 {
-    private readonly LayerMask _selectableLayerMask = LayerMask.GetMask(PhysicsLayer.Selectable);
     private readonly CameraRay _cameraRay;
     private readonly CameraSelect _cameraSelect;
 
@@ -18,7 +17,7 @@ public class CameraSelectController
 
     public void UpdateRaycast(UnityEngine.Camera camera, Vector3 mousePosition, bool selectPressed)
     {
-        var hit = _cameraRay.TryRaycast(camera, mousePosition, out var raycastedObj, _selectableLayerMask);
+        var hit = _cameraRay.TryRaycast<ISelectable>(camera, mousePosition, out var raycastedObj);
         if (hit)
         {
             ProcessHit(raycastedObj.transform.gameObject, selectPressed);

@@ -1,4 +1,4 @@
-using Attributes;
+using Reflex.Attributes;
 using Services;
 using UnityEngine;
 
@@ -6,7 +6,7 @@ namespace Components
 {
     public class GameStartComponent : MonoBehaviour
     {
-        [Autowired] private SettingsService _settingsService;
+        [Inject] private SettingsService _settingsService;
         
         public void Awake()
         {
