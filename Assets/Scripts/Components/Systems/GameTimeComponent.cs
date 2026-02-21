@@ -1,6 +1,7 @@
 using Controllers.Systems;
 using Reflex.Attributes;
 using Services;
+using System.Collections;
 using UnityEngine;
 
 namespace Components.Systems
@@ -10,16 +11,26 @@ namespace Components.Systems
         [Inject] private GameTimeService _gameTimeService;
         [SerializeField] private int ticks;
         private GameTimeController _gameTimeController;
+        private const float TickDelaySecs = 0.1f;
         
         public void Awake()
         {
             _gameTimeController = new GameTimeController(_gameTimeService);
+            StartCoroutine(nameof(TryTick));
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
-            _gameTimeController.TryTick();
             ticks = _gameTimeService.Ticks;
+        }
+
+        private IEnumerator TryTick()
+        {
+            while (true)
+            {
+                _gameTimeController.TryTick();
+                yield return new WaitForSecondsRealtime(TickDelaySecs);
+            }
         }
     }
 }

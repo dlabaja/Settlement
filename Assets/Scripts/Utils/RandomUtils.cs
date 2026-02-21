@@ -4,6 +4,24 @@ namespace Utils;
 
 public static class RandomUtils
 {
+    private static readonly Random _random = new Random();
+    
+    public static bool CheckChance(int chance)
+    {
+        return _random.Next(0, chance) == 0;
+    }
+
+    public static bool CheckChance(int chance, Action onSuccess)
+    {
+        if (CheckChance(chance))
+        {
+            onSuccess();
+            return true;
+        }
+
+        return false;
+    }
+    
     public static T GetRandomEnumItem<T>() where T : struct, Enum
     {
         var items = Enum.GetNames(typeof(T));
