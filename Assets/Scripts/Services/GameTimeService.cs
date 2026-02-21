@@ -6,6 +6,7 @@ public class GameTimeService
 {
     public int Ticks { get; private set; }
     public int GameSpeed { get; private set; }
+    public readonly int MaxSpeed = 3;
     public bool IsPaused => GameSpeed == 0;
     public event Action TimeTicked;
 
@@ -16,7 +17,7 @@ public class GameTimeService
 
     public void Play(int gameSpeed)
     {
-        GameSpeed = Math.Clamp(gameSpeed, 1, 3);
+        GameSpeed = Math.Clamp(gameSpeed, 1, MaxSpeed);
     }
 
     public void Tick()

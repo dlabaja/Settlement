@@ -30,6 +30,7 @@ public class GameInitializer
         builder.RegisterValue(new MaterialsService(MaterialsService.LoadAllMaterials()));
         
         builder.RegisterValue(new WorldObjectsService());
+        builder.RegisterValue(new GameTimeService());
     }
 
     private void RegisterFactories(ContainerBuilder builder)
