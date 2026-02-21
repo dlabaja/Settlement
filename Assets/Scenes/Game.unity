@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 156316028}
   - component: {fileID: 156316027}
   - component: {fileID: 156316031}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,16 +417,16 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &330585550
 Rigidbody:
@@ -649,6 +649,7 @@ GameObject:
   - component: {fileID: 641229272}
   - component: {fileID: 641229273}
   - component: {fileID: 641229274}
+  - component: {fileID: 641229275}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -695,7 +696,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da89a46569994ff580b326aada9bbd71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Components.Systems.GameTimeComponent
-  Ticks: 0
+  ticks: 0
+--- !u!114 &641229275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641229270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 816c5eca49df488a8513ce316e768eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Components.Systems.GlobalInventoryComponent
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

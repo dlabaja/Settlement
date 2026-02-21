@@ -10,7 +10,7 @@ public class WorldObjectsService
     private Dictionary<WorldObjectType, List<WorldObject>> _worldObjects = new Dictionary<WorldObjectType, List<WorldObject>>();
     private Dictionary<WorldObjectType, List<GameObject>> _gameObjects = new Dictionary<WorldObjectType, List<GameObject>>();
 
-    public void Add(WorldObjectType type, WorldObject worldObject, GameObject gameObject)
+    public void Register(WorldObjectType type, WorldObject worldObject, GameObject gameObject)
     {
         if (!_worldObjects.ContainsKey(type))
         {

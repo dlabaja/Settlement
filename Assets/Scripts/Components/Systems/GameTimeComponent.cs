@@ -29,7 +29,7 @@ namespace Components.Systems
             while (true)
             {
                 _gameTimeController.TryTick();
-                yield return new WaitForSecondsRealtime(TickDelaySecs);
+                yield return new WaitForSeconds(TickDelaySecs);
             }
         }
     }

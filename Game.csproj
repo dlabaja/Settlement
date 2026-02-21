@@ -81,6 +81,8 @@
     <Compile Include="Assets/Scripts/Constants/SceneName.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraRotation.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/VillagerStats/VillagerStats.cs" />
+    <Compile Include="Assets/Scripts/Components/Systems/GlobalInventoryComponent.cs" />
+    <Compile Include="Assets/Scripts/Services/GlobalInventory.cs" />
     <Compile Include="Assets/Scripts/Components/Systems/GameTimeComponent.cs" />
     <Compile Include="Assets/Scripts/Controllers/Camera/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
