@@ -32,6 +32,7 @@ public class GameInitializer
         builder.RegisterValue(new WorldObjectsService());
         builder.RegisterValue(new GameTimeService());
         builder.RegisterValue(new GlobalInventory());
+        builder.RegisterValue(new InteractionModeService());
     }
 
     private void RegisterFactories(ContainerBuilder builder)
