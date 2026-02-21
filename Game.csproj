@@ -61,47 +61,49 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/Enums/ItemType.cs" />
+    <Compile Include="Assets/Scripts/Components/WorldObject/WorldObjectComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/Villager.cs" />
     <Compile Include="Assets/Scripts/Interfaces/ISelectable.cs" />
+    <Compile Include="Assets/Scripts/Factories/WorldObjectFactory.cs" />
     <Compile Include="Assets/Scripts/Factories/VillagerFactory.cs" />
     <Compile Include="Assets/Scripts/Services/MousePositionService.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/Inventory.cs" />
+    <Compile Include="Assets/Scripts/Enums/WorldObjectType.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Services/SettingsService.cs" />
-    <Compile Include="Assets\Scripts\Models\WorldObjects\WorldObject.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
-    <Compile Include="Assets\Scripts\Components\WorldObject\WorldObjectComponent.cs" />
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/VillagerPlaces/VillagerPlaceManager.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/VillagerTasks/VillagerTask.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/WorldObject.cs" />
     <Compile Include="Assets/Scripts/Services/MaterialsService.cs" />
-    <Compile Include="Assets\Scripts\Models\WorldObjects\Buildings\House.cs" />
-    <Compile Include="Assets\Scripts\Models\WorldObjects\Buildings\Church.cs" />
     <Compile Include="Assets/Scripts/Constants/SceneName.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraRotation.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/VillagerTasks/VillagerTasksManager.cs" />
     <Compile Include="Assets/Scripts/Controllers/Camera/CameraMovementController.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraMovement.cs" />
-    <Compile Include="Assets\Scripts\Models\WorldObjects\Nature\BerryBush.cs" />
+    <Compile Include="Assets/Scripts/Services/WorldObjectsService.cs" />
     <Compile Include="Assets/Scripts/Components/Villager/VillagerComponent.cs" />
+    <Compile Include="Assets/Scripts/Services/VillagerConfigService.cs" />
+    <Compile Include="Assets/Scripts/Constants/PrefabName.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraZoom.cs" />
     <Compile Include="Assets/Scripts/RequiredKeyword.cs" />
-    <Compile Include="Assets\Scripts\Enums\WorldObjectType.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
     <Compile Include="Assets/Scripts/Constants/Path.cs" />
     <Compile Include="Assets/Scripts/Views/Camera/CameraSelectView.cs" />
     <Compile Include="Assets/Scripts/Converters/SettingsConverter.cs" />
-    <Compile Include="Assets\Scripts\Services\GameTimeService.cs" />
-    <Compile Include="Assets\Scripts\Services\VillagerConfigService.cs" />
     <Compile Include="Assets/Scripts/Delegates/ObjectChangedDelegate.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/Nature/BerryBush.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Delegates/TaskDelegate.cs" />
+    <Compile Include="Assets/Scripts/Services/GameTimeService.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
-    <Compile Include="Assets\Scripts\Factories\WorldObjectFactory.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/Nature/Tree.cs" />
     <Compile Include="Assets/Scripts/Instances/SettingsInstances.cs" />
     <Compile Include="Assets/Scripts/Utils/VectorUtils.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/House.cs" />
     <Compile Include="Assets/Scripts/Instances/InputActionMaps.cs" />
     <Compile Include="Assets/Scripts/DataTypes/PriorityQueue.cs" />
     <Compile Include="Assets/Scripts/Utils/IOUtils.cs" />
@@ -114,26 +116,25 @@
     <Compile Include="Assets/Scripts/Components/Camera/CameraSelectComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
-    <Compile Include="Assets\Scripts\Initializers\ClientDataInitializer.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraSelect.cs" />
-    <Compile Include="Assets\Scripts\Models\WorldObjects\Buildings\Spawn.cs" />
     <Compile Include="Assets/Scripts/Components/GameStartComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/MaterialName.cs" />
     <Compile Include="Assets/Scripts/Utils/RandomUtils.cs" />
+    <Compile Include="Assets/Scripts/Services/PrefabsService.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/Spawn.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/Church.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/VillagerStats/VillagerStatsManager.cs" />
+    <Compile Include="Assets/Scripts/Initializers/ClientDataInitializer.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/InventorySlot.cs" />
     <Compile Include="Assets/Scripts/Data/Init/InitData.cs" />
-    <Compile Include="Assets\Scripts\Services\WorldObjectsService.cs" />
     <Compile Include="Assets/Scripts/Enums/Gender.cs" />
     <Compile Include="Assets/Scripts/Models/Villager/VillagerStats/VillagerStat.cs" />
     <Compile Include="Assets/Scripts/Instances/VillagerNamesInstances.cs" />
     <Compile Include="Assets/Scripts/Utils/ArrayUtils.cs" />
-    <Compile Include="Assets/Scripts/Attributes/Autowired.cs" />
     <Compile Include="Assets/Scripts/Data/Villagers/VillagerNames.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
-    <Compile Include="Assets\Scripts\Models\WorldObjects\Nature\Tree.cs" />
     <None Include="Assets/Scripts/Game.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -976,12 +977,7 @@
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Scripts\architecture.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Scripts\.readme\" />
-  </ItemGroup>
+  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

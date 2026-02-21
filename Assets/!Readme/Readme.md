@@ -1,5 +1,4 @@
 # Struktura Scripts složky
-- Attributes - atributy
 - Components - všechny Monobehaviour komponenty
 - Controllers - ovládání modelů podle vstupu z komponent
 - Constants - konstanty které nemůžou být v enumu (enum je jenom na int)
@@ -27,5 +26,10 @@
 ![architecture.png](architecture.png)
 
 # O projektu
-- Projekt používá C# preview (11), aby vše fungovalo musí se projekt v Edit -> Project Settings -> Editor -> C# Project Modifier přidat k importu
+- Projekt používá C# preview (11)
+  - aby vše fungovalo musí se projekt v Edit -> Project Settings -> Editor -> C# Project Modifier přidat k importu
+  - kromě toho je v projektu několik souborů zajišťujících že to funguje (RequiredKeyword.cs, LangVersion.props, csc.rp)
+  - file-scoped namespace nefunguje v Components
 - NuGet se musí stahovat přes Unity Package Manager
+- Linting jde nastavit v rootu (.editorconfig)
+- Injecting by měl probíhat primárně přes konstruktor kromě komponent, kde to nejde
