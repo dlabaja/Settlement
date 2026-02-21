@@ -40,7 +40,7 @@ public class InventorySlotTest
         var slot = new InventorySlot(ItemType.Wood);
         var success = slot.TryAddItems(400, out var overflow);
         Assert.True(success);
-        Assert.AreEqual(InventorySlot.StackSize, slot.ItemCount);
+        Assert.AreEqual(InventorySlot.DefaultStackSize, slot.ItemCount);
         Assert.AreEqual(300, overflow);
     }
     

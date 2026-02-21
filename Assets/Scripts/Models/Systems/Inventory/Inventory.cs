@@ -11,10 +11,10 @@ public class Inventory
     public int SlotCount { get; }
     private readonly InventorySlot[] _slots;
 
-    public Inventory(int slotCount)
+    public Inventory(int slotCount, int stackSize = InventorySlot.DefaultStackSize)
     {
         SlotCount = slotCount;
-        _slots = ArrayUtils.CreateFilled(SlotCount, () => new InventorySlot(ItemType.None));
+        _slots = ArrayUtils.CreateFilled(SlotCount, () => new InventorySlot(ItemType.None, stackSize));
     }
 
     public bool TryGetSlot(int index, out InventorySlot slot)
@@ -67,6 +67,14 @@ public class Inventory
         }
     }
 
+    public void Reset()
+    {
+        foreach (var slot in _slots)
+        {
+            slot.ResetSlot(ItemType.None);
+        }
+    }
+
     public void Transfer(Inventory inventory, int count, ItemType itemType)
     {
         var itemCount = Math.Min(GetItemCount(itemType), count);
@@ -79,6 +87,11 @@ public class Inventory
     {
         var slots = GetSlotsWithType(type);
         return slots.Sum(slot => slot.ItemCount);
+    }
+
+    public ItemType[] GetItemTypes()
+    {
+        return _slots.Select(slot => slot.ItemType).Distinct().ToArray();
     }
 
     // empty slots or slots with type of first arg

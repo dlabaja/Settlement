@@ -4,14 +4,16 @@ namespace Models.Systems.Inventory;
 
 public class InventorySlot
 {
-    public const int StackSize = 100;
+    public const int DefaultStackSize = 100;
+    public readonly int StackSize;
     public ItemType ItemType { get; private set; }
     public int ItemCount { get; private set; }
 
-    public InventorySlot(ItemType itemType)
+    public InventorySlot(ItemType itemType, int stackSize = DefaultStackSize)
     {
         ItemType = itemType;
         ItemCount = 0;
+        StackSize = stackSize;
     }
 
     public bool TryAddItems(int count, out int overflow)

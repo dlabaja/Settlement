@@ -14,12 +14,14 @@ namespace Components.Villager
         [SerializeField] private Gender _gender;
         [Inject] private VillagerFactory _villagerFactory;
         [Inject] private GameTimeService _gameTimeService;
+        [Inject] private GlobalInventory _globalInventory;
         private Models.Villager.Villager _villager;
         private VillagerStatsController _villagerStatsController;
     
         public void Awake()
         {
             _villager = _villagerFactory.Create();
+            _globalInventory.Register(_villager.Inventory);
             _villagerStatsController = new VillagerStatsController(_villager, _gameTimeService);
             _name = _villager.Name;
             _gender = _villager.Gender;
@@ -27,6 +29,7 @@ namespace Components.Villager
 
         private void OnDestroy()
         {
+            _globalInventory.Remove(_villager.Inventory);
             _villagerStatsController.Dispose();
         }
     }
