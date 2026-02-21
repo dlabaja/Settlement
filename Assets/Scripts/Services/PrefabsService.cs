@@ -1,4 +1,6 @@
 using Enums;
+using Reflex.Core;
+using Reflex.Injectors;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,12 +20,20 @@ public class PrefabsService
 
     public void SpawnVillager(Vector3 position)
     {
-        UnityEngine.Object.Instantiate(_villagerPrefab, position, Quaternion.identity);
+        Instantiate(_villagerPrefab, position);
     }
 
     public void SpawnWorldObject(WorldObjectType type, Vector3 position, Quaternion? quaternion = null)
     {
-        UnityEngine.Object.Instantiate(GetWorldObject(type), position, quaternion ?? Quaternion.identity);
+       Instantiate(GetWorldObject(type), position, quaternion ?? Quaternion.identity);
+    }
+
+    private void Instantiate(GameObject gameObject, Vector3 position, Quaternion? quaternion = null)
+    {
+        gameObject.SetActive(false);
+        var obj = UnityEngine.Object.Instantiate(gameObject, position, quaternion ?? Quaternion.identity);
+        GameObjectInjector.InjectRecursive(obj, Container.RootContainer);
+        obj.SetActive(true);
     }
     
     public static GameObject[] LoadAllPrefabs()
@@ -39,7 +49,7 @@ public class PrefabsService
     
     private static Dictionary<WorldObjectType, GameObject> BindPrefabsToTypes(GameObject[] worldObjectPrefabs)
     {
-        var result = new Dictionary<WorldObjectType, GameObject>{};
+        var result = new Dictionary<WorldObjectType, GameObject>();
         foreach (var prefab in worldObjectPrefabs)
         {
             var nameValid = Enum.TryParse(prefab.name, out WorldObjectType type);
