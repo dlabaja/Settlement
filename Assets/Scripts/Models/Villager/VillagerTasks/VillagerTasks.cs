@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.Villager.VillagerTasks;
 
-public class VillagerTasksManager
+public class VillagerTasks
 {
     public PriorityQueue<VillagerTask> Tasks { get; } = new PriorityQueue<VillagerTask>();
     [CanBeNull] public VillagerTask CurrentRunningTask { get; private set; } = null;
