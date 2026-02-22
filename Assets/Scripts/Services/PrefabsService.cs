@@ -1,8 +1,10 @@
+using Constants;
 using Enums;
 using Reflex.Core;
 using Reflex.Injectors;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Services;
@@ -36,9 +38,12 @@ public class PrefabsService
         obj.SetActive(true);
     }
 
-    public static GameObject[] LoadAllPrefabs()
+    public static (GameObject[] worldObjectPrefabs, GameObject villagerPrefab) LoadAllPrefabs()
     {
-        return Resources.LoadAll<GameObject>("Prefabs");
+        var prefabs = Resources.LoadAll<GameObject>("Prefabs");
+        var villagerPrefab = prefabs.First(obj => obj.name == PrefabName.Villager);
+        var worldObjectPrefabs = prefabs.Except(new[] {villagerPrefab}).ToArray();
+        return (worldObjectPrefabs, villagerPrefab);
     }
 
     private GameObject GetWorldObject(WorldObjectType type)

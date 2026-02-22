@@ -3,6 +3,7 @@ using Data.Init;
 using Initializers;
 using Instances;
 using Reflex.Core;
+using Services;
 using System;
 using UnityEngine;
 
@@ -24,10 +25,16 @@ namespace Components.Init
 
         private InitData GetInitData()
         {
+            var prefabs = PrefabsService.LoadAllPrefabs();
+
             return new InitData
             {
                 mousePositionAction = InputActionMaps.Mouse.FindAction(InputActionName.MousePosition),
-                mousePositionDeltaAction = InputActionMaps.Mouse.FindAction(InputActionName.MouseDelta)
+                mousePositionDeltaAction = InputActionMaps.Mouse.FindAction(InputActionName.MouseDelta),
+                terrain = FindFirstObjectByType<Terrain>(),
+                worldObjectPrefabs = prefabs.worldObjectPrefabs,
+                villagerPrefab = prefabs.villagerPrefab,
+                materials = MaterialsService.LoadAllMaterials(),
             };
         }
     }
