@@ -11,7 +11,7 @@ public class PrefabsService
 {
     private readonly Dictionary<WorldObjectType, GameObject> _worldObjectPrefabs;
     private readonly GameObject _villagerPrefab;
-    
+
     public PrefabsService(GameObject[] worldObjectPrefabs, GameObject villagerPrefab)
     {
         _worldObjectPrefabs = BindPrefabsToTypes(worldObjectPrefabs);
@@ -25,7 +25,7 @@ public class PrefabsService
 
     public void SpawnWorldObject(WorldObjectType type, Vector3 position, Quaternion? quaternion = null)
     {
-       Instantiate(GetWorldObject(type), position, quaternion ?? Quaternion.identity);
+        Instantiate(GetWorldObject(type), position, quaternion ?? Quaternion.identity);
     }
 
     private void Instantiate(GameObject gameObject, Vector3 position, Quaternion? quaternion = null)
@@ -35,7 +35,7 @@ public class PrefabsService
         GameObjectInjector.InjectRecursive(obj, Container.RootContainer);
         obj.SetActive(true);
     }
-    
+
     public static GameObject[] LoadAllPrefabs()
     {
         return Resources.LoadAll<GameObject>("Prefabs");
@@ -46,7 +46,7 @@ public class PrefabsService
         var exists = _worldObjectPrefabs.TryGetValue(type, out var gameObject);
         return !exists ? throw new Exception($"Prefab with type {type} not initialized") : gameObject;
     }
-    
+
     private static Dictionary<WorldObjectType, GameObject> BindPrefabsToTypes(GameObject[] worldObjectPrefabs)
     {
         var result = new Dictionary<WorldObjectType, GameObject>();
@@ -60,6 +60,7 @@ public class PrefabsService
 
             result.Add(type, prefab);
         }
+
         return result;
     }
 }
