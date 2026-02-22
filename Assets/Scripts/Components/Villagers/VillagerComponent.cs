@@ -1,12 +1,13 @@
-using Controllers.Villager;
+using Controllers.Villagers;
 using Enums;
 using Factories;
 using Interfaces;
+using Models.Villagers;
 using Reflex.Attributes;
 using Services;
 using UnityEngine;
 
-namespace Components.Villager
+namespace Components.Villagers
 {
     public class VillagerComponent : MonoBehaviour, ISelectable
     {
@@ -15,7 +16,7 @@ namespace Components.Villager
         [Inject] private VillagerFactory _villagerFactory;
         [Inject] private GameTimeService _gameTimeService;
         [Inject] private GlobalInventory _globalInventory;
-        private Models.Villager.Villager _villager;
+        private Villager _villager;
         private VillagerStatsController _villagerStatsController;
     
         public void Awake()

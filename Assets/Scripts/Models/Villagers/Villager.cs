@@ -1,8 +1,8 @@
 using Enums;
 using Models.Systems.Inventory;
-using Models.Villager.VillagerPlaces;
+using Models.Villagers.VillagerPlaces;
 
-namespace Models.Villager;
+namespace Models.Villagers;
 
 public class Villager
 {

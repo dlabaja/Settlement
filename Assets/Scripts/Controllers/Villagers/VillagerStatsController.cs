@@ -1,14 +1,15 @@
+using Models.Villagers;
 using Services;
 using Utils;
 
-namespace Controllers.Villager;
+namespace Controllers.Villagers;
 
 public class VillagerStatsController
 {
-    private readonly Models.Villager.Villager _villager;
+    private readonly Villager _villager;
     private readonly GameTimeService _gameTimeService;
     
-    public VillagerStatsController(Models.Villager.Villager villager, GameTimeService gameTimeService)
+    public VillagerStatsController(Villager villager, GameTimeService gameTimeService)
     {
         _villager = villager;
         _gameTimeService = gameTimeService;

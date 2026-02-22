@@ -1,4 +1,4 @@
-namespace Models.Villager.VillagerStats;
+namespace Models.Villagers.VillagerStats;
 
 public class VillagerStats
 {

@@ -1,4 +1,4 @@
-using Models.Villager;
+using Models.Villagers;
 using Services;
 
 namespace Factories;
