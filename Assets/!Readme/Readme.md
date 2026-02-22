@@ -32,4 +32,7 @@
   - file-scoped namespace nefunguje v Components
 - NuGet se musí stahovat přes Unity Package Manager
 - Linting jde nastavit v rootu (.editorconfig)
+
+# Code Guidelines
 - Injecting by měl probíhat primárně přes konstruktor kromě komponent, kde to nejde. Prefaby musí mít GameObjectSelfInjector komponentu.
+- Třída by se neměla jmenovat stejně jako namespace (doporučuju množné číslo)
