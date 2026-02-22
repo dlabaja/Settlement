@@ -70,6 +70,7 @@
     <Compile Include="Assets/Scripts/Enums/WorldObjectType.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Services/SettingsService.cs" />
+    <Compile Include="Assets/Scripts/Services/TerrainService.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
     <Compile Include="Assets/Scripts/Models/Controls/KeyControl.cs" />
     <Compile Include="Assets/Scripts/Initializers/GameInitializer.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Assets/Scripts/Controllers/Systems/GameTimeController.cs" />
     <Compile Include="Assets/Scripts/Controllers/Villagers/VillagerStatsController.cs" />
     <Compile Include="Assets/Scripts/Components/Camera/CameraMovementComponent.cs" />
-    <Compile Include="Assets/Scripts/Controllers/Villagers/VillagerMovementController.cs" />
     <Compile Include="Assets/Scripts/Enums/TaskPriority.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraRay.cs" />
     <Compile Include="Assets/Scripts/Controllers/Camera/CameraSelectController.cs" />
@@ -127,6 +127,7 @@
     <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
+    <Compile Include="Assets/Scripts/Controllers/Villagers/VillagerTasksController.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraSelect.cs" />
     <Compile Include="Assets/Scripts/Constants/MaterialName.cs" />
     <Compile Include="Assets/Scripts/Utils/RandomUtils.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Assets/Scripts/Initializers/ClientDataInitializer.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/InventorySlot.cs" />
     <Compile Include="Assets/Scripts/Data/Init/InitData.cs" />
+    <Compile Include="Assets/Scripts/Components/WorldObjects/InteractionPointComponent.cs" />
     <Compile Include="Assets/Scripts/Enums/Gender.cs" />
     <Compile Include="Assets/Scripts/Enums/InteractionMode.cs" />
     <Compile Include="Assets/Scripts/Models/Villagers/VillagerStats/VillagerStats.cs" />
