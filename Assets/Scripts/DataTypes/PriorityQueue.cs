@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataTypes;
 
@@ -7,9 +6,12 @@ public class PriorityQueue<T>
 {
     private List<int> _priorities = new List<int>();
     public List<T> Items { get; } = new List<T>();
+    public int Length { get; private set; }
+    public bool IsEmpty => Length == 0;
 
     public void Add(T item, int priority)
     {
+        Length++;
         for (int i = 0; i < Items.Count; i++)
         {
             if (_priorities[i] >= priority)
@@ -33,8 +35,8 @@ public class PriorityQueue<T>
         {
             return;
         }
-        Items.RemoveAt(index);
-        _priorities.RemoveAt(index);
+
+        RemoveAt(index);
     }
 
     public bool TryPeek(out T value)
@@ -54,11 +56,16 @@ public class PriorityQueue<T>
         if (Items.Count > 0)
         {
             value = Items[0];
-            Items.RemoveAt(0);
-            _priorities.RemoveAt(0);
+            RemoveAt(0);
             return true;
         }
         return false;
+    }
+
+    public void Promote(T item, int newPrioriry)
+    {
+        Remove(item);
+        Add(item, newPrioriry);
     }
     
     public int HighestPriority
@@ -66,8 +73,28 @@ public class PriorityQueue<T>
         get => Items.Count > 0 ? _priorities[0] : int.MinValue;
     }
 
-    public List<(T item, int priority)> ItemsWithPriorities
+    public bool TryGetPriority(T item, out int priority)
     {
-        get => Items.Zip(_priorities, (item, priority) => (item, priority)).ToList();
+        priority = 0;
+        var index = Items.IndexOf(item);
+        if (index == -1)
+        {
+            return false;
+        }
+
+        priority = _priorities[priority];
+        return true;
+    }
+
+    private void RemoveAt(int index)
+    {
+        if (index >= Length)
+        {
+            return;
+        }
+
+        Length--;
+        Items.RemoveAt(0);
+        _priorities.RemoveAt(0);
     }
 }

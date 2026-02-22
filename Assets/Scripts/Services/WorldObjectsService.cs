@@ -8,60 +8,54 @@ namespace Services;
 
 public class WorldObjectsService
 {
-    private readonly Dictionary<WorldObjectType, List<WorldObject>> _worldObjects = new Dictionary<WorldObjectType, List<WorldObject>>();
-    private readonly Dictionary<WorldObjectType, List<GameObject>> _gameObjects = new Dictionary<WorldObjectType, List<GameObject>>();
-    private readonly Dictionary<GameObject, List<InteractionPoint>> _interactionPoints = new Dictionary<GameObject, List<InteractionPoint>>();
+    private readonly Dictionary<WorldObjectType, List<(WorldObject worldObject, GameObject gameObject)>> _objects = new Dictionary<WorldObjectType, List<(WorldObject, GameObject)>>();
+    private readonly Dictionary<WorldObject, List<InteractionPoint>> _interactionPoints = new Dictionary<WorldObject, List<InteractionPoint>>();
 
     public void Register(WorldObjectType type, WorldObject worldObject, GameObject gameObject, List<InteractionPoint> interactionPoints)
     {
-        if (!_worldObjects.ContainsKey(type))
+        if (!_objects.ContainsKey(type))
         {
-            _worldObjects.Add(type, new List<WorldObject>());
+            _objects.Add(type, new List<(WorldObject, GameObject)>());
         }
-        _worldObjects[type].Add(worldObject);
-
-        if (!_gameObjects.ContainsKey(type))
-        {
-            _gameObjects.Add(type, new List<GameObject>());
-        }
-        _gameObjects[type].Add(gameObject);
-        
-        _interactionPoints.Add(gameObject, interactionPoints);
+        _objects[type].Add((worldObject, gameObject));
+        _interactionPoints.Add(worldObject, interactionPoints);
     }
 
     public void Remove(WorldObjectType type, WorldObject worldObject, GameObject gameObject)
     {
-        if (!_worldObjects.ContainsKey(type) || !_gameObjects.ContainsKey(type))
+        if (!_objects.ContainsKey(type))
         {
             return;
         }
 
-        _worldObjects[type].Remove(worldObject);
-        _gameObjects[type].Remove(gameObject);
-        _interactionPoints.Remove(gameObject);
+        _objects[type].Remove((worldObject, gameObject));
+        _interactionPoints.Remove(worldObject);
     }
 
-    public bool TryGetNearestObject(WorldObjectType type, Vector3 currentPos, out GameObject gameObject)
+    public bool TryGetNearestObject(WorldObjectType type, Vector3 currentPos, out (WorldObject worldObject, GameObject gameObject)? output)
     {
-        gameObject = null;
-        if (!_gameObjects.TryGetValue(type, out var gameObjects) || gameObjects.Count == 0)
+        output = null;
+        if (!_objects.TryGetValue(type, out var objects) || objects.Count == 0)
         {
             return false;
         }
         
-        gameObject = gameObjects.OrderBy(x => Vector3.Distance(currentPos, x.transform.position)).First();
+        output = objects.OrderBy(x => Vector3.Distance(currentPos, x.gameObject.transform.position)).First();
         return true;
     }
 
-    public bool TryGetNearestEntryPoint(GameObject gameObject, Vector3 currentPos, out InteractionPoint interactionPoint)
+    public bool TryGetNearestEntryPoint(WorldObject worldObject, Vector3 currentPos, out InteractionPoint interactionPoint)
     {
         interactionPoint = null;
-        if (!_interactionPoints.TryGetValue(gameObject, out var interactionPoints) || interactionPoints.Count == 0)
+        if (!_interactionPoints.TryGetValue(worldObject, out var interactionPoints) || interactionPoints.Count == 0)
         {
             return false;
         }
 
-        var selectedInteractionPoints = interactionPoints.Where(x => !x.IsFull).OrderBy(x => Vector3.Distance(currentPos, x.Position));
+        var selectedInteractionPoints = interactionPoints
+            .Where(x => !x.IsFull)
+            .OrderBy(x => Vector3.Distance(currentPos, x.Position))
+            .ToArray();
         if (!selectedInteractionPoints.Any())
         {
             return false;

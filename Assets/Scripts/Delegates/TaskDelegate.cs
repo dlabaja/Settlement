@@ -1,7 +1,7 @@
 using Models.Villagers;
+using Models.WorldObjects;
 using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Delegates;
 
-public delegate Task TaskDelegate(Villager source, Vector3 destination);
+public delegate Task TaskDelegate(Villager source, WorldObject destination);

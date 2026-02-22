@@ -8,23 +8,46 @@ namespace Models.Villagers.VillagerTasks;
 
 public class VillagerTasks
 {
-    public PriorityQueue<VillagerTask> Tasks { get; } = new PriorityQueue<VillagerTask>();
-    [CanBeNull] public VillagerTask CurrentRunningTask { get; private set; } = null;
+    private readonly PriorityQueue<VillagerTask> _tasks = new PriorityQueue<VillagerTask>();
+    public bool IsEmpty => _tasks.IsEmpty;
+    public int Length => _tasks.Length;
+    [CanBeNull] public VillagerTask CurrentRunningTask { get; private set; }
     public event Action TaskCompleted;
 
     public void Add(VillagerTask villagerTask, TaskPriority priority)
     {
-        Tasks.Add(villagerTask, (int)priority);
+        _tasks.Add(villagerTask, (int)priority);
     }
 
     public void Remove(VillagerTask villagerTask)
     {
-        Tasks.Remove(villagerTask);
+        _tasks.Remove(villagerTask);
+    }
+
+    public bool TryPeek(out VillagerTask task)
+    {
+        task = null;
+        return _tasks.TryPeek(out task);
+    }
+    
+    public bool TryPop(out VillagerTask task)
+    {
+        task = null;
+        return _tasks.TryPop(out task);
+    }
+
+    public void PromoteNextTask()
+    {
+        if (_tasks.Length < 2)
+        {
+            return;
+        }
+        _tasks.Promote(_tasks.Items[1], _tasks.HighestPriority + 1);
     }
 
     public async Task RunTask()
     {
-        if (!Tasks.TryPop(out var task))
+        if (!_tasks.TryPop(out var task))
         {
             return;
         }
@@ -33,5 +56,5 @@ public class VillagerTasks
         await task.Task(task.Source, task.Destination);
         CurrentRunningTask = null;
         TaskCompleted?.Invoke();
-    } 
+    }
 }
