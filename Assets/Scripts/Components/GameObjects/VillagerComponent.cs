@@ -5,9 +5,10 @@ using Interfaces;
 using Models.Villagers;
 using Reflex.Attributes;
 using Services;
+using Services.GameObjects;
 using UnityEngine;
 
-namespace Components.Villagers
+namespace Components.GameObjects
 {
     public class VillagerComponent : MonoBehaviour, ISelectable
     {
@@ -16,6 +17,7 @@ namespace Components.Villagers
         [Inject] private VillagerFactory _villagerFactory;
         [Inject] private GameTimeService _gameTimeService;
         [Inject] private GlobalInventory _globalInventory;
+        [Inject] private VillagerService _villagerService;
         private Villager _villager;
         private VillagerStatsController _villagerStatsController;
     
@@ -23,6 +25,7 @@ namespace Components.Villagers
         {
             _villager = _villagerFactory.Create();
             _globalInventory.Register(_villager.Inventory);
+            _villagerService.Register(_villager, gameObject);
             _villagerStatsController = new VillagerStatsController(_villager, _gameTimeService);
             _name = _villager.Name;
             _gender = _villager.Gender;
@@ -31,6 +34,7 @@ namespace Components.Villagers
         private void OnDestroy()
         {
             _globalInventory.Remove(_villager.Inventory);
+            _villagerService.Remove(_villager);
             _villagerStatsController.Dispose();
         }
     }

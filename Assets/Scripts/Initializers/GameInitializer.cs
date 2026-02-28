@@ -3,6 +3,8 @@ using Factories;
 using Reflex.Core;
 using Reflex.Enums;
 using Services;
+using Services.GameObjects;
+using Services.Resources;
 using Resolution = Reflex.Enums.Resolution;
 
 namespace Initializers;
@@ -25,6 +27,7 @@ public class GameInitializer
         builder.RegisterValue(new TerrainService(initData.terrain));
         
         builder.RegisterValue(new WorldObjectsService());
+        builder.RegisterValue(new VillagerService());
         builder.RegisterValue(new GameTimeService());
         builder.RegisterValue(new GlobalInventory());
         builder.RegisterValue(new InteractionModeService());
