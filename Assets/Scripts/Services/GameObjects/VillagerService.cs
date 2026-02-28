@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Models.Villagers;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,5 +17,11 @@ public class VillagerService
     public void Remove(Villager villager)
     {
         _villagers.Remove(villager);
+    }
+
+    public bool TryGetGameObject(Villager villager, [CanBeNull] out GameObject gameObject)
+    {
+        gameObject = null;
+        return _villagers.TryGetValue(villager, out gameObject);
     }
 }
