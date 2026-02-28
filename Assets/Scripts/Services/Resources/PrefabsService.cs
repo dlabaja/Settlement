@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Services;
+namespace Services.Resources;
 
 public class PrefabsService
 {
@@ -40,7 +40,7 @@ public class PrefabsService
 
     public static (GameObject[] worldObjectPrefabs, GameObject villagerPrefab) LoadAllPrefabs()
     {
-        var prefabs = Resources.LoadAll<GameObject>("Prefabs");
+        var prefabs = UnityEngine.Resources.LoadAll<GameObject>("Prefabs");
         var villagerPrefab = prefabs.First(obj => obj.name == PrefabName.Villager);
         var worldObjectPrefabs = prefabs.Except(new[] {villagerPrefab}).ToArray();
         return (worldObjectPrefabs, villagerPrefab);

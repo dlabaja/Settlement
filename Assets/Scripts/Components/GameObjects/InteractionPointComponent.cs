@@ -1,9 +1,10 @@
 using Models.WorldObjects;
 using Reflex.Attributes;
 using Services;
+using Services.Resources;
 using UnityEngine;
 
-namespace Components.WorldObjects
+namespace Components.GameObjects
 {
     public class InteractionPointComponent : MonoBehaviour
     {

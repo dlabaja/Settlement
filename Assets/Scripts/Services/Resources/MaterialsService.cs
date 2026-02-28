@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Services;
+namespace Services.Resources;
 
 public class MaterialsService
 {
@@ -19,6 +19,6 @@ public class MaterialsService
 
     public static Material[] LoadAllMaterials()
     {
-        return Resources.LoadAll<Material>("Materials");
+        return UnityEngine.Resources.LoadAll<Material>("Materials");
     }
 }

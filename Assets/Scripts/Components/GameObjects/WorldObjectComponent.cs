@@ -2,14 +2,14 @@ using Enums;
 using Factories;
 using Interfaces;
 using Models.WorldObjects;
-using NUnit.Framework;
 using Reflex.Attributes;
 using Services;
+using Services.GameObjects;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Components.WorldObjects
+namespace Components.GameObjects
 {
     public class WorldObjectComponent : MonoBehaviour, ISelectable
     {

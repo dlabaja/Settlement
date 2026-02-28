@@ -1,5 +1,6 @@
 using Reflex.Attributes;
 using Services;
+using Services.Resources;
 using UnityEngine;
 
 namespace Components.Systems

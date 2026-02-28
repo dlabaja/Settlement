@@ -5,6 +5,7 @@ using Models.Camera;
 using Models.Controls;
 using Reflex.Attributes;
 using Services;
+using Services.Resources;
 using UnityEngine;
 using Views.Camera;
 
