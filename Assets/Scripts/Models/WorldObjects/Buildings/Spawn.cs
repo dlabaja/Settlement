@@ -9,5 +9,9 @@ public class Spawn : WorldObject
 {
     public override WorldObjectType WorldObjectType { get; } = WorldObjectType.Spawn;
     public override Inventory Inventory { get; } = new Inventory(0);
-    public override Task VillagerTask(Villagers.Villager source, WorldObject destination) => throw new System.NotImplementedException();
+    public override Task VillagerTask(Villagers.Villager source, WorldObject destination)
+    {
+        Debug.Log("Pracuju na spawnu");
+        return Task.CompletedTask;
+    }
 }

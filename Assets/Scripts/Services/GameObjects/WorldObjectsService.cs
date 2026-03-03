@@ -1,4 +1,5 @@
 using Enums;
+using JetBrains.Annotations;
 using Models.WorldObjects;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,39 +9,43 @@ namespace Services.GameObjects;
 
 public class WorldObjectsService
 {
-    private readonly Dictionary<WorldObjectType, List<(WorldObject worldObject, GameObject gameObject)>> _objects = new Dictionary<WorldObjectType, List<(WorldObject, GameObject)>>();
+    private readonly Dictionary<WorldObjectType, List<WorldObject>> _types = new Dictionary<WorldObjectType, List<WorldObject>>();
+    private readonly Dictionary<WorldObject, GameObject> _objects = new Dictionary<WorldObject, GameObject>();
     private readonly Dictionary<WorldObject, List<InteractionPoint>> _interactionPoints = new Dictionary<WorldObject, List<InteractionPoint>>();
 
     public void Register(WorldObjectType type, WorldObject worldObject, GameObject gameObject, List<InteractionPoint> interactionPoints)
     {
-        if (!_objects.ContainsKey(type))
+        if (!_types.ContainsKey(type))
         {
-            _objects.Add(type, new List<(WorldObject, GameObject)>());
+            _types.Add(type, new List<WorldObject>());
         }
-        _objects[type].Add((worldObject, gameObject));
+        _types[type].Add(worldObject);
+        _objects.Add(worldObject, gameObject);
         _interactionPoints.Add(worldObject, interactionPoints);
     }
 
     public void Remove(WorldObjectType type, WorldObject worldObject, GameObject gameObject)
     {
-        if (!_objects.ContainsKey(type))
+        if (!_types.ContainsKey(type))
         {
             return;
         }
 
-        _objects[type].Remove((worldObject, gameObject));
+        _types[type].Remove(worldObject);
+        _objects.Remove(worldObject);
         _interactionPoints.Remove(worldObject);
     }
 
     public bool TryGetNearestObject(WorldObjectType type, Vector3 currentPos, out (WorldObject worldObject, GameObject gameObject)? output)
     {
         output = null;
-        if (!_objects.TryGetValue(type, out var objects) || objects.Count == 0)
+        if (!_types.TryGetValue(type, out var worldObjects) || worldObjects.Count == 0)
         {
             return false;
         }
         
-        output = objects.OrderBy(x => Vector3.Distance(currentPos, x.gameObject.transform.position)).First();
+        var closestWO = worldObjects.OrderBy(wo => Vector3.Distance(currentPos, _objects[wo].transform.position)).First();
+        output = (closestWO, _objects[closestWO]);
         return true;
     }
 
@@ -63,5 +68,16 @@ public class WorldObjectsService
 
         interactionPoint = selectedInteractionPoints.First();
         return true;
+    }
+    
+    public List<WorldObject> GetWorldObjects(WorldObjectType type)
+    {
+        return _types[type].ToList();
+    }
+    
+    [CanBeNull]
+    public WorldObject GetFirstWorldObject(WorldObjectType type)
+    {
+        return _types[type].FirstOrDefault();
     }
 }

@@ -16,7 +16,7 @@ public class PrefabsService
 
     public PrefabsService(GameObject[] worldObjectPrefabs, GameObject villagerPrefab)
     {
-        _worldObjectPrefabs = BindPrefabsToTypes(worldObjectPrefabs);
+        _worldObjectPrefabs = BindPrefabsToWorldObjectTypes(worldObjectPrefabs);
         _villagerPrefab = villagerPrefab;
     }
 
@@ -52,7 +52,7 @@ public class PrefabsService
         return !exists ? throw new Exception($"Prefab with type {type} not initialized") : gameObject;
     }
 
-    private static Dictionary<WorldObjectType, GameObject> BindPrefabsToTypes(GameObject[] worldObjectPrefabs)
+    private static Dictionary<WorldObjectType, GameObject> BindPrefabsToWorldObjectTypes(GameObject[] worldObjectPrefabs)
     {
         var result = new Dictionary<WorldObjectType, GameObject>();
         foreach (var prefab in worldObjectPrefabs)
@@ -60,7 +60,7 @@ public class PrefabsService
             var nameValid = Enum.TryParse(prefab.name, out WorldObjectType type);
             if (!nameValid)
             {
-                throw new Exception($"Cannot bind {prefab.name} prefab to enum");
+                continue;
             }
 
             result.Add(type, prefab);
