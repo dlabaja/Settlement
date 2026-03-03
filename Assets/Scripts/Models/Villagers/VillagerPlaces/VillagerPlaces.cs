@@ -2,7 +2,7 @@ using Models.WorldObjects;
 
 namespace Models.Villagers.VillagerPlaces;
 
-public class VillagerPlace
+public class VillagerPlaces
 {
     public WorldObject Home;
     public WorldObject Workplace;

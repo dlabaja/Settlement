@@ -11,7 +11,7 @@ public class Villager
     public Inventory Inventory { get; } = new Inventory(1);
     public VillagerTasks.VillagerTasks Tasks { get; } = new VillagerTasks.VillagerTasks();
     public VillagerStats.VillagerStats Stats { get; } = new VillagerStats.VillagerStats();
-    public VillagerPlace Place { get; } = new VillagerPlace();
+    public VillagerPlaces.VillagerPlaces Places { get; } = new VillagerPlaces.VillagerPlaces();
     
     public Villager(string name, Gender gender)
     {

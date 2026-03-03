@@ -5,8 +5,8 @@ namespace Models.Villagers.VillagerTasks;
 
 public class VillagerTask
 {
-    public WorldObject Destination { get; }
     public Villager Source { get; }
+    public WorldObject Destination { get; }
     public TaskDelegate Task { get; }
 
     public VillagerTask(Villager source, WorldObject destination, TaskDelegate fn)

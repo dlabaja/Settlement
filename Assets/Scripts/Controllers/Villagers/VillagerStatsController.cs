@@ -1,10 +1,11 @@
 using Models.Villagers;
 using Services;
+using System;
 using Utils;
 
 namespace Controllers.Villagers;
 
-public class VillagerStatsController
+public class VillagerStatsController : IDisposable
 {
     private readonly Villager _villager;
     private readonly GameTimeService _gameTimeService;
