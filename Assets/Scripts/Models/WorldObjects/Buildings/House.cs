@@ -9,5 +9,5 @@ public class House : WorldObject
 {
     public override WorldObjectType WorldObjectType { get; } = WorldObjectType.House;
     public override Inventory Inventory { get; } = new Inventory(0);
-    public override Task VillagerTask(Villagers.Villager source, Vector3 destination) => throw new System.NotImplementedException();
+    public override Task VillagerTask(Villagers.Villager source, WorldObject destination) => throw new System.NotImplementedException();
 }

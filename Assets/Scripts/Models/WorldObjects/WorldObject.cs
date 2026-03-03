@@ -9,5 +9,5 @@ public abstract class WorldObject
 {
     public abstract WorldObjectType WorldObjectType { get; }
     public abstract Inventory Inventory { get; }
-    public abstract Task VillagerTask(Villagers.Villager source, Vector3 destination);
+    public abstract Task VillagerTask(Villagers.Villager source, WorldObject destination);
 }
