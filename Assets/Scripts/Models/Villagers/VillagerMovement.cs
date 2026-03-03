@@ -1,4 +1,5 @@
-using Services;
+using JetBrains.Annotations;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,45 +7,23 @@ namespace Models.Villagers;
 
 public class VillagerMovement
 {
-    private readonly NavMeshAgent _navMeshAgent;
-    private readonly GameTimeService _gameTimeService;
-    private const int _speed = 10;
-
-    public VillagerMovement(NavMeshAgent villagerNavMeshAgentAgent, GameTimeService gameTimeService)
+    private bool _isMoving;
+    public Vector3 Destination { get; private set; }
+    public event Action<bool> IsMovingChanged;
+    public event Action<Vector3, NavMeshPath?> DestinationChanged;
+    public bool IsMoving
     {
-        _navMeshAgent = villagerNavMeshAgentAgent;
-        _gameTimeService = gameTimeService;
-        _gameTimeService.SpeedChanged += GameTimeServiceOnSpeedChanged;
+        get => _isMoving;
+        set
+        {
+            _isMoving = value;
+            IsMovingChanged?.Invoke(value);
+        }
     }
 
-    public bool CanReach(Vector3 destination, out NavMeshPath path)
+    public void SetDestination(Vector3 destination, [CanBeNull] NavMeshPath navMeshPath)
     {
-        path = new NavMeshPath();
-        return _navMeshAgent.CalculatePath(destination, path);
-    }
-
-    public void SetDestination(Vector3 destination)
-    {
-        _navMeshAgent.SetDestination(destination);
-    }
-    
-    public void SetPath(NavMeshPath navMeshPath)
-    {
-        _navMeshAgent.SetPath(navMeshPath);
-    }
-
-    public void Walk()
-    {
-        _navMeshAgent.isStopped = false;
-    }
-
-    public void Stop()
-    {
-        _navMeshAgent.isStopped = true;
-    }
-    
-    private void GameTimeServiceOnSpeedChanged()
-    {
-        _navMeshAgent.speed = _speed * _gameTimeService.GameSpeed;
+        Destination = destination;
+        DestinationChanged?.Invoke(destination, navMeshPath);
     }
 }

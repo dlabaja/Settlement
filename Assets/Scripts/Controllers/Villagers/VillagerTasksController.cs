@@ -1,4 +1,7 @@
+using Enums;
+using Factories;
 using Models.Villagers;
+using Models.Villagers.VillagerTasks;
 using Services;
 using Services.GameObjects;
 using UnityEngine;
@@ -11,47 +14,60 @@ public class VillagerTasksController
     private readonly WorldObjectsService _worldObjectsService;
     private readonly Villager _villager;
     private readonly VillagerMovement _villagerMovement;
-    private readonly GameObject _villagerGameObject;
-    public bool WaitingForTasks { get; private set; } = true;
+    private readonly VillagerTasks _tasks;
+    private readonly VillagerTaskFactory _villagerTaskFactory;
+    private readonly PathfindingService _pathfindingService;
 
-    public VillagerTasksController(Villager villager, VillagerMovement villagerMovement, GameObject villagerGameObject, WorldObjectsService worldObjectsService)
+    public VillagerTasksController(Villager villager, VillagerMovement villagerMovement, 
+        WorldObjectsService worldObjectsService, PathfindingService pathfindingService, VillagerTaskFactory villagerTaskFactory)
     {
         _villager = villager;
         _villagerMovement = villagerMovement;
         _worldObjectsService = worldObjectsService;
-        _villagerGameObject = villagerGameObject;
+        _pathfindingService = pathfindingService;
+        _villagerTaskFactory = villagerTaskFactory;
+        _tasks = _villager.Tasks;
     }
 
-    public void ProcessTask()
+    public void ProcessTask(Vector3 villagerPos)
     {
-        if (!WaitingForTasks)
+        if (_tasks.CurrentRunningTask != null)
         {
             return;
         }
 
-        var tasks = _villager.Tasks;
-        var hasTasks = _villager.Tasks.TryPeek(out var task);
+        var hasTasks = _tasks.TryPeek(out var task);
         if (!hasTasks)
         {
-            // work
-            WaitingForTasks = false;
+            AddWorkTask();
             return;
         }
 
-        var taskHasDestination = _worldObjectsService.TryGetNearestEntryPoint(task.Destination, _villagerGameObject.transform.position, out var point);
+        var taskHasDestination = _worldObjectsService.TryGetNearestEntryPoint(task.Destination, villagerPos, out var point);
         if (!taskHasDestination)
         {
-            if (tasks.Length == 1)
+            if (_tasks.Length == 1)
             {
-                // přidej task na práci
+                AddWorkTask();
                 return;
             }
-            tasks.PromoteNextTask();
+            _tasks.PromoteNextTask();
             return;
         }
 
-        _villagerMovement.SetDestination(point.Position);
+        DoTask(villagerPos, point.Position);
+    }
+
+    private void DoTask(Vector3 villagerPos, Vector3 destination)
+    {
+        var canReach = _pathfindingService.CanReach(villagerPos, destination, out var path);
+        _villagerMovement.SetDestination(destination, path);
         // checkni jestli tam může dojít
         // nějaká kontrola jak dodělat task
+    }
+
+    private void AddWorkTask()
+    {
+        _tasks.Add(_villagerTaskFactory.WorkTask(_villager), TaskPriority.Low);
     }
 }
