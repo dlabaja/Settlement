@@ -22,9 +22,12 @@ namespace Components.GameObjects
         public void Awake()
         {
             _worldObject = _worldObjectFactory.Create(_worldObjectType);
+        }
+
+        public void Start()
+        {
             _worldObjectsService.Register(_worldObjectType, _worldObject, gameObject, GetInteractionPoints());
             _globalInventoryService.Register(_worldObject.Inventory);
-            
         }
 
         public void OnDestroy()
