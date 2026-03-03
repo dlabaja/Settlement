@@ -19,9 +19,9 @@
 # Obecná architektura
 #### Component -> Controller -> Model --(event)-> View
 - Component - MonoBehaviour, Unity lifecycle, Input systém, init View, správa Controlleru
-- Controller - reference na objekty, ovládání Modelů
+- Controller - reference na objekty, ovládání Modelů, taky pokud možno čisté
 - Model - Čistý objekt pokud možno bez Unity, testovatelné, logika
-- View - vizuální stránka objektů (materiály, ...), ovládáno skrz eventy z Modelů
+- View - vizuální stránka objektů (materiály, navmesh, animace, ...), ovládáno skrz eventy z Modelů
 
 ![architecture.png](architecture.png)
 
