@@ -11,8 +11,11 @@ namespace Initializers;
 
 public class GameInitializer
 {
+    private ContainerBuilder _builder;
+    
     public void Init(ContainerBuilder builder, ClientData data, InitData initData)
     {
+        _builder = builder;
         RegisterManagers(builder, data, initData);
         RegisterFactories(builder);
     }
@@ -29,13 +32,20 @@ public class GameInitializer
         builder.RegisterValue(new WorldObjectsService());
         builder.RegisterValue(new VillagerService());
         builder.RegisterValue(new GameTimeService());
-        builder.RegisterValue(new GlobalInventory());
+        builder.RegisterValue(new GlobalInventoryService());
+        builder.RegisterValue(new PathfindingService());
         builder.RegisterValue(new InteractionModeService());
     }
 
     private void RegisterFactories(ContainerBuilder builder)
     {
-        builder.RegisterType(typeof(VillagerFactory), Lifetime.Singleton, Resolution.Lazy);
-        builder.RegisterType(typeof(WorldObjectFactory), Lifetime.Singleton, Resolution.Lazy);
+        RegisterFactory<VillagerFactory>();
+        RegisterFactory<WorldObjectFactory>();
+        RegisterFactory<VillagerTaskFactory>();
+    }
+
+    private void RegisterFactory<T>()
+    {
+        _builder.RegisterType(typeof(T), Lifetime.Singleton, Resolution.Lazy);
     }
 }
