@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Services;
 
-public class GlobalInventory
+public class GlobalInventoryService
 {
     private readonly Inventory _inventory = new Inventory(50, 1_000_000);
     private readonly List<Inventory> _inventories = new List<Inventory>();

@@ -16,21 +16,21 @@ namespace Components.GameObjects
         [SerializeField] private WorldObjectType _worldObjectType;
         [Inject] private WorldObjectFactory _worldObjectFactory;
         [Inject] private WorldObjectsService _worldObjectsService;
-        [Inject] private GlobalInventory _globalInventory;
+        [Inject] private GlobalInventoryService _globalInventoryService;
         private WorldObject _worldObject;
 
         public void Awake()
         {
             _worldObject = _worldObjectFactory.Create(_worldObjectType);
             _worldObjectsService.Register(_worldObjectType, _worldObject, gameObject, GetInteractionPoints());
-            _globalInventory.Register(_worldObject.Inventory);
+            _globalInventoryService.Register(_worldObject.Inventory);
             
         }
 
         public void OnDestroy()
         {
             _worldObjectsService.Remove(_worldObjectType, _worldObject, gameObject);
-            _globalInventory.Remove(_worldObject.Inventory);
+            _globalInventoryService.Remove(_worldObject.Inventory);
         }
 
         private List<InteractionPoint> GetInteractionPoints()

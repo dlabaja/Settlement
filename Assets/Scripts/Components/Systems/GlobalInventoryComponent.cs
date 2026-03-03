@@ -7,7 +7,7 @@ namespace Components.Systems
 {
     public class GlobalInventoryComponent : MonoBehaviour
     {
-        [Inject] private GlobalInventory _globalInventory; 
+        [Inject] private GlobalInventoryService _globalInventoryService; 
         
         public void Awake()
         {
@@ -18,7 +18,7 @@ namespace Components.Systems
         {
             while (true)
             {
-                _globalInventory.Update();
+                _globalInventoryService.Update();
                 yield return new WaitForSeconds(10);
             }
         }
