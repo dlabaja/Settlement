@@ -34,7 +34,6 @@ public class VillagerMovementView : IDisposable
         _navMeshAgent.path = navMeshPath;
     }
 
-
     public void Dispose()
     {
         _villagerMovement.DestinationChanged += VillagerMovementOnDestinationChanged;

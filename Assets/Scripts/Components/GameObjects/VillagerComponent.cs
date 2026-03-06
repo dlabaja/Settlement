@@ -48,10 +48,6 @@ namespace Components.GameObjects
         {
             _globalInventoryService.Register(_villager.Inventory);
             _villagerService.Register(_villager, gameObject);
-        }
-
-        public void Update()
-        {
             StartCoroutine(UpdateTasks());
         }
 

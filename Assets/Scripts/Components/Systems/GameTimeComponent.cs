@@ -16,6 +16,10 @@ namespace Components.Systems
         public void Awake()
         {
             _gameTimeController = new GameTimeController(_gameTimeService);
+        }
+
+        public void Start()
+        {
             StartCoroutine(nameof(TryTick));
         }
 
