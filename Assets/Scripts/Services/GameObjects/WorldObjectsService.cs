@@ -13,7 +13,7 @@ public class WorldObjectsService
     private readonly Dictionary<WorldObject, GameObject> _objects = new Dictionary<WorldObject, GameObject>();
     private readonly Dictionary<WorldObject, List<InteractionPoint>> _interactionPoints = new Dictionary<WorldObject, List<InteractionPoint>>();
 
-    public void Register(WorldObjectType type, WorldObject worldObject, GameObject gameObject, List<InteractionPoint> interactionPoints)
+    public void Register(WorldObjectType type, WorldObject worldObject, GameObject gameObject)
     {
         if (!_types.ContainsKey(type))
         {
@@ -21,7 +21,15 @@ public class WorldObjectsService
         }
         _types[type].Add(worldObject);
         _objects.Add(worldObject, gameObject);
-        _interactionPoints.Add(worldObject, interactionPoints);
+    }
+
+    public void RegisterInteractionPoint(InteractionPoint interactionPoint, WorldObject worldObject)
+    {
+        if (!_interactionPoints.ContainsKey(worldObject))
+        {
+            _interactionPoints.Add(worldObject, new List<InteractionPoint>());
+        }
+        _interactionPoints[worldObject].Add(interactionPoint);
     }
 
     public void Remove(WorldObjectType type, WorldObject worldObject, GameObject gameObject)

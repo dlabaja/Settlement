@@ -1,4 +1,4 @@
-using Enums;
+using Controllers.Systems;
 using Reflex.Attributes;
 using Services;
 using Services.GameObjects;
@@ -10,22 +10,27 @@ namespace Components.Systems
     public class GameStartComponent : MonoBehaviour
     {
         [Inject] private PrefabsService _prefabsService;
-        [Inject] private GameTimeService _gameTimeService;
-        [Inject] private VillagerService _villagerService;
         [Inject] private WorldObjectsService _worldObjectsService;
+        [Inject] private VillagerService _villagerService;
+        [Inject] private GameTimeService _gameTimeService;
+        private GameStartController _gameStartController;
+        private bool _lateStartCalled;
         
-        public void Start()
+        public void Awake()
         {
-            _prefabsService.SpawnWorldObject(WorldObjectType.Spawn, new Vector3(10, 0, 0));
-            _prefabsService.SpawnVillager(new Vector3(0, 0, 0));
-            _prefabsService.SpawnVillager(new Vector3(0, 1, 0));
+            _gameStartController = new GameStartController();
+            _gameStartController.Init(_prefabsService);
+        }
 
-            var spawn = _worldObjectsService.GetFirstWorldObject(WorldObjectType.Spawn);
-            foreach (var villager in _villagerService.Villagers)
+        public void FixedUpdate()
+        {
+            if (_lateStartCalled)
             {
-                villager.Places.Workplace = spawn;
+                return;
             }
-            _gameTimeService.Play(1);
+
+            _lateStartCalled = true;
+            _gameStartController.Start(_worldObjectsService, _villagerService, _gameTimeService);
         }
     }
 }
