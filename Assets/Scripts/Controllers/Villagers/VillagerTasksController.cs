@@ -26,7 +26,13 @@ public class VillagerTasksController
         _worldObjectsService = worldObjectsService;
         _pathfindingService = pathfindingService;
         _villagerTaskFactory = villagerTaskFactory;
+        villager.Tasks.TaskStarted += TasksOnTaskStarted;
         _tasks = _villager.Tasks;
+    }
+
+    private void TasksOnTaskStarted()
+    {
+        _villagerMovement.IsMoving = false;
     }
 
     public void ProcessTask(Vector3 villagerPos)
@@ -61,13 +67,21 @@ public class VillagerTasksController
     private void DoTask(Vector3 villagerPos, Vector3 destination)
     {
         var canReach = _pathfindingService.CanReach(villagerPos, destination, out var path);
+        if (!canReach)
+        {
+            return;
+        }
+        _villager.Tasks.SetTask();
+        _villagerMovement.IsMoving = true;
         _villagerMovement.SetDestination(destination, path);
-        // checkni jestli tam může dojít
-        // nějaká kontrola jak dodělat task
     }
 
     private void AddWorkTask()
     {
+        if (_villager.Places.Workplace == null)
+        {
+            return;
+        }
         _tasks.Add(_villagerTaskFactory.WorkTask(_villager), TaskPriority.Low);
     }
 }

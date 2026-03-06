@@ -12,6 +12,7 @@ public class VillagerTasks
     public bool IsEmpty => _tasks.IsEmpty;
     public int Length => _tasks.Length;
     [CanBeNull] public VillagerTask CurrentRunningTask { get; private set; }
+    public event Action TaskStarted; 
     public event Action TaskCompleted;
 
     public void Add(VillagerTask villagerTask, TaskPriority priority)
@@ -45,15 +46,24 @@ public class VillagerTasks
         _tasks.Promote(_tasks.Items[1], _tasks.HighestPriority + 1);
     }
 
-    public async Task RunTask()
+    public void SetTask()
     {
         if (!_tasks.TryPop(out var task))
         {
             return;
         }
-
         CurrentRunningTask = task;
-        await task.Task(task.Source, task.Destination);
+    }
+
+    public async Task RunCurrentTask()
+    {
+        if (CurrentRunningTask == null)
+        {
+            return;
+        }
+        
+        TaskStarted?.Invoke();
+        await CurrentRunningTask.Task(CurrentRunningTask.Source, CurrentRunningTask.Destination);
         CurrentRunningTask = null;
         TaskCompleted?.Invoke();
     }

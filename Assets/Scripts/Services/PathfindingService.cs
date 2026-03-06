@@ -7,7 +7,7 @@ public class PathfindingService
 {
     public bool CanReach(Vector3 start, Vector3 destination, out NavMeshPath path)
     {
-        path = null;
+        path = new NavMeshPath();
         return NavMesh.CalculatePath(start, destination, NavMesh.AllAreas, path);
     }
 }
