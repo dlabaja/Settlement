@@ -5,8 +5,6 @@ using Models.WorldObjects;
 using Reflex.Attributes;
 using Services;
 using Services.GameObjects;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Components.GameObjects
@@ -17,34 +15,23 @@ namespace Components.GameObjects
         [Inject] private WorldObjectFactory _worldObjectFactory;
         [Inject] private WorldObjectsService _worldObjectsService;
         [Inject] private GlobalInventoryService _globalInventoryService;
-        private WorldObject _worldObject;
+        public WorldObject WorldObject { get; private set; }
 
         public void Awake()
         {
-            _worldObject = _worldObjectFactory.Create(_worldObjectType);
+            WorldObject = _worldObjectFactory.Create(_worldObjectType);
         }
 
         public void Start()
         {
-            _worldObjectsService.Register(_worldObjectType, _worldObject, gameObject, GetInteractionPoints());
-            _globalInventoryService.Register(_worldObject.Inventory);
+            _worldObjectsService.Register(_worldObjectType, WorldObject, gameObject);
+            _globalInventoryService.Register(WorldObject.Inventory);
         }
 
         public void OnDestroy()
         {
-            _worldObjectsService.Remove(_worldObjectType, _worldObject, gameObject);
-            _globalInventoryService.Remove(_worldObject.Inventory);
-        }
-
-        private List<InteractionPoint> GetInteractionPoints()
-        {
-            return gameObject.GetComponentsInChildren<InteractionPointComponent>()
-                .Select(component =>
-                {
-                    component.InteractionPoint.MaxOccupantCount = InteractionPoint.GetMaxOccupantCount(_worldObjectType);
-                    return component.InteractionPoint;
-                })
-                .ToList();
+            _worldObjectsService.Remove(_worldObjectType, WorldObject, gameObject);
+            _globalInventoryService.Remove(WorldObject.Inventory);
         }
     }
 }
