@@ -86,6 +86,16 @@ public class PriorityQueue<T>
         return true;
     }
 
+    public bool Contains(T item)
+    {
+        if (Items.Contains(item))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private void RemoveAt(int index)
     {
         if (index >= Length)
