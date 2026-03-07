@@ -134,6 +134,7 @@
     <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
     <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
+    <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/Well.cs" />
     <Compile Include="Assets/Scripts/Services/Resources/MaterialsService.cs" />
     <Compile Include="Assets/Scripts/Controllers/Villagers/VillagerTasksController.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/CameraSelect.cs" />

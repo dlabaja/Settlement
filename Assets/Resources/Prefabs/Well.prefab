@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6617d4fea09b452f8ddb4f8dc0081092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Components.GameObjects.WorldObjectComponent
-  _worldObjectType: 0
+  _worldObjectType: 5
 --- !u!1001 &168381036101193388
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -467,18 +467,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1440038903552455581, guid: 6177e8a9432e04938a193bfed9c5c859, type: 3}
-      propertyPath: m_Size.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440038903552455581, guid: 6177e8a9432e04938a193bfed9c5c859, type: 3}
-      propertyPath: m_Size.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440038903552455581, guid: 6177e8a9432e04938a193bfed9c5c859, type: 3}
-      propertyPath: m_Size.z
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 1499706873953482036, guid: 6177e8a9432e04938a193bfed9c5c859, type: 3}
       propertyPath: m_Name
       value: Villager
