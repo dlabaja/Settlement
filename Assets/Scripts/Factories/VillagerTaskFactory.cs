@@ -15,4 +15,9 @@ public class VillagerTaskFactory
     {
         return new VillagerTask(villager, villager.Places.Workplace, villager.Places.Workplace.VillagerTask);
     }
+
+    public VillagerTask DrinkTask(Villager villager, WorldObject nearestWell)
+    {
+        return new VillagerTask(villager, nearestWell, nearestWell.VillagerTask);
+    }
 }

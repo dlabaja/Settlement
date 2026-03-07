@@ -6,5 +6,6 @@ public enum WorldObjectType
     Tree,
     BerryBush,
     House,
-    Church
+    Church,
+    Well
 }
