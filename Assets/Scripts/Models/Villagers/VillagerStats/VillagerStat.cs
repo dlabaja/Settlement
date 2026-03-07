@@ -10,7 +10,7 @@ public class VillagerStat
     public event Action StatLowThresholdReached; // he should start to look for it
     public event Action UrgentThresholdReached; // he will die/leave
 
-    public VillagerStat(int statLowTreshold = 50, int urgentThreshold = 0)
+    public VillagerStat(int statLowTreshold, int urgentThreshold)
     {
         StatLowThreshold = statLowTreshold;
         UrgentThreshold = urgentThreshold;
@@ -28,7 +28,7 @@ public class VillagerStat
 
     public void Decrease(int amount)
     {
-        ChangeValue(amount);
+        ChangeValue(-amount);
     }
     
     public void Increase()
@@ -46,16 +46,17 @@ public class VillagerStat
         get => Value == 0;
     }
 
-    private void ChangeValue(int ammount)
+    private void ChangeValue(int amount)
     {
-        Value = Math.Clamp(Value + ammount, 0, 100);
-        if (Value <= StatLowThreshold)
-        {
-            StatLowThresholdReached?.Invoke();
-        }
+        Value = Math.Clamp(Value + amount, 0, 100);
         if (Value <= UrgentThreshold)
         {
             UrgentThresholdReached?.Invoke();
+            return;
+        }
+        if (Value <= StatLowThreshold)
+        {
+            StatLowThresholdReached?.Invoke();
         }
     }
 }
