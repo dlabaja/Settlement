@@ -25,7 +25,7 @@ public class VillagerMovementView : IDisposable
 
     private void VillagerMovementOnIsMovingChanged(bool isMoving)
     {
-        _navMeshAgent.isStopped = isMoving;
+        _navMeshAgent.isStopped = !isMoving;
     }
 
     private void VillagerMovementOnDestinationChanged(Vector3 destination, NavMeshPath navMeshPath)
