@@ -44,16 +44,16 @@ public class WorldObjectsService
         _interactionPoints.Remove(worldObject);
     }
 
-    public bool TryGetNearestObject(WorldObjectType type, Vector3 currentPos, out (WorldObject worldObject, GameObject gameObject)? output)
+    public bool TryGetNearestObject(WorldObjectType type, Vector3 currentPos, out WorldObject worldObject)
     {
-        output = null;
+        worldObject = null;
         if (!_types.TryGetValue(type, out var worldObjects) || worldObjects.Count == 0)
         {
             return false;
         }
         
         var closestWO = worldObjects.OrderBy(wo => Vector3.Distance(currentPos, _objects[wo].transform.position)).First();
-        output = (closestWO, _objects[closestWO]);
+        worldObject = closestWO;
         return true;
     }
 

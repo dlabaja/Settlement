@@ -38,6 +38,18 @@ public class VillagerService
         return _gameObjects.TryGetValue(gameObject, out villager);
     }
     
+    public bool TryGetVillagerPosition(Villager villager, out Vector3 position)
+    {
+        position = Vector3.zero;
+        if (!TryGetGameObject(villager, out var gameObject))
+        {
+            return false;
+        }
+
+        position = gameObject.transform.position;
+        return true;
+    }
+    
     public List<Villager> Villagers
     {
         get => _villagers.Keys.ToList();
