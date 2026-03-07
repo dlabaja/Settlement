@@ -35,7 +35,7 @@ namespace Components.GameObjects
             _villager = _villagerFactory.Create();
             _villagerMovement = new VillagerMovement();
             
-            _villagerStatsController = new VillagerStatsController(_villager, _gameTimeService);
+            _villagerStatsController = new VillagerStatsController(_villager, _villagerService, _worldObjectsService, _gameTimeService, _villagerTaskFactory);
             _villagerTasksController = new VillagerTasksController(_villager, _villagerMovement, _worldObjectsService, _pathfindingService, _villagerTaskFactory);
 
             _villagerMovementView = new VillagerMovementView(_villagerMovement, GetComponent<NavMeshAgent>(), _gameTimeService);
@@ -65,7 +65,7 @@ namespace Components.GameObjects
             while (true)
             {
                 _villagerTasksController.ProcessTask(transform.position);
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(2);
             }
         }
     }

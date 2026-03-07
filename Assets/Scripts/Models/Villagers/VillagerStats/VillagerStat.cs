@@ -5,12 +5,14 @@ namespace Models.Villagers.VillagerStats;
 public class VillagerStat
 {
     public int Value { get; private set; } = 100;
+    public int StatLowThreshold { get; }
     public int UrgentThreshold { get; }
-    public event Action UrgentThresholdReached;
-    private bool urgentThresholdCalled;
+    public event Action StatLowThresholdReached; // he should start to look for it
+    public event Action UrgentThresholdReached; // he will die/leave
 
-    public VillagerStat(int urgentThreshold = 0)
+    public VillagerStat(int statLowTreshold = 50, int urgentThreshold = 0)
     {
+        StatLowThreshold = statLowTreshold;
         UrgentThreshold = urgentThreshold;
     }
 
@@ -47,14 +49,13 @@ public class VillagerStat
     private void ChangeValue(int ammount)
     {
         Value = Math.Clamp(Value + ammount, 0, 100);
+        if (Value <= StatLowThreshold)
+        {
+            StatLowThresholdReached?.Invoke();
+        }
         if (Value <= UrgentThreshold)
         {
             UrgentThresholdReached?.Invoke();
-            urgentThresholdCalled = true;
-        }
-        else if (urgentThresholdCalled && Value > UrgentThreshold)
-        {
-            urgentThresholdCalled = false;
         }
     }
 }
