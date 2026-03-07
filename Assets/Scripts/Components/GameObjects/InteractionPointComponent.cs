@@ -31,17 +31,17 @@ namespace Components.GameObjects
             _worldObjectsService.RegisterInteractionPoint(_interactionPoint, _worldObject);
         }
 
-        public void OnCollisionEnter(Collision other)
+        public void OnTriggerEnter(Collider other)
         {
             if (!_villagerService.TryGetVillager(other.gameObject, out var villager))
             {
                 return;
             }
 
-            StartCoroutine(OnCollisionEnterAsync(villager));
+            StartCoroutine(OnTriggerEnterAsync(villager));
         }
 
-        private IEnumerator OnCollisionEnterAsync(Villager villager)
+        private IEnumerator OnTriggerEnterAsync(Villager villager)
         {
             yield return _interactionPointController.OnVillagerCollision(villager, _worldObject);
         }
