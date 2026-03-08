@@ -22,7 +22,6 @@ namespace Components.Camera
 
         public void Awake()
         {
-            _cameraMovementController = new CameraMovementController(GetComponent<Rigidbody>(), transform, _settingsService);
             _keyControlsWithAction = new (KeyControl keyControl, Func<Vector3> action)[]
             {
                 (GetKeyControl(InputActionName.CameraForward), transform.Forward),
@@ -30,6 +29,11 @@ namespace Components.Camera
                 (GetKeyControl(InputActionName.CameraLeft), transform.Left),
                 (GetKeyControl(InputActionName.CameraRight), transform.Right),
             };
+        }
+
+        public void Start()
+        {
+            _cameraMovementController = new CameraMovementController(GetComponent<Rigidbody>(), transform, _settingsService);
             _zoomAction = InputActionMaps.Camera.FindAction(InputActionName.CameraZoom);
             _allowRotationKey = GetKeyControl(InputActionName.CameraAllowRotate);
         }

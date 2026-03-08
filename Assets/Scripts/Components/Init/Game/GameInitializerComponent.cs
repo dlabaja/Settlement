@@ -7,8 +7,9 @@ using Services.Resources;
 using System;
 using UnityEngine;
 
-namespace Components.Init
+namespace Components.Init.Game
 {
+    // initializes ClientData (from container filled in Boot scene) and Init data
     public class GameInitializerComponent : MonoBehaviour, IInstaller
     {
         public void InstallBindings(ContainerBuilder builder)

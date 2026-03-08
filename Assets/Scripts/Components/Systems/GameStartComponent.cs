@@ -3,6 +3,7 @@ using Reflex.Attributes;
 using Services;
 using Services.GameObjects;
 using Services.Resources;
+using System;
 using UnityEngine;
 
 namespace Components.Systems
@@ -19,6 +20,10 @@ namespace Components.Systems
         public void Awake()
         {
             _gameStartController = new GameStartController();
+        }
+
+        public void Start()
+        {
             _gameStartController.Init(_prefabsService);
         }
 

@@ -1,5 +1,6 @@
 using Reflex.Attributes;
 using Services;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace Components.Systems
     public class GlobalInventoryComponent : MonoBehaviour
     {
         [Inject] private GlobalInventoryService _globalInventoryService; 
-        
-        public void Awake()
+
+        public void Start()
         {
             StartCoroutine(UpdateInventory());
         }

@@ -37,8 +37,6 @@ namespace Components.GameObjects
             
             _villagerStatsController = new VillagerStatsController(_villager, _villagerService, _worldObjectsService, _gameTimeService, _villagerTaskFactory);
             _villagerTasksController = new VillagerTasksController(_villager, _villagerMovement, _worldObjectsService, _pathfindingService, _villagerTaskFactory);
-
-            _villagerMovementView = new VillagerMovementView(_villagerMovement, GetComponent<NavMeshAgent>(), _gameTimeService);
             
             _name = _villager.Name;
             _gender = _villager.Gender;
@@ -46,6 +44,7 @@ namespace Components.GameObjects
 
         public void Start()
         {
+            _villagerMovementView = new VillagerMovementView(_villagerMovement, GetComponent<NavMeshAgent>(), _gameTimeService);
             _globalInventoryService.Register(_villager.Inventory);
             _villagerService.Register(_villager, gameObject);
             StartCoroutine(UpdateTasks());

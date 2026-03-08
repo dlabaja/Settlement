@@ -6,6 +6,7 @@ using Models.Controls;
 using Reflex.Attributes;
 using Services;
 using Services.Resources;
+using System;
 using UnityEngine;
 using Views.Camera;
 
@@ -24,9 +25,13 @@ namespace Components.Camera
         public void Awake()
         {
             _cameraSelect = new CameraSelect();
-            _camera = GetComponent<UnityEngine.Camera>();
             _cameraSelectView = new CameraSelectView(_cameraSelect, _materialsService);
             _cameraSelectController = new CameraSelectController(_cameraSelect);
+        }
+
+        public void Start()
+        {
+            _camera = GetComponent<UnityEngine.Camera>();
             _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
         }
 

@@ -36,3 +36,4 @@
 # Code Guidelines
 - Injecting by měl probíhat primárně přes konstruktor kromě komponent, kde to nejde. Prefaby musí mít GameObjectSelfInjector komponentu.
 - Třída by se neměla jmenovat stejně jako namespace (doporučuju množné číslo)
+- Awake by mělo mít jen inicializaci, Start pak registrace, hledání komponent nebo coroutiny

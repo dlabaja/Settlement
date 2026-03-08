@@ -11,7 +11,7 @@ namespace Components.Systems
         [Inject] private GameTimeService _gameTimeService;
         [SerializeField] private int ticks;
         private GameTimeController _gameTimeController;
-        private const float TickDelaySecs = 0.1f;
+        private const float TickDurationInSecs = 0.1f;
         
         public void Awake()
         {
@@ -33,7 +33,7 @@ namespace Components.Systems
             while (true)
             {
                 _gameTimeController.TryTick();
-                yield return new WaitForSeconds(TickDelaySecs);
+                yield return new WaitForSeconds(TickDurationInSecs);
             }
         }
     }
