@@ -1,7 +1,9 @@
-using Delegates;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Models.Camera;
+
+public delegate void ObjectChangedNullable<in T>([CanBeNull] T newObject, [CanBeNull] T oldObject);
 
 public class CameraSelect
 {

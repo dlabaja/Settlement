@@ -34,7 +34,7 @@ public class PrefabsService
     {
         gameObject.SetActive(false);
         var obj = UnityEngine.Object.Instantiate(gameObject, position, quaternion ?? Quaternion.identity);
-        GameObjectInjector.InjectRecursive(obj, Container.RootContainer);
+        GameObjectInjector.InjectRecursive(obj, Container.RootContainer); // dependency injection
         obj.SetActive(true);
     }
 

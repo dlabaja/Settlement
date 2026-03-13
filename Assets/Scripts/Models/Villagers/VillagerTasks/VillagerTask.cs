@@ -3,13 +3,14 @@ using Models.WorldObjects;
 
 namespace Models.Villagers.VillagerTasks;
 
+
 public class VillagerTask
 {
     public Villager Source { get; }
     public WorldObject Destination { get; }
-    public TaskDelegate Task { get; }
+    public VillagerTaskDelegate Task { get; }
 
-    public VillagerTask(Villager source, WorldObject destination, TaskDelegate fn)
+    public VillagerTask(Villager source, WorldObject destination, VillagerTaskDelegate fn)
     {
         Source = source;
         Destination = destination;
