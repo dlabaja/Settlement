@@ -1,5 +1,5 @@
 using Models.Villagers;
-using Models.Villagers.VillagerTasks;
+using Models.Villagers.Tasks;
 using Models.WorldObjects;
 
 namespace Factories;

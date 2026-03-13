@@ -1,6 +1,6 @@
 using Models.WorldObjects;
 
-namespace Models.Villagers.VillagerPlaces;
+namespace Models.Villagers.Places;
 
 public class VillagerPlaces
 {

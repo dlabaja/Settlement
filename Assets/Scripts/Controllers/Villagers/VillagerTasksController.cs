@@ -1,7 +1,7 @@
 using Enums;
 using Factories;
 using Models.Villagers;
-using Models.Villagers.VillagerTasks;
+using Models.Villagers.Tasks;
 using Services;
 using Services.GameObjects;
 using UnityEngine;

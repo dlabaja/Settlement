@@ -1,6 +1,6 @@
 using System;
 
-namespace Models.Villagers.VillagerStats;
+namespace Models.Villagers.Stats;
 
 public class VillagerStat
 {

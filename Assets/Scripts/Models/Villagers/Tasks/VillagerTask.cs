@@ -1,7 +1,7 @@
 using Delegates;
 using Models.WorldObjects;
 
-namespace Models.Villagers.VillagerTasks;
+namespace Models.Villagers.Tasks;
 
 
 public class VillagerTask

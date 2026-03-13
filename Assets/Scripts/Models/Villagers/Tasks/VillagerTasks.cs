@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Models.Villagers.VillagerTasks;
+namespace Models.Villagers.Tasks;
 
 public class VillagerTasks
 {

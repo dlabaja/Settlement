@@ -1,6 +1,8 @@
 using Enums;
 using Models.Systems.Inventory;
-using Models.Villagers.VillagerPlaces;
+using Models.Villagers.Places;
+using Models.Villagers.Stats;
+using Models.Villagers.Tasks;
 
 namespace Models.Villagers;
 
@@ -9,9 +11,9 @@ public class Villager
     public string Name { get; }
     public Gender Gender { get; }
     public Inventory Inventory { get; } = new Inventory(1);
-    public VillagerTasks.VillagerTasks Tasks { get; } = new VillagerTasks.VillagerTasks();
-    public VillagerStats.VillagerStats Stats { get; } = new VillagerStats.VillagerStats();
-    public VillagerPlaces.VillagerPlaces Places { get; } = new VillagerPlaces.VillagerPlaces();
+    public VillagerTasks Tasks { get; } = new VillagerTasks();
+    public VillagerStats Stats { get; } = new VillagerStats();
+    public VillagerPlaces Places { get; } = new VillagerPlaces();
     
     public Villager(string name, Gender gender)
     {
