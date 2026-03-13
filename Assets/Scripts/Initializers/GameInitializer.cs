@@ -44,6 +44,7 @@ public class GameInitializer
         RegisterFactory<VillagerFactory>();
         RegisterFactory<WorldObjectFactory>();
         RegisterFactory<VillagerTaskFactory>();
+        RegisterFactory<InteractionPointFactory>();
     }
 
     private void RegisterService(object value)

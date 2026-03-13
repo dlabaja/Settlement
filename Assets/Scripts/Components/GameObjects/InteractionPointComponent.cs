@@ -1,4 +1,5 @@
 using Controllers.GameObjects;
+using Factories;
 using Models.Villagers;
 using Models.WorldObjects;
 using Reflex.Attributes;
@@ -15,6 +16,7 @@ namespace Components.GameObjects
         [Inject] private TerrainService _terrainService;
         [Inject] private VillagerService _villagerService;
         [Inject] private WorldObjectsService _worldObjectsService;
+        [Inject] private InteractionPointFactory _interactionPointFactory;
         private InteractionPointController _interactionPointController;
         private InteractionPoint _interactionPoint;
         private WorldObject _worldObject;
@@ -22,12 +24,12 @@ namespace Components.GameObjects
         public void Awake()
         {
             _interactionPointController = new InteractionPointController();
-            _interactionPoint = _interactionPointController.GetGrounded(transform.position, _terrainService);
         }
 
         public void Start()
         {
             _worldObject = GetWorldObject();
+            _interactionPoint = _interactionPointFactory.Create(_terrainService.GroundVector3(transform.position), _worldObject.WorldObjectType);
             _worldObjectsService.RegisterInteractionPoint(_interactionPoint, _worldObject);
         }
 
@@ -39,6 +41,15 @@ namespace Components.GameObjects
             }
 
             StartCoroutine(OnTriggerEnterAsync(villager));
+        }
+
+        public void OnTriggerExit(Collider other)
+        {
+            if (!_villagerService.TryGetVillager(other.gameObject, out var villager))
+            {
+                return;
+            }
+            _interactionPoint.Leave(villager);
         }
 
         private IEnumerator OnTriggerEnterAsync(Villager villager)

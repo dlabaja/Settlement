@@ -49,7 +49,7 @@ public class VillagerTasksController
             return;
         }
 
-        var taskHasDestination = _worldObjectsService.TryGetNearestEntryPoint(task.Destination, villagerPos, out var point);
+        var taskHasDestination = _worldObjectsService.TryGetNearestInteractionPoint(task.Destination, villagerPos, out var point);
         if (!taskHasDestination)
         {
             if (_tasks.Length == 1)
@@ -61,6 +61,7 @@ public class VillagerTasksController
             return;
         }
 
+        point.TrySetOccupant(_villager);
         DoTask(villagerPos, point.Position);
     }
 

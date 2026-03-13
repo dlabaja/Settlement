@@ -57,7 +57,7 @@ public class WorldObjectsService
         return true;
     }
 
-    public bool TryGetNearestEntryPoint(WorldObject worldObject, Vector3 currentPos, out InteractionPoint interactionPoint)
+    public bool TryGetNearestInteractionPoint(WorldObject worldObject, Vector3 currentPos, out InteractionPoint interactionPoint)
     {
         interactionPoint = null;
         if (!_interactionPoints.TryGetValue(worldObject, out var interactionPoints) || interactionPoints.Count == 0)
