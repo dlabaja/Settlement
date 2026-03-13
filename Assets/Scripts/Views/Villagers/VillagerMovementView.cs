@@ -1,5 +1,5 @@
 using Models.Villagers;
-using Services;
+using Services.Systems;
 using System;
 using UnityEngine;
 using UnityEngine.AI;
@@ -36,8 +36,8 @@ public class VillagerMovementView : IDisposable
 
     public void Dispose()
     {
-        _villagerMovement.DestinationChanged += VillagerMovementOnDestinationChanged;
-        _villagerMovement.IsMovingChanged += VillagerMovementOnIsMovingChanged;
+        _villagerMovement.DestinationChanged -= VillagerMovementOnDestinationChanged;
+        _villagerMovement.IsMovingChanged -= VillagerMovementOnIsMovingChanged;
         _gameTimeService.SpeedChanged -= GameTimeServiceOnSpeedChanged;
     }
     

@@ -6,14 +6,14 @@ public static class RandomUtils
 {
     private static readonly Random _random = new Random();
     
-    public static bool CheckChance(int chance)
+    public static bool GetChance(int chance)
     {
         return _random.Next(0, chance) == 0;
     }
 
-    public static bool CheckChance(int chance, Action onSuccess)
+    public static bool WhenChance(int chance, Action onSuccess)
     {
-        if (CheckChance(chance))
+        if (GetChance(chance))
         {
             onSuccess();
             return true;
@@ -25,13 +25,13 @@ public static class RandomUtils
     public static T GetRandomEnumItem<T>() where T : struct, Enum
     {
         var items = Enum.GetNames(typeof(T));
-        var random = new Random().Next(0, items.Length);
+        var random = _random.Next(0, items.Length);
         return Enum.Parse<T>(items[random]);
     }
 
     public static T GetRandomArrayItem<T>(T[] list)
     {
-        var random = new Random().Next(0, list.Length);
+        var random = _random.Next(0, list.Length);
         return list[random];
     }
 }

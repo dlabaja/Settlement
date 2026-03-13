@@ -19,9 +19,10 @@ public static class MathUtils
         return Diff(a, b) < eps;
     }
 
-    // inclusive
-    public static bool InInterval(int num, int start, int end)
+    public static bool InInterval(int num, int start, int end, bool startInclusive = true, bool endInclusive = true)
     {
-        return start <= num && num <= end;
+        var startCond = startInclusive ? start <= num : start < num;
+        var endCond = endInclusive ? num <= end : num < end;
+        return startCond && endCond;
     }
 }
