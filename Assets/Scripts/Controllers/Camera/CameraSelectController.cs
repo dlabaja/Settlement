@@ -1,6 +1,6 @@
 using Interfaces;
 using Models.Camera;
-using Services;
+using Services.Controls;
 using UnityEngine;
 
 namespace Controllers.Camera;

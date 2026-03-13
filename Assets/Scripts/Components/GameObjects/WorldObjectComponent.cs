@@ -3,8 +3,8 @@ using Factories;
 using Interfaces;
 using Models.WorldObjects;
 using Reflex.Attributes;
-using Services;
 using Services.GameObjects;
+using Services.Systems;
 using UnityEngine;
 
 namespace Components.GameObjects

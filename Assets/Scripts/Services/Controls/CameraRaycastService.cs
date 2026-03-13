@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Services;
+namespace Services.Controls;
 
 public class CameraRaycastService
 {

@@ -1,9 +1,9 @@
 using Controllers.Systems;
 using Reflex.Attributes;
-using Services;
 using Services.GameObjects;
+using Services.GameObjects.Villagers;
 using Services.Resources;
-using System;
+using Services.Systems;
 using UnityEngine;
 
 namespace Components.Systems

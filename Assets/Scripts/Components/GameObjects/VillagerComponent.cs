@@ -6,6 +6,8 @@ using Models.Villagers;
 using Reflex.Attributes;
 using Services;
 using Services.GameObjects;
+using Services.GameObjects.Villagers;
+using Services.Systems;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;

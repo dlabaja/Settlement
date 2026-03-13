@@ -3,7 +3,7 @@ using Models.Systems.Inventory;
 using System;
 using System.Collections.Generic;
 
-namespace Services;
+namespace Services.Systems;
 
 public class GlobalInventoryService
 {

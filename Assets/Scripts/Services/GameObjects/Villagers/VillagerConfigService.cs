@@ -2,7 +2,7 @@ using Data.Villagers;
 using Enums;
 using Utils;
 
-namespace Services;
+namespace Services.GameObjects.Villagers;
 
 public class VillagerConfigService
 {

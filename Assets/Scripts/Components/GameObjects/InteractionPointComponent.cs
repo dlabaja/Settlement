@@ -4,6 +4,7 @@ using Models.Villagers;
 using Models.WorldObjects;
 using Reflex.Attributes;
 using Services.GameObjects;
+using Services.GameObjects.Villagers;
 using Services.Resources;
 using System;
 using System.Collections;

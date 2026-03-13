@@ -1,7 +1,7 @@
 using Enums;
 using System;
 
-namespace Services;
+namespace Services.Systems;
 
 public class InteractionModeService
 {

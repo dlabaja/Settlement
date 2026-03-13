@@ -1,5 +1,5 @@
 using Models.Villagers;
-using Services;
+using Services.GameObjects.Villagers;
 
 namespace Factories;
 

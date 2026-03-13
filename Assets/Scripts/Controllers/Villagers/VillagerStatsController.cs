@@ -1,8 +1,9 @@
 using Enums;
 using Factories;
 using Models.Villagers;
-using Services;
 using Services.GameObjects;
+using Services.GameObjects.Villagers;
+using Services.Systems;
 using System;
 using Utils;
 
@@ -78,21 +79,21 @@ public class VillagerStatsController : IDisposable
 
     private void DecreaseWater()
     {
-        RandomUtils.CheckChance(20, _villager.Stats.Water.Decrease);
+        RandomUtils.WhenChance(20, _villager.Stats.Water.Decrease);
     }
     
     private void DecreaseFood()
     {
-        RandomUtils.CheckChance(50, _villager.Stats.Food.Decrease);
+        RandomUtils.WhenChance(50, _villager.Stats.Food.Decrease);
     }
     
     private void DecreaseChurch()
     {
-        RandomUtils.CheckChance(80, _villager.Stats.Church.Decrease);
+        RandomUtils.WhenChance(80, _villager.Stats.Church.Decrease);
     }
     
     private void DecreaseHousing()
     {
-        RandomUtils.CheckChance(60, _villager.Stats.Housing.Decrease);
+        RandomUtils.WhenChance(60, _villager.Stats.Housing.Decrease);
     }
 }

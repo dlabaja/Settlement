@@ -1,6 +1,6 @@
 using System;
 
-namespace Services;
+namespace Services.Systems;
 
 public class GameTimeService
 {

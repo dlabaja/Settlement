@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Services;
+namespace Services.Controls;
 
 public class MousePositionService
 {
