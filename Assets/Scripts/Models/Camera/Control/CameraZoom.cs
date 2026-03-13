@@ -1,19 +1,20 @@
+using Interfaces;
+using Models.Systems.Settings;
 using Services;
 using UnityEngine;
 
-namespace Models.Camera;
+namespace Models.Camera.Control;
 
-public class CameraZoom
+public class CameraZoom : ISettingsDependant
 {
-    private readonly SettingsService _settingsService;
     private int _remainingTicks = maxRemainingTicks;
     private float _direction;
     private const int maxRemainingTicks = 20;
-    private float ZoomSpeed => _settingsService.Settings.CameraSettings.ZoomSpeed;
+    private readonly SettingsValue<int> _zoomSpeed;
 
     public CameraZoom(SettingsService settingsService)
     {
-        _settingsService = settingsService;
+        _zoomSpeed = settingsService.Value(s => s.CameraSettings.ZoomSpeed);
     }
         
     public void StartZoom(float direction)
@@ -22,14 +23,14 @@ public class CameraZoom
         _remainingTicks = maxRemainingTicks;
     }
 
-    public Vector3 ZoomedVectorDelta(Vector3 forward, float deltaTime)
+    public Vector3 ZoomVectorDelta(Vector3 forward, float deltaTime)
     {
         if (ZoomEnded)
         {
             return Vector3.zero;
         }
         _remainingTicks--;
-        return forward * (_direction * ZoomSpeed * deltaTime);
+        return forward * (_direction * _zoomSpeed.Value * deltaTime);
     }
 
     public bool ZoomEnded
@@ -40,5 +41,10 @@ public class CameraZoom
     public void StopZoom()
     {
         _remainingTicks = 0;
+    }
+
+    public void Dispose()
+    {
+        _zoomSpeed.Dispose();
     }
 }
