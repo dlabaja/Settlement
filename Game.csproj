@@ -95,13 +95,11 @@
     <Compile Include="Assets/Scripts/Views/Camera/CameraSelectView.cs" />
     <Compile Include="Assets/Scripts/Converters/SettingsConverter.cs" />
     <Compile Include="Assets/Scripts/Models/Villagers/VillagerTasks/VillagerTask.cs" />
-    <Compile Include="Assets/Scripts/Delegates/ObjectChangedDelegate.cs" />
     <Compile Include="Assets/Scripts/Models/WorldObjects/Nature/BerryBush.cs" />
     <Compile Include="Assets/Scripts/Models/Villagers/VillagerPlaces/VillagerPlaces.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionMapName.cs" />
     <Compile Include="Assets/Scripts/Models/Villagers/VillagerMovement.cs" />
     <Compile Include="Assets/Scripts/Views/Villagers/VillagerMovementView.cs" />
-    <Compile Include="Assets/Scripts/Delegates/TaskDelegate.cs" />
     <Compile Include="Assets/Scripts/Services/GameTimeService.cs" />
     <Compile Include="Assets/Scripts/Controllers/GameObjects/InteractionPointController.cs" />
     <Compile Include="Assets/Scripts/Utils/QuaternionUtils.cs" />
@@ -151,6 +149,7 @@
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
     <Compile Include="Assets\Scripts\Components\Init\Boot\GameBootComponent.cs" />
     <Compile Include="Assets\Scripts\Components\Init\Game\GameInitializerComponent.cs" />
+    <Compile Include="Assets\Scripts\Delegates\VillagerTaskDelegate.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ISettingsDependant.cs" />
     <Compile Include="Assets\Scripts\Models\Camera\Control\CameraControl.cs" />
     <Compile Include="Assets\Scripts\Models\Camera\Control\CameraMovement.cs" />

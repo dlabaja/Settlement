@@ -5,7 +5,6 @@
 - Convertors - převodníky (zatím JSON->Model)
 - Data - čisté datové třídy
 - DataTypes - vlastní datové struktury
-- Delegates - delegáti (funkce)
 - Enums - enumy
 - Factories - factorky tvořící třídy z Models, musí se injectovat (některé mají deps)
 - Initializers - třídy initující DI, statický kontejner pro přesun async dat z bootu do hry
