@@ -68,7 +68,6 @@
     <Compile Include="Assets/Scripts/Services/MousePositionService.cs" />
     <Compile Include="Assets/Scripts/Models/Systems/Inventory/Inventory.cs" />
     <Compile Include="Assets/Scripts/Enums/WorldObjectType.cs" />
-    <Compile Include="Assets/Scripts/Components/Init/GameBootComponent.cs" />
     <Compile Include="Assets/Scripts/Services/SettingsService.cs" />
     <Compile Include="Assets/Scripts/Services/PathfindingService.cs" />
     <Compile Include="Assets/Scripts/Constants/InputActionName.cs" />
@@ -78,12 +77,10 @@
     <Compile Include="Assets/Scripts/Models/WorldObjects/WorldObject.cs" />
     <Compile Include="Assets/Scripts/Models/WorldObjects/InteractionPoint.cs" />
     <Compile Include="Assets/Scripts/Constants/SceneName.cs" />
-    <Compile Include="Assets/Scripts/Models/Camera/CameraRotation.cs" />
     <Compile Include="Assets/Scripts/Components/Systems/GlobalInventoryComponent.cs" />
     <Compile Include="Assets/Scripts/Components/Systems/GameTimeComponent.cs" />
-    <Compile Include="Assets/Scripts/Controllers/Camera/CameraMovementController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Camera\CameraControlController.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
-    <Compile Include="Assets/Scripts/Models/Camera/CameraMovement.cs" />
     <Compile Include="Assets/Scripts/Controllers/Systems/GameStartController.cs" />
     <Compile Include="Assets/Scripts/Services/GlobalInventoryService.cs" />
     <Compile Include="Assets/Scripts/Components/GameObjects/VillagerComponent.cs" />
@@ -91,7 +88,6 @@
     <Compile Include="Assets/Scripts/Models/Villagers/VillagerStats/VillagerStat.cs" />
     <Compile Include="Assets/Scripts/Components/Systems/GameStartComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/PrefabName.cs" />
-    <Compile Include="Assets/Scripts/Models/Camera/CameraZoom.cs" />
     <Compile Include="Assets/Scripts/RequiredKeyword.cs" />
     <Compile Include="Assets/Scripts/Components/GameObjects/WorldObjectComponent.cs" />
     <Compile Include="Assets/Scripts/Utils/JsonUtils.cs" />
@@ -133,7 +129,6 @@
     <Compile Include="Assets/Scripts/Components/Camera/CameraSelectComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/PhysicsLayer.cs" />
     <Compile Include="Assets/Scripts/Converters/Converter.cs" />
-    <Compile Include="Assets/Scripts/Components/Init/GameInitializerComponent.cs" />
     <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/Well.cs" />
     <Compile Include="Assets/Scripts/Services/Resources/MaterialsService.cs" />
     <Compile Include="Assets/Scripts/Controllers/Villagers/VillagerTasksController.cs" />
@@ -154,6 +149,16 @@
     <Compile Include="Assets/Scripts/Utils/ArrayUtils.cs" />
     <Compile Include="Assets/Scripts/Data/Villagers/VillagerNames.cs" />
     <Compile Include="Assets/Scripts/Data/Settings/Settings.cs" />
+    <Compile Include="Assets\Scripts\Components\Init\Boot\GameBootComponent.cs" />
+    <Compile Include="Assets\Scripts\Components\Init\Game\GameInitializerComponent.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\ISettingsDependant.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\Control\CameraControl.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\Control\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\Control\CameraRotation.cs" />
+    <Compile Include="Assets\Scripts\Models\Camera\Control\CameraZoom.cs" />
+    <Compile Include="Assets\Scripts\Models\Systems\Settings\SettingsValue.cs" />
+    <Compile Include="Assets\Scripts\Utils\TransformUtils.cs" />
+    <Compile Include="Assets\Scripts\Views\Camera\CameraControlView.cs" />
     <None Include="Assets/Scripts/Game.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>/home/dlabaja/Unity/Hub/Editor/6000.3.6f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -996,7 +1001,6 @@
       <HintPath>/home/dlabaja/Settlement/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup></ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

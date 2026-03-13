@@ -27,13 +27,17 @@
 
 # O projektu
 - Projekt používá C# preview (11)
-  - aby vše fungovalo musí se projekt v Edit -> Project Settings -> Editor -> C# Project Modifier přidat k importu
-  - kromě toho je v projektu několik souborů zajišťujících že to funguje (RequiredKeyword.cs, LangVersion.props, csc.rp)
+  - aby vše fungovalo, musí se projekt v Edit -> Project Settings -> Editor -> C# Project Modifier přidat k importu
+  - kromě toho je v projektu několik souborů zajišťujících, že to funguje (RequiredKeyword.cs, LangVersion.props, csc.rp)
   - file-scoped namespace nefunguje v Components
 - NuGet se musí stahovat přes Unity Package Manager
 - Linting jde nastavit v rootu (.editorconfig)
 
 # Code Guidelines
-- Injecting by měl probíhat primárně přes konstruktor kromě komponent, kde to nejde. Prefaby musí mít GameObjectSelfInjector komponentu.
-- Třída by se neměla jmenovat stejně jako namespace (doporučuju množné číslo)
+- Injecting by měl probíhat přes konstruktor (kromě komponent, tam to nejde).
+- Třída by se neměla jmenovat stejně jako namespace (řešení je množné číslo/pojmenovat třídu celým jménem a namespace jen částí)
 - Awake by mělo mít jen inicializaci, Start pak registrace, hledání komponent nebo coroutiny
+
+# Na co dát pozor
+- Některé věci se musí disposovat (např SettingsValue)
+- MonoBehavior nesmí mít scoped namespace
