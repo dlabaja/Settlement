@@ -16,28 +16,27 @@ namespace Components.Camera
     {
         [Inject] private MaterialsService _materialsService;
         [Inject] private MousePositionService _mousePositionService;
+        [Inject] private CameraRaycastService _cameraRaycastService;
         private CameraSelect _cameraSelect;
         private CameraSelectView _cameraSelectView;
         private CameraSelectController _cameraSelectController;
         private KeyControl _selectedKey;
-        private UnityEngine.Camera _camera;
         
         public void Awake()
         {
             _cameraSelect = new CameraSelect();
             _cameraSelectView = new CameraSelectView(_cameraSelect, _materialsService);
-            _cameraSelectController = new CameraSelectController(_cameraSelect);
+            _cameraSelectController = new CameraSelectController(_cameraSelect, _cameraRaycastService);
         }
 
         public void Start()
         {
-            _camera = GetComponent<UnityEngine.Camera>();
             _selectedKey = new KeyControl(InputActionMaps.Camera.FindAction(InputActionName.CameraSelect));
         }
 
         public void Update()
         {
-            _cameraSelectController.UpdateRaycast(_camera, _mousePositionService.Position, _selectedKey.WasPressedThisFrame());
+            _cameraSelectController.UpdateRaycast(UnityEngine.Camera.current, _mousePositionService.Position, _selectedKey.WasPressedThisFrame());
         }
 
         private void OnDestroy()

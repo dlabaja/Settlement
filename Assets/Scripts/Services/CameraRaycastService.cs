@@ -1,16 +1,16 @@
 using UnityEngine;
 
-namespace Models.Camera;
+namespace Services;
 
-public class CameraRay
+public class CameraRaycastService
 {
-    public bool TryRaycast(UnityEngine.Camera camera, Vector3 mousePosition, out RaycastHit hit, LayerMask? mask)
+    public bool TryRaycast(Camera camera, Vector3 mousePosition, out RaycastHit hit, LayerMask? mask)
     {
         Ray ray = camera.ScreenPointToRay(mousePosition);
         return Physics.Raycast(ray, out hit, Mathf.Infinity, mask ?? Physics.DefaultRaycastLayers);
     }
 
-    public bool TryRaycast<T>(UnityEngine.Camera camera, Vector3 mousePosition, out RaycastHit hit)
+    public bool TryRaycast<T>(Camera camera, Vector3 mousePosition, out RaycastHit hit)
     {
         Ray ray = camera.ScreenPointToRay(mousePosition);
         if (!Physics.Raycast(ray, out hit))

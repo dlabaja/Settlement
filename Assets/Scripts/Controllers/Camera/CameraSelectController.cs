@@ -1,23 +1,24 @@
 using Interfaces;
 using Models.Camera;
+using Services;
 using UnityEngine;
 
 namespace Controllers.Camera;
 
 public class CameraSelectController
 {
-    private readonly CameraRay _cameraRay;
+    private readonly CameraRaycastService _cameraRaycastService;
     private readonly CameraSelect _cameraSelect;
 
-    public CameraSelectController(CameraSelect cameraSelect)
+    public CameraSelectController(CameraSelect cameraSelect, CameraRaycastService cameraRaycastService)
     {
-        _cameraRay = new CameraRay();
         _cameraSelect = cameraSelect;
+        _cameraRaycastService = cameraRaycastService;
     }
 
     public void UpdateRaycast(UnityEngine.Camera camera, Vector3 mousePosition, bool selectPressed)
     {
-        var hit = _cameraRay.TryRaycast<ISelectable>(camera, mousePosition, out var raycastedObj);
+        var hit = _cameraRaycastService.TryRaycast<ISelectable>(camera, mousePosition, out var raycastedObj);
         if (hit)
         {
             ProcessHit(raycastedObj.transform.gameObject, selectPressed);

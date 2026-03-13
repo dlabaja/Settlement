@@ -16,32 +16,39 @@ public class GameInitializer
     public void Init(ContainerBuilder builder, ClientData data, InitData initData)
     {
         _builder = builder;
-        RegisterManagers(builder, data, initData);
-        RegisterFactories(builder);
+        RegisterServices(data, initData);
+        RegisterFactories();
     }
 
-    private void RegisterManagers(ContainerBuilder builder, ClientData data, InitData initData)
+    private void RegisterServices(ClientData data, InitData initData)
     {
-        builder.RegisterValue(new SettingsService(data.Settings));
-        builder.RegisterValue(new VillagerConfigService(data.VillagerNames));
-        builder.RegisterValue(new MousePositionService(initData.mousePositionAction, initData.mousePositionDeltaAction));
-        builder.RegisterValue(new PrefabsService(initData.worldObjectPrefabs, initData.villagerPrefab));
-        builder.RegisterValue(new MaterialsService(initData.materials));
-        builder.RegisterValue(new TerrainService(initData.terrain));
+        RegisterService(new SettingsService(data.Settings));
+        RegisterService(new VillagerConfigService(data.VillagerNames));
         
-        builder.RegisterValue(new WorldObjectsService());
-        builder.RegisterValue(new VillagerService());
-        builder.RegisterValue(new GameTimeService());
-        builder.RegisterValue(new GlobalInventoryService());
-        builder.RegisterValue(new PathfindingService());
-        builder.RegisterValue(new InteractionModeService());
+        RegisterService(new MousePositionService(initData.mousePositionAction, initData.mousePositionDeltaAction));
+        RegisterService(new PrefabsService(initData.worldObjectPrefabs, initData.villagerPrefab));
+        RegisterService(new MaterialsService(initData.materials));
+        RegisterService(new TerrainService(initData.terrain));
+        RegisterService(new CameraRaycastService());
+        
+        RegisterService(new WorldObjectsService());
+        RegisterService(new VillagerService());
+        RegisterService(new GameTimeService());
+        RegisterService(new GlobalInventoryService());
+        RegisterService(new PathfindingService());
+        RegisterService(new InteractionModeService());
     }
 
-    private void RegisterFactories(ContainerBuilder builder)
+    private void RegisterFactories()
     {
         RegisterFactory<VillagerFactory>();
         RegisterFactory<WorldObjectFactory>();
         RegisterFactory<VillagerTaskFactory>();
+    }
+
+    private void RegisterService(object value)
+    {
+        _builder.RegisterValue(value);
     }
 
     private void RegisterFactory<T>()
