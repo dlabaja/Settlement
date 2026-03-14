@@ -90,11 +90,11 @@ public class VillagerTasks
         return type switch
         {
             WorldObjectType.Spawn => 0,
-            WorldObjectType.Tree => FromRange(20, 5),
-            WorldObjectType.BerryBush => FromRange(15, 5),
-            WorldObjectType.House => FromRange(20, 5),
-            WorldObjectType.Church => FromRange(60, 10),
-            WorldObjectType.Well => FromInterval(5, 8),
+            WorldObjectType.Tree => FromRangeF(20, 5),
+            WorldObjectType.BerryBush => FromRangeF(15, 5),
+            WorldObjectType.House => FromRangeF(20, 5),
+            WorldObjectType.Church => FromRangeF(60, 10),
+            WorldObjectType.Well => FromIntervalF(5, 8),
         };
     }
 }

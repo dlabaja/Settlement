@@ -5,6 +5,21 @@ namespace Utils;
 public static class RandomUtils
 {
     private static readonly Random _random = new Random();
+
+    public static int FromInterval(int start, int end)
+    {
+        return _random.Next(start, end + 1);
+    }
+    
+    public static double FromIntervalF(float start, float end)
+    {
+        return start + (end - start) * _random.NextDouble();
+    }
+    
+    public static double FromRangeF(float value, float range)
+    {
+        return (value - range) + (value + range) * _random.NextDouble();
+    }
     
     public static bool GetChance(int chance)
     {
