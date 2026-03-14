@@ -37,6 +37,12 @@
 - Třída by se neměla jmenovat stejně jako namespace (řešení je množné číslo/pojmenovat třídu celým jménem a namespace jen částí)
 - Awake by mělo mít jen inicializaci, Start pak registrace, hledání komponent nebo coroutiny
 
+# Dependency Injection
+- Projekt používá knihovnu Reflex
+- Root kontejner (RootScope, dá se změnit v Assets/Resources/ReflexSettings) je dostupný ve všech scénách, nikdy se nemaže
+- Scene kontejner se musí udělat pro každou scénu zvlášť a musí být ve scéně, max 1. Vždy dědí z Root kontejneru
+- [Inject] je lazy loaded a zavolá se až ho někdo potřebuje
+
 # Na co dát pozor
 - Některé věci se musí disposovat (např SettingsValue)
 - MonoBehavior nesmí mít scoped namespace
