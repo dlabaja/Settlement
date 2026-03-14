@@ -5,6 +5,7 @@ using Models.WorldObjects;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Utils.RandomUtils;
 
 namespace Models.Villagers.Tasks;
 
@@ -18,11 +19,6 @@ public class VillagerTasks
     public event Action TaskStarted; 
     public event Action TaskCompleted;
     
-    /// <summary>
-    ///     Adds a task with priority if it's not already added
-    /// </summary>
-    /// <param name="villagerTask"></param>
-    /// <param name="priority"></param>
     public void Add(VillagerTask villagerTask, TaskPriority priority)
     {
         if (_addedDestinations.Contains(villagerTask.Destination))
@@ -84,8 +80,21 @@ public class VillagerTasks
         }
         
         TaskStarted?.Invoke();
-        await CurrentRunningTask.Task(CurrentRunningTask.Source, CurrentRunningTask.Destination);
+        await CurrentRunningTask.Task(CurrentRunningTask.Source);
         CurrentRunningTask = null;
         TaskCompleted?.Invoke();
+    }
+
+    public static double GetTaskWaitTime(WorldObjectType type)
+    {
+        return type switch
+        {
+            WorldObjectType.Spawn => 0,
+            WorldObjectType.Tree => FromRange(20, 5),
+            WorldObjectType.BerryBush => FromRange(15, 5),
+            WorldObjectType.House => FromRange(20, 5),
+            WorldObjectType.Church => FromRange(60, 10),
+            WorldObjectType.Well => FromInterval(5, 8),
+        };
     }
 }

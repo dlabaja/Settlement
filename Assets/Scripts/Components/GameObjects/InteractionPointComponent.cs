@@ -6,6 +6,7 @@ using Reflex.Attributes;
 using Services.GameObjects;
 using Services.GameObjects.Villagers;
 using Services.Resources;
+using Services.Systems;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -18,13 +19,14 @@ namespace Components.GameObjects
         [Inject] private VillagerService _villagerService;
         [Inject] private WorldObjectsService _worldObjectsService;
         [Inject] private InteractionPointFactory _interactionPointFactory;
+        [Inject] private GameTimeService _gameTimeService;
         private InteractionPointController _interactionPointController;
         private InteractionPoint _interactionPoint;
         private WorldObject _worldObject;
 
         public void Awake()
         {
-            _interactionPointController = new InteractionPointController();
+            _interactionPointController = new InteractionPointController(_gameTimeService);
         }
 
         public void Start()

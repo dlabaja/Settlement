@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Services.Systems;
 
@@ -27,5 +28,10 @@ public class GameTimeService
     {
         Ticks++;
         TimeTicked?.Invoke();
+    }
+
+    public async Task Wait(double seconds)
+    {
+        await Task.Delay((int)Math.Floor((seconds / GameSpeed) * 1000));
     }
 }

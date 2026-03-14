@@ -76,6 +76,7 @@ public class VillagerTasksController
         _villager.Tasks.SetTask();
         _villagerMovement.IsMoving = true;
         _villagerMovement.SetDestination(destination, path);
+        // zbytek Tasku po interakci je v InteractionPointController
     }
 
     private void AddWorkTask()
