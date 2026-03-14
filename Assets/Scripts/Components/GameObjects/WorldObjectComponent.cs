@@ -20,6 +20,15 @@ namespace Components.GameObjects
         public void Awake()
         {
             WorldObject = _worldObjectFactory.Create(_worldObjectType);
+            WorldObject.Destroy += WorldObjectOnDestroy;
+        }
+
+        private void WorldObjectOnDestroy(WorldObject worldObject)
+        {
+            if (_worldObjectsService.TryGetGameObject(worldObject, out var obj))
+            {
+                Destroy(obj);
+            }
         }
 
         public void Start()
@@ -32,6 +41,7 @@ namespace Components.GameObjects
         {
             _worldObjectsService.Remove(_worldObjectType, WorldObject, gameObject);
             _globalInventoryService.Remove(WorldObject.Inventory);
+            WorldObject.Dispose();
         }
     }
 }
