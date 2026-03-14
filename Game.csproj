@@ -87,13 +87,13 @@
     <Compile Include="Assets/Scripts/Components/Systems/GameTimeComponent.cs" />
     <Compile Include="Assets/Scripts/Converters/VillagerNamesConverter.cs" />
     <Compile Include="Assets/Scripts/Controllers/Systems/GameStartController.cs" />
-    <Compile Include="Assets/Scripts/Delegates/VillagerTaskDelegate.cs" />
     <Compile Include="Assets/Scripts/Components/Init/Scopes/GameInitializerComponent.cs" />
     <Compile Include="Assets/Scripts/Components/GameObjects/VillagerComponent.cs" />
     <Compile Include="Assets/Scripts/Interfaces/ISettingsDependant.cs" />
     <Compile Include="Assets/Scripts/Services/Systems/GlobalInventoryService.cs" />
     <Compile Include="Assets/Scripts/Components/Systems/GameStartComponent.cs" />
     <Compile Include="Assets/Scripts/Constants/PrefabName.cs" />
+    <Compile Include="Assets/Scripts/Services/TimerService.cs" />
     <Compile Include="Assets/Scripts/RequiredKeyword.cs" />
     <Compile Include="Assets/Scripts/Services/GameObjects/Villagers/VillagerService.cs" />
     <Compile Include="Assets/Scripts/Components/GameObjects/WorldObjectComponent.cs" />
@@ -147,6 +147,7 @@
     <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/Spawn.cs" />
     <Compile Include="Assets/Scripts/Utils/MathUtils.cs" />
     <Compile Include="Assets/Scripts/Models/WorldObjects/Buildings/Church.cs" />
+    <Compile Include="Assets/Scripts/Components/Systems/TimerServiceComponent.cs" />
     <Compile Include="Assets/Scripts/Factories/VillagerTaskFactory.cs" />
     <Compile Include="Assets/Scripts/Data/Init/BootData.cs" />
     <Compile Include="Assets/Scripts/Models/Camera/Control/CameraControl.cs" />

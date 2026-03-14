@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 641229273}
   - component: {fileID: 641229274}
   - component: {fileID: 641229275}
+  - component: {fileID: 641229276}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -591,6 +592,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 816c5eca49df488a8513ce316e768eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game::Components.Systems.GlobalInventoryComponent
+--- !u!114 &641229276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641229270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8dd6b955089483a9996d00ac8599822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game::Components.Systems.TimerServiceComponent
 --- !u!1 &670709446
 GameObject:
   m_ObjectHideFlags: 0
