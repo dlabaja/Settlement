@@ -44,6 +44,18 @@ public class WorldObjectsService
         _interactionPoints.Remove(worldObject);
     }
 
+    public bool TryGetGameObject(WorldObject worldObject, out GameObject gameObject)
+    {
+        gameObject = null;
+        if (_objects.ContainsKey(worldObject))
+        {
+            gameObject = _objects[worldObject];
+            return true;
+        }
+
+        return false;
+    }
+
     public bool TryGetNearestObject(WorldObjectType type, Vector3 currentPos, out WorldObject worldObject)
     {
         worldObject = null;
