@@ -9,11 +9,13 @@ namespace Models.Systems.Inventory;
 public class Inventory
 {
     public int SlotCount { get; }
+    public int StackSize { get; }
     private readonly InventorySlot[] _slots;
 
     public Inventory(int slotCount, int stackSize = InventorySlot.DefaultStackSize)
     {
         SlotCount = slotCount;
+        StackSize = stackSize;
         _slots = ArrayUtils.CreateFilled(SlotCount, () => new InventorySlot(ItemType.None, stackSize));
     }
 
@@ -47,7 +49,7 @@ public class Inventory
             slot.TryAddItems(overflow, out overflow);
         }
     }
-    
+
     public void Remove(int count, ItemType itemType, out int underflow)
     {
         underflow = count;
@@ -59,11 +61,20 @@ public class Inventory
             }
 
             slot.TryRemoveItems(underflow, out underflow);
-            
+
             if (slot.IsEmpty)
             {
                 slot.ResetSlot(ItemType.None);
             }
+        }
+    }
+
+    public void Fill(ItemType type)
+    {
+        foreach (var slot in GetSlotsForType(type))
+        {
+            slot.ResetSlot(type);
+            slot.FillSlot();
         }
     }
 
@@ -75,11 +86,12 @@ public class Inventory
         }
     }
 
-    public void Transfer(Inventory inventory, int count, ItemType itemType)
+    public void Transfer(Inventory toInventory, int count, ItemType itemType)
     {
-        var itemCount = Math.Min(GetItemCount(itemType), count);
+        var itemCount = Math.Min(GetItemCount(itemType),
+            Math.Min(toInventory.GetFreeSpaceCount(itemType), count));
         Remove(itemCount, itemType, out _);
-        inventory.Add(itemCount, itemType, out int overflow);
+        toInventory.Add(itemCount, itemType, out int overflow);
         Add(overflow, itemType, out _);
     }
 
@@ -87,6 +99,11 @@ public class Inventory
     {
         var slots = GetSlotsWithType(type);
         return slots.Sum(slot => slot.ItemCount);
+    }
+
+    public int GetFreeSpaceCount(ItemType type)
+    {
+        return GetSlotsForType(type).Sum(slot => slot.StackSize - slot.ItemCount);
     }
 
     public ItemType[] GetItemTypes()
@@ -100,8 +117,9 @@ public class Inventory
         return _slots.Where(slot => slot.CanStoreItemType(type))
             .OrderBy(slot =>
                 slot.IsEmpty ? 2 :
-                slot.IsFull  ? 1 :
-                0);;
+                slot.IsFull ? 1 :
+                0);
+        ;
     }
 
     private IEnumerable<InventorySlot> GetSlotsWithType(ItemType type)

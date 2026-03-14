@@ -72,6 +72,14 @@ public class InventorySlot
         return true;
     }
 
+    public void FillSlot()
+    {
+        if (HasItemType)
+        {
+            ItemCount = StackSize;
+        }
+    }
+
     public bool CanStoreItemType(ItemType itemType)
     {
         return !HasItemType || ItemType == itemType;
