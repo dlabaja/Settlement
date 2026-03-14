@@ -6,12 +6,11 @@ using UnityEngine.SceneManagement;
 
 namespace Components.Init.Boot
 {
-    // loads all the async configuration in the boot scene, fills the ClientDataContainer and switches to game
     public class GameBootComponent : MonoBehaviour
     {
         public IEnumerator Start()
         {
-            yield return ClientDataInitializer.Init();
+            yield return BootDataContainer.InitBootData();
             SceneManager.LoadSceneAsync(SceneName.Game);
         }
     }

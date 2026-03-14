@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace Data.Init;
 
-public class InitData
+public class GameData
 {
     public required InputAction mousePositionAction;
     public required InputAction mousePositionDeltaAction;

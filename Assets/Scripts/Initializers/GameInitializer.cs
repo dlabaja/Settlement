@@ -1,37 +1,33 @@
 using Data.Init;
 using Factories;
 using Reflex.Core;
-using Reflex.Enums;
 using Services;
 using Services.Controls;
 using Services.GameObjects;
 using Services.GameObjects.Villagers;
 using Services.Resources;
 using Services.Systems;
-using Resolution = Reflex.Enums.Resolution;
 
 namespace Initializers;
 
-public class GameInitializer
+public class GameInitializer : Initializer
 {
-    private ContainerBuilder _builder;
-    
-    public void Init(ContainerBuilder builder, ClientData data, InitData initData)
+    public GameInitializer(ContainerBuilder containerBuilder) : base(containerBuilder) {}
+
+    public void Init(BootData bootData, GameData gameData)
     {
-        _builder = builder;
-        RegisterServices(data, initData);
+        RegisterServices(bootData, gameData);
         RegisterFactories();
     }
 
-    private void RegisterServices(ClientData data, InitData initData)
+    private void RegisterServices(BootData bootData, GameData gameData)
     {
-        RegisterService(new SettingsService(data.Settings));
-        RegisterService(new VillagerConfigService(data.VillagerNames));
+        RegisterService(new VillagerConfigService(bootData.VillagerNames));
         
-        RegisterService(new MousePositionService(initData.mousePositionAction, initData.mousePositionDeltaAction));
-        RegisterService(new PrefabsService(initData.worldObjectPrefabs, initData.villagerPrefab));
-        RegisterService(new MaterialsService(initData.materials));
-        RegisterService(new TerrainService(initData.terrain));
+        RegisterService(new MousePositionService(gameData.mousePositionAction, gameData.mousePositionDeltaAction));
+        RegisterService(new PrefabsService(gameData.worldObjectPrefabs, gameData.villagerPrefab));
+        RegisterService(new MaterialsService(gameData.materials));
+        RegisterService(new TerrainService(gameData.terrain));
         RegisterService(new CameraRaycastService());
         
         RegisterService(new WorldObjectsService());
@@ -48,15 +44,5 @@ public class GameInitializer
         RegisterFactory<WorldObjectFactory>();
         RegisterFactory<VillagerTaskFactory>();
         RegisterFactory<InteractionPointFactory>();
-    }
-
-    private void RegisterService(object value)
-    {
-        _builder.RegisterValue(value);
-    }
-
-    private void RegisterFactory<T>()
-    {
-        _builder.RegisterType(typeof(T), Lifetime.Singleton, Resolution.Lazy);
     }
 }
