@@ -11,10 +11,15 @@ public abstract class Initializer
     {
         _builder = containerBuilder;
     }
-    
+
     protected void RegisterService(object value)
     {
         _builder.RegisterValue(value);
+    }
+    
+    protected void AutoRegisterService<T>()
+    {
+        _builder.RegisterType(typeof(T), Lifetime.Singleton, Resolution.Lazy);
     }
     
     protected void RegisterFactory<T>()
